@@ -16,3 +16,6 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+// map
+Route::get('/map', 'App\Http\Controllers\MapController@index');
