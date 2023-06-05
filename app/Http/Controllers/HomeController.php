@@ -25,4 +25,9 @@ class HomeController extends Controller
     {
         return view('home');
     }
+
+    public function friends(){
+        $users = \App\Models\User::get();
+        return view('friends', compact('users'));
+    }
 }
