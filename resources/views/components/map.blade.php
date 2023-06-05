@@ -92,6 +92,20 @@
           source: vectorSource
         });
 
+        // Make the marker draggable
+        var dragInteraction = new ol.interaction.Translate({
+              features: new ol.Collection([marker])
+        });
+
+        map.addInteraction(dragInteraction);
+
+        // Display the latitude and longitude when the marker is dragged
+        marker.on('change', function () {
+            var coordinates = marker.getGeometry().getCoordinates();
+            var lonLat = ol.proj.toLonLat(coordinates);
+            console.log('Latitude: ' + lonLat[1] + ', Longitude: ' + lonLat[0]);
+        });
+
         map.addLayer(vectorLayer);
       }
 
