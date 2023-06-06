@@ -49,31 +49,9 @@ public function friends()
         }
     }
     
-    // Rest of the logic using $usersArray
     
     return view('friends', compact('usersArray'));
 }
-
-
-    // public function friends(){
-    //     $user = auth()->user();
-        
-    //     $friendsjson = $user->friends;
-    //     $json = json_decode($friendsjson);
-        
-       
-    //     $usersArray = [];
-
-    //     foreach ($json as $value) {
-    //         $display = \App\Models\User::find($value);
-    //         if ($display) {
-    //             $usersArray[] = $display;
-    //         }
-    //     }
-
-    //     return view('friends', compact('usersArray'));
-    // }
-
 
 
     public function searchFriends(request $request){
@@ -105,7 +83,6 @@ public function friends()
             foreach ($friendsAdded as $value) {
                 $json[] += $value;
             }  
-        //dd($json);
 
         $user = auth()->user();
         $user->friends = json_encode($json);
