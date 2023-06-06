@@ -39,7 +39,7 @@
                     <div class="card-header">{{"Add Friends"}}</div>
 
                     <div class="card-body">
-                        <a type="button" class="btn btn-primary" href="{{route('findFriends')}}">{{"Search"}}</a>
+                        <a type="button" class="btn btn-primary" href="{{route('searchFriends')}}">{{"Search"}}</a>
                         
                         
                     </div>

@@ -74,11 +74,7 @@ public function friends()
     //     return view('friends', compact('usersArray'));
     // }
 
-    public function findFriends(){
-        $friends = \App\Models\User::all();
 
-        return view('findFriends', compact('friends'));
-    }
 
     public function searchFriends(request $request){
         $users = \App\Models\User::all();
@@ -109,6 +105,14 @@ public function friends()
             foreach ($friendsAdded as $value) {
                 $json[] += $value;
             }  
-        dd($json);
+        //dd($json);
+
+        $user = auth()->user();
+        $user->friends = json_encode($json);
+        $user->save();
+
+        return redirect()->route('friends');
+
+
     }
 }
