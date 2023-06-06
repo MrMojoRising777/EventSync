@@ -210,9 +210,7 @@
         map.addLayer(vectorLayer);
       }
 
-      // Enable predictive street and city suggestions
-
-      // predict street
+      // enable predicting street
       $(document).ready(function() {
         $('#streetInput').autocomplete({
           source: function(request, response) {
@@ -239,7 +237,8 @@
                   return {
                     label: street + ', ' + city,
                     value: street + ', ' + city,
-                    zip: zip
+                    zip: zip,
+                    city: city // Added city property
                   };
                 }));
               }
@@ -248,6 +247,7 @@
           minLength: 2,
           select: function(event, ui) {
             updateZipCode(ui.item.zip);
+            updateCity(ui.item.city);
           }
         });
 
@@ -269,63 +269,14 @@
           return uniqueStreets;
         }
 
-        // predict city
-        $('#cityInput').autocomplete({
-          source: function(request, response) {
-            $.ajax({
-              url: 'https://nominatim.openstreetmap.org/search',
-              method: 'GET',
-              headers: {
-                'Accept-Language': 'nl' // Specify the language as Dutch
-              },
-              dataType: 'json',
-              data: {
-                q: request.term + ', België', // Search for addresses in Belgium
-                format: 'json',
-                addressdetails: 1,
-                limit: 5
-              },
-              success: function(data) {
-                var uniqueCities = getUniqueCities(data);
-                response($.map(uniqueCities, function(item) {
-                  var address = item.address;
-                  var city = address.city || address.town || address.village || address.hamlet;
-                  var zip = address.postcode || '';
-                  return {
-                    label: city,
-                    value: city,
-                    zip: zip
-                  };
-                }));
-              }
-            });
-          },
-          minLength: 2,
-          select: function(event, ui) {
-            updateZipCode(ui.item.zip);
-          }
-        });
-
-        // get unique cities from Nominatim API
-        function getUniqueCities(data) {
-          var uniqueCities = [];
-          var citiesMap = new Map();
-
-          data.forEach(function(item) {
-            var address = item.address;
-            var city = address.city || address.town || address.village || address.hamlet;
-            if (city && !citiesMap.has(city)) {
-              citiesMap.set(city, true);
-              uniqueCities.push(item);
-            }
-          });
-
-          return uniqueCities;
-        }
-
-        // update zip code based on selected city
+        // update zip code
         function updateZipCode(zip) {
           $('#zipInput').val(zip);
+        }
+
+        // update city
+        function updateCity(city) {
+          $('#cityInput').val(city);
         }
       });
 
