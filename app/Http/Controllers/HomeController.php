@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\User;
 
 class HomeController extends Controller
 {
@@ -25,25 +26,53 @@ class HomeController extends Controller
     {
         return view('home');
     }
-
-    public function friends(){
-        $user = auth()->user();
+    
+    private function getFriendJson()
+{
+    $user = auth()->user();
+    $friendsJson = $user->friends;
+    $json = json_decode($friendsJson);
         
-        $friendsjson = $user->friends;
-        $json = json_decode($friendsjson);
+    return $json;
+}
+
+public function friends()
+{
+    $json = $this->getFriendJson();
+
+    $usersArray = [];
+    //dd($json);
+    foreach ($json as $value) {
+        $display = User::find($value);
+        if ($display) {
+            $usersArray[] = $display;
+        }
+    }
+    
+    // Rest of the logic using $usersArray
+    
+    return view('friends', compact('usersArray'));
+}
+
+
+    // public function friends(){
+    //     $user = auth()->user();
+        
+    //     $friendsjson = $user->friends;
+    //     $json = json_decode($friendsjson);
         
        
-        $usersArray = [];
+    //     $usersArray = [];
 
-        foreach ($json as $value) {
-            $display = \App\Models\User::find($value);
-            if ($display) {
-                $usersArray[] = $display;
-            }
-        }
+    //     foreach ($json as $value) {
+    //         $display = \App\Models\User::find($value);
+    //         if ($display) {
+    //             $usersArray[] = $display;
+    //         }
+    //     }
 
-        return view('friends', compact('usersArray'));
-    }
+    //     return view('friends', compact('usersArray'));
+    // }
 
     public function findFriends(){
         $friends = \App\Models\User::all();
@@ -57,11 +86,13 @@ class HomeController extends Controller
 
         $friends = \App\Models\User::query();
 
+        $friendsJson = $this->getFriendJson();
 
         $friends->where(function ($query) use ($search) {
             $query->where('name', 'like', '%' . $search . '%')
                 ->orWhere('id', 'like', '%' . $search . '%');
-        });
+        })
+        ->whereNotIn('id', $friendsJson);
 
         $friends = $friends->get();
 
@@ -70,7 +101,14 @@ class HomeController extends Controller
 
     public function AddFriends(request $request){
         $friendsAdded = $request->input('selectedCards');
-        
-        dd($friendsAdded);
+        $json = $this->getFriendJson();
+
+        $usersArray = [];
+    
+
+            foreach ($friendsAdded as $value) {
+                $json[] += $value;
+            }  
+        dd($json);
     }
 }
