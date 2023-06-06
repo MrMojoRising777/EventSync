@@ -27,7 +27,21 @@ class HomeController extends Controller
     }
 
     public function friends(){
-        $users = \App\Models\User::get();
-        return view('friends', compact('users'));
+        $user = auth()->user();
+        
+        $friendsjson = $user->friends;
+        $json = json_decode($friendsjson);
+        
+       
+        $usersArray = [];
+
+        foreach ($json as $value) {
+            $display = \App\Models\User::find($value);
+            if ($display) {
+                $usersArray[] = $display;
+            }
+        }
+
+        return view('friends', compact('usersArray'));
     }
 }
