@@ -40,6 +40,26 @@
         border-radius: 5px;
         cursor: pointer;
       }
+
+      /* user input auto complete */
+      .ui-autocomplete {
+        max-height: 200px;
+        overflow-y: auto;
+        overflow-x: hidden;
+        background-color: #fff;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+      }
+
+      .ui-autocomplete .ui-menu-item {
+        padding: 8px 12px;
+        cursor: pointer;
+      }
+
+      .ui-autocomplete .ui-menu-item:hover {
+        background-color: #f5f5f5;
+      }
     </style>
   </head>
   <body>
@@ -127,9 +147,9 @@
 
         <div id="map" style="height: 400px;"></div>
 
-
-
         <script src="https://cdn.jsdelivr.net/npm/ol/dist/ol.js"></script>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script src="https://code.jquery.com/ui/1.13.0/jquery-ui.js"></script>
 
     <script>
       var map;
@@ -189,6 +209,103 @@
 
         map.addLayer(vectorLayer);
       }
+
+      // Enable predictive street and city suggestions
+      $(document).ready(function() {
+        $('#streetInput').autocomplete({
+          source: function(request, response) {
+            $.ajax({
+              url: 'https://nominatim.openstreetmap.org/search',
+              method: 'GET',
+              headers: {
+                'Accept-Language': 'nl' // Specify the language as Dutch
+              },
+              dataType: 'json',
+              data: {
+                q: request.term + ', België', // Search for addresses in Belgium
+                format: 'json',
+                addressdetails: 1,
+                limit: 5
+              },
+              success: function(data) {
+                var uniqueCities = getUniqueCities(data);
+                response($.map(uniqueCities, function(item) {
+                  var address = item.address;
+                  var city = address.city || address.town || address.village || address.hamlet;
+                  var zip = address.postcode || '';
+                  return {
+                    label: city,
+                    value: city,
+                    zip: zip
+                  };
+                }));
+              }
+            });
+          },
+          minLength: 2,
+          select: function(event, ui) {
+            updateZipCode(ui.item.zip);
+          }
+        });
+
+        $('#cityInput').autocomplete({
+          source: function(request, response) {
+            $.ajax({
+              url: 'https://nominatim.openstreetmap.org/search',
+              method: 'GET',
+              headers: {
+                'Accept-Language': 'nl' // Specify the language as Dutch
+              },
+              dataType: 'json',
+              data: {
+                q: request.term + ', België', // Search for addresses in Belgium
+                format: 'json',
+                addressdetails: 1,
+                limit: 5
+              },
+              success: function(data) {
+                var uniqueCities = getUniqueCities(data);
+                response($.map(uniqueCities, function(item) {
+                  var address = item.address;
+                  var city = address.city || address.town || address.village || address.hamlet;
+                  var zip = address.postcode || '';
+                  return {
+                    label: city,
+                    value: city,
+                    zip: zip
+                  };
+                }));
+              }
+            });
+          },
+          minLength: 2,
+          select: function(event, ui) {
+            updateZipCode(ui.item.zip);
+          }
+        });
+
+        // Function to get unique cities from the Nominatim API response
+        function getUniqueCities(data) {
+          var uniqueCities = [];
+          var citiesMap = new Map();
+
+          data.forEach(function(item) {
+            var address = item.address;
+            var city = address.city || address.town || address.village || address.hamlet;
+            if (city && !citiesMap.has(city)) {
+              citiesMap.set(city, true);
+              uniqueCities.push(item);
+            }
+          });
+
+          return uniqueCities;
+        }
+
+        // Function to update the zip code based on the selected city
+        function updateZipCode(zip) {
+          $('#zipInput').val(zip);
+        }
+      });
 
       function geocodeAddress() {
         var street = document.getElementById('streetInput').value;
