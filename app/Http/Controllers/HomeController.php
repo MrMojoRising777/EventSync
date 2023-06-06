@@ -59,8 +59,8 @@ class HomeController extends Controller
 
 
         $friends->where(function ($query) use ($search) {
-            $query->where('name', 'like', '%' . $search . '%');
-                //->orWhere('id', 'like', '%' . $search . '%');
+            $query->where('name', 'like', '%' . $search . '%')
+                ->orWhere('id', 'like', '%' . $search . '%');
         });
 
         $friends = $friends->get();
