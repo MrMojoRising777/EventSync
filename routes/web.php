@@ -23,6 +23,9 @@ Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::get('/friends', [App\Http\Controllers\HomeController::class, 'friends'])->name('friends');
+Route::get('/findFriends', [App\Http\Controllers\HomeController::class, 'findFriends'])->name('findFriends');
+Route::post('/findFriends', [App\Http\Controllers\HomeController::class, 'searchFriends'])->name('searchFriends');
+Route::post('/show', [App\Http\Controllers\HomeController::class, 'AddFriends'])->name('AddFriends');
 
 // map
 Route::get('/map', 'App\Http\Controllers\MapController@index');

@@ -25,7 +25,8 @@
                           <div class="col-md-3">
                             <div class="card mb-4">
                               <div class="card-body text-center align-middle">
-                                <h5 class="card-title">{{$friend->name}}</h5>
+                                <h3 class="card-title">{{$friend->name}}</h3>
+                                <h5 class="card-content">{{"id: ". $friend->id}}</h5>
                               </div>
                             </div>
                           </div>
@@ -38,6 +39,7 @@
                     <div class="card-header">{{"Add Friends"}}</div>
 
                     <div class="card-body">
+                        <a type="button" class="btn btn-primary" href="{{route('findFriends')}}">{{"Search"}}</a>
                         
                         
                     </div>

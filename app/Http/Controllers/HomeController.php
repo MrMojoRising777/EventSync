@@ -44,4 +44,33 @@ class HomeController extends Controller
 
         return view('friends', compact('usersArray'));
     }
+
+    public function findFriends(){
+        $friends = \App\Models\User::all();
+
+        return view('findFriends', compact('friends'));
+    }
+
+    public function searchFriends(request $request){
+        $users = \App\Models\User::all();
+        $search = $request->input('search');
+
+        $friends = \App\Models\User::query();
+
+
+        $friends->where(function ($query) use ($search) {
+            $query->where('name', 'like', '%' . $search . '%');
+                //->orWhere('id', 'like', '%' . $search . '%');
+        });
+
+        $friends = $friends->get();
+
+        return view('findFriends', compact('friends'));
+    }
+
+    public function AddFriends(request $request){
+        $friendsAdded = $request->input('selectedCards');
+        
+        dd($friendsAdded);
+    }
 }
