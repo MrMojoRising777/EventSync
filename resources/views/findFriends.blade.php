@@ -24,42 +24,43 @@
     <br>
     <div class="row">
         <div class="col-md-4">
-            <form action="{{route('AddFriends')}}" method="POST">
-
+            <form action="{{ route('AddFriends') }}" method="POST">
+                @csrf
                 <div class="container">
                     <div class="row">
                         @foreach ($friends as $friend)
                             <div class="col-md-4">
                                 <div class="card mb-3">
-                                    <div class="card-body  text-center align-middle selectable-card">
+                                    <div class="card-body text-center align-middle selectable-card">
                                         <h3 class="card-title">{{ $friend->name }}</h3>
                                         <h5 class="card-content">{{ $friend->id }}</h5>
                                     </div>
                                 </div>
                             </div>
-                            <input type="hidden" name="selectedCards[]" class="selected-card" value="{{ $friend->id }}">
+                            <input type="hidden" name="selectedCards[]" class="selected-card" id="{{ $friend->id }}" value="{{ $friend->id }}">
                         @endforeach 
-                       
-                        <button class="btn btn-primary mt-2" type="submit">{{"Add friends"}}</button>
                     </div>
                 </div>
+                <button class="btn btn-primary mt-2" type="submit">{{ "Add friends" }}</button>
             </form>
-                        
-                        
+        </div>
+    </div>
+</div>
 
- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <script>
-        $(document).ready(function() {
-            $('.selectable-card').click(function() {
-                $(this).toggleClass('selected');
-                 // Get the IDs of all selected cards
-            var selectedCardIDs = $('.selected .card-content').map(function() {
-                return $(this).text();
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $('.selectable-card').click(function() {
+            $(this).toggleClass('selected');
+
+            // Get the IDs of all selected cards
+            var selectedCardIDs = $('.selected-card').map(function() {
+                return $(this).val();
             }).get();
 
             // Populate the hidden input field with the selected card IDs
             $('#selectedCards').val(selectedCardIDs.join(','));
-            });
         });
-     </script>
+    });
+</script>
 @endsection
