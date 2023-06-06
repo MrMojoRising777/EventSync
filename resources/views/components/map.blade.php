@@ -291,31 +291,38 @@
           encodeURIComponent(address) +
           '&countrycodes=be&limit=1';
 
-        fetch(url).then(function(response) {
-          return response.json();
-        })
-        .then(function(data) {
-          if (data.length > 0) {
-            var lat = parseFloat(data[0].lat);
-            var lon = parseFloat(data[0].lon);
-            var coordinate = ol.proj.fromLonLat([lon, lat]);
+        fetch(url)
+          .then(function(response) {
+            return response.json();
+          })
+          .then(function(data) {
+            if (data.length > 0) {
+              var lat = parseFloat(data[0].lat);
+              var lon = parseFloat(data[0].lon);
+              var coordinate = ol.proj.fromLonLat([lon, lat]);
 
-            marker.setGeometry(new ol.geom.Point(coordinate));
+              marker.setGeometry(new ol.geom.Point(coordinate));
 
-            map.getView().setCenter(coordinate);
-            map.getView().setZoom(15);
-          } else {
-            alert('Address not found');
-          }
-        })
-        .catch(function(error) {
-          console.log('Error:', error);
-        });
+              map.getView().setCenter(coordinate);
+              map.getView().setZoom(15);
+            } else {
+              alert('Address not found');
+            }
+          })
+          .catch(function(error) {
+            console.log('Error:', error);
+          });
       }
 
-    document.addEventListener('DOMContentLoaded', function() {
-      initMap();
-    });
+      document.addEventListener('DOMContentLoaded', function() {
+        initMap();
+
+        var searchButton = document.querySelector('.btn-primary');
+        searchButton.addEventListener('click', function(event) {
+          event.preventDefault();
+          geocodeAddress();
+        });
+      });
     </script>
   </body>
 </html>
