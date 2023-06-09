@@ -73,13 +73,14 @@
                                     {{ Auth::user()->name }}
                                 </a>
 
+                                <!-- dashboard route -->
                                 <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" href="{{ url('/user-profile') }}" 
+                                    <a class="dropdown-item" href="{{ url('/home') }}" 
                                         onclick="event.preventDefault();
                                         document.getElementById('userprofile-form').submit();">
                                         {{ __('Profiel') }}
                                     </a>
-                                    <form id="userprofile-form" action="{{ url('/user-profile') }}" method="GET" style="display: none;">
+                                    <form id="userprofile-form" action="{{ url('/home') }}" method="GET" style="display: none;">
                                         @csrf
                                     </form>
 
