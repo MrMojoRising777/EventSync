@@ -15,13 +15,13 @@
                     @endif
 
                     {{ __('You are logged in!') }}
+
+                    <!-- Map Component -->
+                    @include('components.mapComp')
+
                 </div>
             </div>
         </div>
     </div>
 </div>
-
-<!-- Map Component -->
-@include('components.mapComp')
-
 @endsection
