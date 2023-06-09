@@ -56,17 +56,17 @@
                         @else
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                    {{ Auth::user()->name }}
+                                    {{ Auth::user()->username }}
                                 </a>
 
                                 <!-- dashboard route -->
                                 <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" href="{{ url('/home') }}" 
+                                    <a class="dropdown-item" href="{{ url('/profile') }}" 
                                         onclick="event.preventDefault();
                                         document.getElementById('userprofile-form').submit();">
                                         {{ __('Profiel') }}
                                     </a>
-                                    <form id="userprofile-form" action="{{ url('/home') }}" method="GET" style="display: none;">
+                                    <form id="userprofile-form" action="{{ url('/profile') }}" method="GET" style="display: none;">
                                         @csrf
                                     </form>
 
