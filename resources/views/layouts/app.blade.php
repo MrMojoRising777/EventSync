@@ -7,7 +7,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Laravel') }}</title>
+    <title>{{ config('app.name', 'Home') }}</title>
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.bunny.net">
@@ -38,7 +38,7 @@
             <img src="{{ asset('build/assets/images/logo_placeholder.png') }}" alt="Logo" class="navbar-logo">
             <div class="container">
                 <a class="navbar-brand" href="{{ url('/home') }}">
-                    {{ config('app.name', 'Laravel') }}
+                    {{ config('Home', 'Home') }}
                 </a>
                 <a class="navbar-brand" href="{{ url('/map') }}">
                     {{ config('Map', 'Map') }}
