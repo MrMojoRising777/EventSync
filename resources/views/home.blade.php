@@ -20,4 +20,8 @@
         </div>
     </div>
 </div>
+
+<!-- Map Component -->
+@include('components.mapComp')
+
 @endsection
