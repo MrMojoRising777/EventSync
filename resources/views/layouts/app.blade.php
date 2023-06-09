@@ -20,7 +20,7 @@
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container">
-                <a class="navbar-brand" href="{{ url('/') }}">
+                <a class="navbar-brand" href="{{ url('/home') }}">
                     {{ config('app.name', 'Laravel') }}
                 </a>
                 <a class="navbar-brand" href="{{ url('/map') }}">
@@ -58,12 +58,20 @@
                                 </a>
 
                                 <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                                    <a class="dropdown-item" href="{{ url('/user-profile') }}" 
+                                        onclick="event.preventDefault();
+                                        document.getElementById('userprofile-form').submit();">
+                                        {{ __('Profiel') }}
+                                    </a>
+                                    <form id="userprofile-form" action="{{ url('/user-profile') }}" method="GET" style="display: none;">
+                                        @csrf
+                                    </form>
+
                                     <a class="dropdown-item" href="{{ route('logout') }}"
                                        onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
+                                        document.getElementById('logout-form').submit();">
                                         {{ __('Logout') }}
                                     </a>
-
                                     <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                                         @csrf
                                     </form>
