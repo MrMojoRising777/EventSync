@@ -24,3 +24,7 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 
 // map
 Route::get('/map', 'App\Http\Controllers\MapController@index');
+
+// calendar
+Route::get('/calendar-event', 'App\Http\Controllers\CalendarController@index');
+Route::post('/calendar-crud-ajax', 'App\Http\Controllers\CalendarController@calendarEvents');
