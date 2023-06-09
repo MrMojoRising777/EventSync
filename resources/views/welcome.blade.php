@@ -11,15 +11,20 @@
   <style>
     body {
       font-family: 'Figtree', sans-serif;
+      background-color: #f7fafc;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
     }
 
-    .container {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      min-height: 100vh;
-      background-color: #f3f4f6;
+    .card {
+      max-width: 500px;
+      padding: 2rem;
+      background-color: #ffffff;
+      border-radius: 0.5rem;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     }
 
     .title {
@@ -39,7 +44,6 @@
     .button {
       padding: 0.75rem 1.5rem;
       border-radius: 0.5rem;
-      background-color: #ef4444;
       color: white;
       font-size: 1rem;
       font-weight: 600;
@@ -51,14 +55,29 @@
     .button:hover {
       background-color: #dc2626;
     }
+    .button.register {
+      background-color: #ff5722;
+    }
+
+    .button.login {
+      background-color: #4caf50;
+    }
+
+    .button.register:hover {
+      background-color: #ff7847;
+    }
+
+    .button.login:hover {
+      background-color: #4dbf77;
+    }
   </style>
 </head>
 <body>
-  <div class="container">
+  <div class="card">
     <h1 class="title">Welkom</h1>
     <div class="button-container">
-      <a class="button" href="/login">Aanmelden</a>
-      <a class="button" href="/register">Account aanmaken</a>
+      <a class="button login" href="/login">Aanmelden</a>
+      <a class="button register" href="/register">Account aanmaken</a>
     </div>
   </div>
 </body>
