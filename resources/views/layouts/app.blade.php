@@ -7,7 +7,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Laravel') }}</title>
+    <title>{{ config('app.name', 'Home') }}</title>
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.bunny.net">
@@ -15,13 +15,30 @@
 
     <!-- Scripts -->
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
+
+    <!-- style -->
+    <style>
+        .navbar-logo {
+            height: 3em;
+            margin-right: 1.5rem;
+            margin-left: 1.5rem;
+        }
+        .footer {
+            padding: 2rem;
+        }
+
+        .footer p {
+            margin-bottom: 0.5rem;
+        }
+    </style>
 </head>
 <body>
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
+            <img src="{{ asset('build/assets/images/logo_placeholder.png') }}" alt="Logo" class="navbar-logo">
             <div class="container">
                 <a class="navbar-brand" href="{{ url('/home') }}">
-                    {{ config('app.name', 'Laravel') }}
+                    {{ config('Home', 'Home') }}
                 </a>
                 <a class="navbar-brand" href="{{ url('/map') }}">
                     {{ config('Map', 'Map') }}
@@ -33,7 +50,6 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav me-auto">
-
                     </ul>
 
                     <!-- Right Side Of Navbar -->
@@ -57,13 +73,14 @@
                                     {{ Auth::user()->name }}
                                 </a>
 
+                                <!-- dashboard route -->
                                 <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" href="{{ url('/user-profile') }}" 
+                                    <a class="dropdown-item" href="{{ url('/home') }}" 
                                         onclick="event.preventDefault();
                                         document.getElementById('userprofile-form').submit();">
                                         {{ __('Profiel') }}
                                     </a>
-                                    <form id="userprofile-form" action="{{ url('/user-profile') }}" method="GET" style="display: none;">
+                                    <form id="userprofile-form" action="{{ url('/home') }}" method="GET" style="display: none;">
                                         @csrf
                                     </form>
 
@@ -86,6 +103,15 @@
         <main class="py-4">
             @yield('content')
         </main>
+
+        <footer class="footer bg-light">
+            <div class="container text-center">
+                <p>&copy; {{ date('Y') }} Your Company. All rights reserved.</p>
+                <p>Address, City, Country</p>
+                <p>Email: info@yourcompany.com</p>
+            </div>
+        </footer>
+
     </div>
 </body>
 </html>

@@ -1,27 +1,69 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
+  <div class="container-fluid">
     <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">{{ __('Dashboard') }}</div>
+      <div class="col-lg-10">
+        <div class="card">
+          <div class="card-header">
+            <h2>{{ __('Dashboard') }}</h2>
+          </div>
 
-                <div class="card-body">
-                    @if (session('status'))
-                        <div class="alert alert-success" role="alert">
-                            {{ session('status') }}
-                        </div>
-                    @endif
+          <div class="card-body">
+            @if (session('status'))
+              <div class="alert alert-success" role="alert">
+                {{ session('status') }}
+              </div>
+            @endif
 
-                    {{ __('You are logged in!') }}
+            <h4>{{ __('Welcome, :name', ['name' => Auth::user()->name]) }}</h4>
 
-                    <!-- Map Component -->
-                    @include('components.mapComp')
+            <div class="dashboard-container">
+              <div class="row">
+                <div class="col-lg-2">
 
+                  <div class="card friends-container">
+                    <div class="card-header">{{ __('Friends') }}</div>
+                    <div class="card-body">
+                      <ul>
+                        <li>Friend 1</li>
+                        <li>Friend 2</li>
+                        <li>Friend 3</li>
+                        <li>Friend 4</li>
+                        <li>Friend 5</li>
+                      </ul>
+                    </div>
+                  </div>
                 </div>
+
+              <div class="col-lg-10">
+                <div class="row">
+                  <div class="col-lg-6">
+                    <div class="card calendar-container">
+                      <div class="card-header">{{ __('Calendar') }}</div>
+                      <div class="card-body">
+                        <!-- Calendar Component -->
+                        @include('components.calendar')
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="col-lg-6">
+                    <div class="card map-container">
+                      <div class="card-header">{{ __('Map') }}</div>
+                        <div class="card-body">
+                          <!-- Map Component -->
+                          @include('components.mapComp')
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
+          </div>
         </div>
+      </div>
     </div>
-</div>
+  </div>
 @endsection

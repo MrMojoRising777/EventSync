@@ -1,23 +1,18 @@
 <div class="card">
   <div class="card-body">
-    <form>
-      <!-- Form inputs and button -->
-
       <!-- Map container -->
       <div id="map" style="height: 400px;"></div>
-    </form>
   </div>
 </div>
 
-<!-- Inline styles -->
-<style>
-  /* Styles */
-</style>
-
 <!-- JavaScript -->
 <script src="https://cdn.jsdelivr.net/npm/ol/dist/ol.js"></script>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://code.jquery.com/ui/1.13.0/jquery-ui.js"></script>
+
 <script>
-  // Initialize the map
+  // Initialize map
   var map;
   var marker;
   var vectorSource;
@@ -36,10 +31,9 @@
       })
     });
 
-    // Rest of the map initialization code...
   }
 
-  // Call the initMap function once the DOM content is loaded
+  // Call initMap function once DOM content is loaded
   document.addEventListener('DOMContentLoaded', function() {
     initMap();
   });
