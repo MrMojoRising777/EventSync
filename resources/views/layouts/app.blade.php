@@ -23,7 +23,13 @@
             margin-right: 1.5rem;
             margin-left: 1.5rem;
         }
+        .footer {
+            padding: 2rem;
+        }
 
+        .footer p {
+            margin-bottom: 0.5rem;
+        }
     </style>
 </head>
 <body>
@@ -96,6 +102,15 @@
         <main class="py-4">
             @yield('content')
         </main>
+
+        <footer class="footer bg-light">
+            <div class="container text-center">
+                <p>&copy; {{ date('Y') }} Your Company. All rights reserved.</p>
+                <p>Address, City, Country</p>
+                <p>Email: info@yourcompany.com</p>
+            </div>
+        </footer>
+
     </div>
 </body>
 </html>
