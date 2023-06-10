@@ -40,7 +40,7 @@
     <div class="row justify-content-center">
       <div class="col-md-8">
         <div class="card">
-          <div class="card-header">User Profile</div>
+          <div class="card-header">Gebruikersprofiel</div>
 
           <div class="card-body">
             @if(session('success'))
@@ -55,7 +55,7 @@
               @method('PUT')
 
               <div class="form-group row">
-                <label for="username" class="col-md-4 col-form-label text-md-right">Username</label>
+                <label for="username" class="col-md-4 col-form-label text-md-right">Gebruikersnaam</label>
 
                 <div class="col-md-8">
                   <input id="username" type="text" class="form-control @error('username') is-invalid @enderror" name="username" value="{{ $user->username }}" required autofocus>
@@ -70,7 +70,7 @@
 
               <div class="form-group row mb-4">
                 <div class="col-md-8 offset-md-4">
-                  <button type="submit" class="btn btn-primary">Update Username</button>
+                  <button type="submit" class="btn btn-primary">Wijzig gebruikersnaam</button>
                 </div>
               </div>
             </form>
@@ -83,7 +83,7 @@
               @method('PUT')
 
               <div class="form-group row">
-                <label for="password" class="col-md-4 col-form-label text-md-right">Password</label>
+                <label for="password" class="col-md-4 col-form-label text-md-right">Wachtwoord</label>
 
                 <div class="col-md-8">
                   <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="new-password">
@@ -106,7 +106,7 @@
 
               <div class="form-group row mb-4">
                 <div class="col-md-8 offset-md-4">
-                  <button type="submit" class="btn btn-primary">Update Password</button>
+                  <button type="submit" class="btn btn-primary">Wijzig wachtwoord</button>
                 </div>
               </div>
             </form>
@@ -119,7 +119,7 @@
 
               <div class="form-group row mb-0">
                 <div class="col-md-8 offset-md-4">
-                  <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete your account?')">Delete Account</button>
+                  <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete your account?')">Verwijder account</button>
                 </div>
               </div>
             </form>

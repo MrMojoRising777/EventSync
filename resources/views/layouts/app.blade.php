@@ -94,9 +94,9 @@
             <div class="container py-4">
                 <div class="row">
                     <div class="col text-center">
-                        <p class="mb-1">&copy; {{ date('Y') }} Your Company. All rights reserved.</p>
-                        <p class="mb-1">Address, City, Country</p>
-                        <p class="mb-0">Email: info@yourcompany.com</p>
+                        <p class="mb-1">&copy; {{ date('Y') }} [site naam]]. All rights reserved.</p>
+                        <p class="mb-1">adres, stad, land</p>
+                        <p class="mb-0">Email: info@sitenaam.com</p>
                     </div>
                 </div>
             </div>
