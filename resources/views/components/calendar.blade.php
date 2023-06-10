@@ -29,17 +29,20 @@
             var calendar = $('#full_calendar_events').fullCalendar({
                 editable: true,
                 editable: true,
-                events: SITEURL + "/calendar-event",
+                events: SITEURL + "/calendar",
                 displayEventTime: true,
                 eventRender: function (event, element, view) {
-                    if (event.allDay === 'true') {
+                    if (event.allDay) {
                         event.allDay = true;
                     } else {
                         event.allDay = false;
                     }
+                    element.find('.fc-title').text(event.event_name);
                 },
                 selectable: true,
                 selectHelper: true,
+
+                // add event
                 select: function (event_start, event_end, allDay) {
                     var event_name = prompt('Event Name:');
                     if (event_name) {
@@ -68,6 +71,8 @@
                         });
                     }
                 },
+                
+                // update event
                 eventDrop: function (event, delta) {
                     var event_start = $.fullCalendar.formatDate(event.start, "Y-MM-DD");
                     var event_end = $.fullCalendar.formatDate(event.end, "Y-MM-DD");
@@ -86,6 +91,8 @@
                         }
                     });
                 },
+
+                // delete event
                 eventClick: function (event) {
                     var eventDelete = confirm("Are you sure?");
                     if (eventDelete) {
