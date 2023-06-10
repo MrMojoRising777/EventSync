@@ -6,13 +6,12 @@ class CalendarController extends Controller
 {
     public function index(Request $request)
     {
-        if($request->ajax()) {  
-            $data = CrudEvents::whereDate('event_start', '>=', $request->start)
-                ->whereDate('event_end',   '<=', $request->end)
-                ->get(['id', 'event_name', 'event_start', 'event_end']);
-            return response()->json($data);
+        if ($request->ajax()) {
+            $events = CrudEvents::all(['id as id', 'event_name as title', 'event_start as start', 'event_end as end']);
+            return response()->json($events);
         }
-        return view('components\calendar');
+
+        return view('components.calendar');
     }
  
     public function calendarEvents(Request $request)

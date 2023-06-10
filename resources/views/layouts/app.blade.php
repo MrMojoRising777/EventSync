@@ -16,26 +16,12 @@
     <!-- Scripts -->
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
 
-    <!-- style -->
-    <style>
-        .navbar-logo {
-            height: 3em;
-            margin-right: 1.5rem;
-            margin-left: 1.5rem;
-        }
-        .footer {
-            padding: 2rem;
-        }
-
-        .footer p {
-            margin-bottom: 0.5rem;
-        }
-    </style>
+    @yield('styles')
 </head>
 <body>
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
-            <img src="{{ asset('build/assets/images/logo_placeholder.png') }}" alt="Logo" class="navbar-logo">
+        <img src="{{ asset('build/assets/images/logo_placeholder.png') }}" alt="Logo" class="navbar-logo mx-3 my-2" style="height: 3em;">
             <div class="container">
                 <a class="navbar-brand" href="{{ url('/home') }}">
                     {{ config('Home', 'Home') }}
@@ -70,17 +56,17 @@
                         @else
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                    {{ Auth::user()->name }}
+                                    {{ Auth::user()->username }}
                                 </a>
 
                                 <!-- dashboard route -->
                                 <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" href="{{ url('/home') }}" 
+                                    <a class="dropdown-item" href="{{ url('/profile') }}" 
                                         onclick="event.preventDefault();
                                         document.getElementById('userprofile-form').submit();">
                                         {{ __('Profiel') }}
                                     </a>
-                                    <form id="userprofile-form" action="{{ url('/home') }}" method="GET" style="display: none;">
+                                    <form id="userprofile-form" action="{{ url('/profile') }}" method="GET" style="display: none;">
                                         @csrf
                                     </form>
 
@@ -105,12 +91,17 @@
         </main>
 
         <footer class="footer bg-light">
-            <div class="container text-center">
-                <p>&copy; {{ date('Y') }} Your Company. All rights reserved.</p>
-                <p>Address, City, Country</p>
-                <p>Email: info@yourcompany.com</p>
+            <div class="container py-4">
+                <div class="row">
+                    <div class="col text-center">
+                        <p class="mb-1">&copy; {{ date('Y') }} [site naam]]. All rights reserved.</p>
+                        <p class="mb-1">adres, stad, land</p>
+                        <p class="mb-0">Email: info@sitenaam.com</p>
+                    </div>
+                </div>
             </div>
         </footer>
+
 
     </div>
 </body>
