@@ -7,7 +7,7 @@ class CalendarController extends Controller
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            $events = CrudEvents::all(['id', 'event_name', 'event_start', 'event_end']);
+            $events = CrudEvents::all(['id as id', 'event_name as title', 'event_start as start', 'event_end as end']);
             return response()->json($events);
         }
 

@@ -19,30 +19,36 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/fullcalendar.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
     <script>
-        $(document).ready(function () {
+       $(document).ready(function () {
+            // fetch header information
             var SITEURL = "{{ url('/') }}";
             $.ajaxSetup({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 }
             });
+
             var calendar = $('#full_calendar_events').fullCalendar({
                 editable: true,
-                editable: true,
-                events: SITEURL + "/calendar",
+
+                // fetch ALL events
+                events: function (start, end, timezone, callback) {
+                    $.ajax({
+                        url: SITEURL + "/calendar",
+                        type: "GET",
+                        success: function (data) {
+                            callback(data); // Pass data directly to callback
+                        }
+                    });
+                },
                 displayEventTime: true,
                 eventRender: function (event, element, view) {
-                    if (event.allDay) {
-                        event.allDay = true;
-                    } else {
-                        event.allDay = false;
-                    }
-                    element.find('.fc-title').text(event.event_name);
+                    element.find('.fc-title').text(event.title);
                 },
                 selectable: true,
                 selectHelper: true,
 
-                // add event
+                // create new event
                 select: function (event_start, event_end, allDay) {
                     var event_name = prompt('Event Name:');
                     if (event_name) {
@@ -71,15 +77,15 @@
                         });
                     }
                 },
-                
-                // update event
+
+                // update event (Not yet tested)
                 eventDrop: function (event, delta) {
                     var event_start = $.fullCalendar.formatDate(event.start, "Y-MM-DD");
                     var event_end = $.fullCalendar.formatDate(event.end, "Y-MM-DD");
                     $.ajax({
                         url: SITEURL + '/calendar-event',
                         data: {
-                            title: event.event_name,
+                            title: event.title,
                             start: event_start,
                             end: event_end,
                             id: event.id,
@@ -112,8 +118,9 @@
                 }
             });
         });
+
         function displayMessage(message) {
-            toastr.success(message, 'Event');            
+            toastr.success(message, 'Event');
         }
     </script>
 </body>
