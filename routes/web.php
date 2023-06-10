@@ -29,6 +29,7 @@ Route::get('/map', 'App\Http\Controllers\MapController@index');
 // calendar
 Route::get('/calendar', 'App\Http\Controllers\CalendarController@index');
 Route::post('/calendar-event', 'App\Http\Controllers\CalendarController@calendarEvents');
+Route::get('/calendar-event', 'App\Http\Controllers\CalendarController@calendarEvents');
 
 // profile page
 Route::get('/profile', 'App\Http\Controllers\ProfileController@show')->name('profile.show');

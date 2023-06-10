@@ -46,7 +46,7 @@
                         var event_start = $.fullCalendar.formatDate(event_start, "Y-MM-DD HH:mm:ss");
                         var event_end = $.fullCalendar.formatDate(event_end, "Y-MM-DD HH:mm:ss");
                         $.ajax({
-                            url: SITEURL + "/calendar-crud-ajax",
+                            url: SITEURL + "/calendar-event",
                             data: {
                                 event_name: event_name,
                                 event_start: event_start,
@@ -72,7 +72,7 @@
                     var event_start = $.fullCalendar.formatDate(event.start, "Y-MM-DD");
                     var event_end = $.fullCalendar.formatDate(event.end, "Y-MM-DD");
                     $.ajax({
-                        url: SITEURL + '/calendar-crud-ajax',
+                        url: SITEURL + '/calendar-event',
                         data: {
                             title: event.event_name,
                             start: event_start,
@@ -91,7 +91,7 @@
                     if (eventDelete) {
                         $.ajax({
                             type: "POST",
-                            url: SITEURL + '/calendar-crud-ajax',
+                            url: SITEURL + '/calendar-event',
                             data: {
                                 id: event.id,
                                 type: 'delete'
