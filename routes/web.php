@@ -28,6 +28,7 @@ Route::get('/friends', [App\Http\Controllers\HomeController::class, 'friends'])-
 
     //add friend routes
     Route::get('/searchFriends', [App\Http\Controllers\HomeController::class, 'searchFriends'])->name('searchFriends');
+    Route::post('/searchFriends', [App\Http\Controllers\HomeController::class, 'searchFriends'])->name('searchFriends');
     Route::post('/showAdd', [App\Http\Controllers\HomeController::class, 'AddFriends'])->name('AddFriends');
 
     //Delete friend routes

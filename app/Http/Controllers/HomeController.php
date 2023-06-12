@@ -58,13 +58,17 @@ public function friends()
         $users = \App\Models\User::all();
         $search = $request->input('search');
 
-        $friends = \App\Models\User::query();
+        $own = auth()->user();
+
+        $friends = \App\Models\User::where('id', '!=', $own->id);
 
         $friendsJson = $this->getFriendJson();
 
         $friends->where(function ($query) use ($search) {
+            $own = auth()->user();
             $query->where('name', 'like', '%' . $search . '%')
-                ->orWhere('id', 'like', '%' . $search . '%');
+                ->orWhere('id', 'like', '%' . $search . '%')
+                ->where('id', '!=', $own->id);
         })
         ->whereNotIn('id', $friendsJson);
 
@@ -72,6 +76,8 @@ public function friends()
 
         return view('addFriends', compact('friends'));
     }
+
+    
 
     public function AddFriends(request $request){
 
