@@ -17,6 +17,33 @@ class HomeController extends Controller
         $this->middleware('auth');
     }
 
+    private function getFriendJson() {
+
+        // get the friends['id'] of the current user as an array
+        $user = auth()->user();
+        $friendsJson = $user->friends;
+        $json = json_decode($friendsJson);
+            
+        return $json;
+    }
+
+
+    private function getCurrentFriends() {
+
+        // get the current users friends info as an array
+        $json = $this->getFriendJson();
+
+        $usersArray = [];
+        foreach ($json as $value) {
+            $display = User::find($value);
+            if ($display) {
+                $usersArray[] = $display;
+            }
+        }
+
+        return $usersArray;
+    }
+
     /**
      * Show the application dashboard.
      *
@@ -24,40 +51,18 @@ class HomeController extends Controller
      */
     public function index()
     {   
-        $json = $this->getFriendJson();
+        
+        $usersArray = $this->getCurrentFriends();
 
-        $usersArray = [];
-        //dd($json);
-        foreach ($json as $value) {
-            $display = User::find($value);
-            if ($display) {
-                $usersArray[] = $display;
-            }
-        }
         return view('home', compact('usersArray'));
     }
     
-    private function getFriendJson()
-{
-    $user = auth()->user();
-    $friendsJson = $user->friends;
-    $json = json_decode($friendsJson);
-        
-    return $json;
-}
+
 
 public function friends()
 {
-    $json = $this->getFriendJson();
 
-    $usersArray = [];
-    //dd($json);
-    foreach ($json as $value) {
-        $display = User::find($value);
-        if ($display) {
-            $usersArray[] = $display;
-        }
-    }
+    $usersArray = $this->getCurrentFriends();
     
     
     return view('friends', compact('usersArray'));
@@ -93,13 +98,12 @@ public function friends()
 
         //get all users so it can check what friend needs to get added
         $itemsEloquent = User::all();
+        // array_filter doesnt work with eloquent, so chagne it to an array instead
         $items = $itemsEloquent->toArray();
 
         //get current friends from the DB
         $json = $this->getFriendJson();
 
-            // Execute when form is submitted otherwise ignore this snippet...
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             // Check if any items are selected
             if (isset($_POST['selectedItems']) && is_array($_POST['selectedItems'])) {
                 echo "<h2>Selected Items:</h2>";
@@ -119,10 +123,10 @@ public function friends()
                 }
                 echo "</ul>";
             }
-        }
+        
 
          
-
+        // save selected friends to database
         $user = auth()->user();
         $user->friends = json_encode($json);
         $user->save();
@@ -132,17 +136,11 @@ public function friends()
 
     }
 
-    Public function FindFriends() {
-        $json = $this->getFriendJson();
 
-        $usersArray = [];
-        //dd($json);
-        foreach ($json as $value) {
-            $display = User::find($value);
-            if ($display) {
-                $usersArray[] = $display;
-            }
-        }
+
+    Public function FindFriends() {
+
+        $usersArray = $this->getCurrentFriends();
 
         return view('deleteFriends', compact('usersArray'));
     }
@@ -150,23 +148,15 @@ public function friends()
     public function DeleteFriends(request $request) {
         
 
-        //get current friends from the DB
+        //get current friends array from the DB
         $json = $this->getFriendJson();
-
+    
         //get friend users so it can check what friend needs to get deleted
-         $items = [];
-        //dd($json);
-        foreach ($json as $value) {
-            $display = User::find($value);
-            if ($display) {
-                $items[] = $display;
-            }
-        }
+        $items = $this->getCurrentFriends();
+        
         
         $deleteFriends = [];
 
-            // Execute when form is submitted otherwise ignore this snippet...
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             // Check if any items are selected
             if (isset($_POST['selectedItems']) && is_array($_POST['selectedItems'])) {
                 echo "<h2>Selected Items:</h2>";
@@ -185,20 +175,14 @@ public function friends()
                         echo "<li>{$selectedItem['username']} (ID: {$selectedItem['id']})</li>";
                     }
                 }
-                //dd($json, $updatedFriendIds);
                 
                 $updatedFriendIds = array_diff($json, $deleteFriends);
                 
                 echo "</ul>";
             }
-        }
-
-
-
         
-        
-        if (isset($updatedFriendIds)) {
-            
+        // save updated friend information to database
+        if (isset($updatedFriendIds)) {    
             $user = auth()->user();
             $user->friends = json_encode($updatedFriendIds);
             $user->save();
