@@ -74,15 +74,38 @@ public function friends()
     }
 
     public function AddFriends(request $request){
-        $friendsAdded = $request->input('selectedCards');
+
+        //get all users so it can check what friend needs to get added
+        $itemsEloquent = User::all();
+        $items = $itemsEloquent->toArray();
+
+        //get current friends from the DB
         $json = $this->getFriendJson();
 
-        $usersArray = [];
-    
+            // Execute when form is submitted otherwise ignore this snippet...
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            // Check if any items are selected
+            if (isset($_POST['selectedItems']) && is_array($_POST['selectedItems'])) {
+                echo "<h2>Selected Items:</h2>";
+                echo "<ul>";
+                foreach ($_POST['selectedItems'] as $selectedItemId) {
+                    // Find the selected item by id
+                    $selectedItem = array_filter($items, function ($item) use ($selectedItemId) {
+                        return $item['id'] == $selectedItemId;
+                    });
 
-            foreach ($friendsAdded as $value) {
-                $json[] += $value;
-            }  
+                    if (!empty($selectedItem)) {
+                        
+                        $selectedItem = reset($selectedItem);
+                        $json[] += $selectedItem['id'];
+                        echo "<li>{$selectedItem['name']} (ID: {$selectedItem['id']})</li>";
+                    }
+                }
+                echo "</ul>";
+            }
+        }
+
+         
 
         $user = auth()->user();
         $user->friends = json_encode($json);
