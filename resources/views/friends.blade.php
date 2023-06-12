@@ -44,6 +44,15 @@
                         
                     </div>
             </div>
+            <div class="card">
+                <div class="card-header">{{"Delete Friends"}}</div>
+
+                <div class="card-body">
+                    <a type="button" class="btn btn-primary" href="{{route('findFriends')}}">{{"Search"}}</a>
+                    
+                    
+                </div>
+        </div>
         </div>
     </div>
 </div>

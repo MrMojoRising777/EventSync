@@ -70,7 +70,7 @@ public function friends()
 
         $friends = $friends->get();
 
-        return view('findFriends', compact('friends'));
+        return view('addFriends', compact('friends'));
     }
 
     public function AddFriends(request $request){
@@ -114,5 +114,69 @@ public function friends()
         return redirect()->route('friends');
 
 
+    }
+
+    Public function FindFriends() {
+        $json = $this->getFriendJson();
+
+        $usersArray = [];
+        //dd($json);
+        foreach ($json as $value) {
+            $display = User::find($value);
+            if ($display) {
+                $usersArray[] = $display;
+            }
+        }
+
+        return view('deleteFriends', compact('usersArray'));
+    }
+
+    public function DeleteFriends(request $request) {
+        
+
+        //get current friends from the DB
+        $json = $this->getFriendJson();
+
+        //get friend users so it can check what friend needs to get deleted
+         $items = [];
+        //dd($json);
+        foreach ($json as $value) {
+            $display = User::find($value);
+            if ($display) {
+                $items[] = $display;
+            }
+        }
+        
+        
+
+            // Execute when form is submitted otherwise ignore this snippet...
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            // Check if any items are selected
+            if (isset($_POST['selectedItems']) && is_array($_POST['selectedItems'])) {
+                echo "<h2>Selected Items:</h2>";
+                echo "<ul>";
+                foreach ($_POST['selectedItems'] as $selectedItemId) {
+                    // Find the selected item by id
+                    $selectedItem = array_filter($items, function ($item) use ($selectedItemId) {
+                        return $item['id'] == $selectedItemId;
+                    });
+
+                    if (!empty($selectedItem)) {
+                        
+                        $selectedItem = reset($selectedItem);
+                        $updatedFriendIds = array_diff($json, [$selectedItem['id']]);
+                        echo "<li>{$selectedItem['name']} (ID: {$selectedItem['id']})</li>";
+                    }
+                }
+                //dd($json, $updatedFriendIds);
+                echo "</ul>";
+            }
+        }
+
+        $user = auth()->user();
+        $user->friends = json_encode($updatedFriendIds);
+        $user->save();
+
+        return redirect()->route('friends');
     }
 }

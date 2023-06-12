@@ -22,10 +22,17 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+//friend routes
 Route::get('/friends', [App\Http\Controllers\HomeController::class, 'friends'])->name('friends');
-// Route::get('/findFriends', [App\Http\Controllers\HomeController::class, 'findFriends'])->name('findFriends');
-Route::get('/findFriends', [App\Http\Controllers\HomeController::class, 'searchFriends'])->name('searchFriends');
-Route::post('/show', [App\Http\Controllers\HomeController::class, 'AddFriends'])->name('AddFriends');
+
+    //add friend routes
+    Route::get('/searchFriends', [App\Http\Controllers\HomeController::class, 'searchFriends'])->name('searchFriends');
+    Route::post('/showAdd', [App\Http\Controllers\HomeController::class, 'AddFriends'])->name('AddFriends');
+
+    //Delete friend routes
+    Route::get('/findFriends', [App\Http\Controllers\HomeController::class, 'findFriends'])->name('findFriends');
+    Route::post('/showDelete', [App\Http\Controllers\HomeController::class, 'DeleteFriends'])->name('DeleteFriends');
 
 // map
 Route::get('/map', 'App\Http\Controllers\MapController@index');
