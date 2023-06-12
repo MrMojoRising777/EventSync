@@ -23,12 +23,7 @@
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
         <img src="{{ asset('build/assets/images/logo_placeholder.png') }}" alt="Logo" class="navbar-logo mx-3 my-2" style="height: 3em;">
             <div class="container">
-                <a class="navbar-brand" href="{{ url('/home') }}">
-                    {{ config('Home', 'Home') }}
-                </a>
-                <a class="navbar-brand" href="{{ url('/map') }}">
-                    {{ config('Map', 'Map') }}
-                </a>
+                
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                     <span class="navbar-toggler-icon"></span>
                 </button>
@@ -43,6 +38,10 @@
                         
                         <li class="nav-item">
                             <a class="nav-link" href="{{route('friends')}}">{{"Friends"}}</a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{url('map')}}">{{"Map"}}</a>
                         </li>
 
 
