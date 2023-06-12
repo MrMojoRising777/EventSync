@@ -52,35 +52,42 @@
                 selectable: true,
                 selectHelper: true,
 
-                // create new event
-                select: function (event_start, event_end, allDay) {
-                    var event_name = prompt('Event Name:');
-                    if (event_name) {
-                        var event_start = $.fullCalendar.formatDate(event_start, "Y-MM-DD HH:mm:ss");
-                        var event_end = $.fullCalendar.formatDate(event_end, "Y-MM-DD HH:mm:ss");
-                        $.ajax({
-                            url: SITEURL + "/calendar-event",
-                            data: {
-                                event_name: event_name,
-                                event_start: event_start,
-                                event_end: event_end,
-                                type: 'create'
-                            },
-                            type: "POST",
-                            success: function (data) {
-                                displayMessage("Event created.");
-                                calendar.fullCalendar('renderEvent', {
-                                    id: data.id,
-                                    title: event_name,
-                                    start: event_start,
-                                    end: event_end,
-                                    allDay: allDay
-                                }, true);
-                                calendar.fullCalendar('unselect');
-                            }
-                        });
-                    }
+                // select callback for capturing the selected date
+                select: function(startDate, endDate) {
+                    var selectedDate = startDate.format('YYYY-MM-DD');
+                    // Emit event with event date
+                    window.dispatchEvent(new CustomEvent('date-updated', { detail: { date: selectedDate } }));
                 },
+
+                // create new event
+                // select: function (event_start, event_end, allDay) {
+                //     var event_name = prompt('Event Name:');
+                //     if (event_name) {
+                //         var event_start = $.fullCalendar.formatDate(event_start, "Y-MM-DD HH:mm:ss");
+                //         var event_end = $.fullCalendar.formatDate(event_end, "Y-MM-DD HH:mm:ss");
+                //         $.ajax({
+                //             url: SITEURL + "/calendar-event",
+                //             data: {
+                //                 event_name: event_name,
+                //                 event_start: event_start,
+                //                 event_end: event_end,
+                //                 type: 'create'
+                //             },
+                //             type: "POST",
+                //             success: function (data) {
+                //                 displayMessage("Event created.");
+                //                 calendar.fullCalendar('renderEvent', {
+                //                     id: data.id,
+                //                     title: event_name,
+                //                     start: event_start,
+                //                     end: event_end,
+                //                     allDay: allDay
+                //                 }, true);
+                //                 calendar.fullCalendar('unselect');
+                //             }
+                //         });
+                //     }
+                // },
 
                 // update event (Not yet tested)
                 eventDrop: function (event, delta) {

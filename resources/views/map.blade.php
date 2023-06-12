@@ -90,7 +90,7 @@
       </div>
     </div>
 
-    <div id="map" style="height: 400px;"></div>
+    @include('components.mapComp')
   @endsection
 
     <script src="https://cdn.jsdelivr.net/npm/ol/dist/ol.js"></script>

@@ -22,7 +22,7 @@
             <div class="card mb-3">
               <div class="card-header">{{ __('Kies een datum:') }}</div>
               <div class="card-body">
-                <div class="calendar-container">
+                <div class="calendar-container" id="calendarContainer">
                   @include('components.calendar')
                 </div>
               </div>
@@ -71,16 +71,82 @@
             </div>
           </div>
 
-          <button type="submit" class="btn btn-primary">Create Event</button>
+          <button type="submit" class="btn btn-primary" onclick="test()">Create Event</button>
         </form>
       </div>
     </div>
   </div>
-
-  <script>
-    
-  </script>
-
   <!-- Add ol.css manually -->
   <link rel="stylesheet" href="{{ asset('css/ol.css') }}">
 @endsection
+
+<script>
+  var lat;
+  var long;
+  var event_date;
+
+  // Event listener: capture emitted MAP event
+  window.addEventListener('coordinates-updated', function (event) {
+    lat = event.detail.latitude;
+    long = event.detail.longitude;
+    console.log(lat, long);
+  });
+
+  // Event listener: capture emitted CALENDAR event
+  window.addEventListener('date-updated', function (event) {
+    event_date = event.detail.date;
+    console.log(event_date);
+  });
+
+  function test() {
+    console.log("Form input:");
+
+    // Retrieve input values
+    var eventName = document.getElementById('event_name').value;
+    var street = document.getElementById('streetInput').value;
+    var zipCode = document.getElementById('zipInput').value;
+    var city = document.getElementById('cityInput').value;
+
+    // Log the input values
+    console.log("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$");
+    console.log("event_name: " + eventName);
+    console.log("--------------------------------");
+    console.log("event_date:", event_date);
+    console.log("event_lat + event_long:", lat, " + ", long);
+    console.log("event address details:");
+    console.log("street: " + street);
+    console.log("zip code: " + zipCode);
+    console.log("city: " + city);
+    console.log("--------------------------------");
+
+    // Create a new event object
+    var newEvent = {
+      event_name: eventName,
+      event_date: event_date,
+      lat: lat,
+      long: long
+    };
+
+    // Make an AJAX request to save the new event
+    var xhr = new XMLHttpRequest();
+    xhr.open('POST', '{{ route('calendar.events') }}');
+    xhr.setRequestHeader('Content-Type', 'application/json');
+    xhr.setRequestHeader('X-CSRF-TOKEN', '{{ csrf_token() }}'); // Include CSRF token
+    xhr.onload = function () {
+      if (xhr.status === 200) {
+        if (xhr.responseText) {
+          var response = JSON.parse(xhr.responseText);
+          console.log("New event created:", response);
+          // Reset the form or perform any other desired actions
+        } else {
+          console.log("Empty response");
+          // Handle the empty response appropriately
+        }
+      } else {
+        console.log("Error creating new event:", xhr.responseText);
+        // Handle the error appropriately
+      }
+    };
+    xhr.send(JSON.stringify(newEvent));
+  }
+</script>
