@@ -26,11 +26,9 @@
                     <div class="card-header">{{ __('Vrienden') }}</div>
                     <div class="card-body">
                       <ul>
-                        <li>Vriend 1</li>
-                        <li>Vriend 2</li>
-                        <li>Vriend 3</li>
-                        <li>Vriend 4</li>
-                        <li>Vriend 5</li>
+                        @foreach ($usersArray as $friend)
+                          <li>{{ $friend->name }}</li>
+                        @endforeach
                       </ul>
                     </div>
                   </div>

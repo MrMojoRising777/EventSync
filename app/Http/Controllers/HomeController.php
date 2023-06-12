@@ -23,8 +23,18 @@ class HomeController extends Controller
      * @return \Illuminate\Contracts\Support\Renderable
      */
     public function index()
-    {
-        return view('home');
+    {   
+        $json = $this->getFriendJson();
+
+        $usersArray = [];
+        //dd($json);
+        foreach ($json as $value) {
+            $display = User::find($value);
+            if ($display) {
+                $usersArray[] = $display;
+            }
+        }
+        return view('home', compact('usersArray'));
     }
     
     private function getFriendJson()
