@@ -25,7 +25,7 @@
                           <div class="col-md-3">
                             <div class="card mb-4">
                               <div class="card-body text-center align-middle">
-                                <h3 class="card-title">{{$friend->name}}</h3>
+                                <h3 class="card-title">{{$friend->username}}</h3>
                                 <h5 class="card-content">{{"id: ". $friend->id}}</h5>
                               </div>
                             </div>

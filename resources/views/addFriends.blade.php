@@ -136,7 +136,7 @@
                             <label class="checkbox-wrapper">
                               <input type="checkbox" class="checkbox-input" name="selectedItems[]" value="{{$friend->id}}" />
                                 <span class="checkbox-tile text-center align-middle">
-                                    {{$friend->name}}
+                                    {{$friend->username}}
                                     <br>
                                     {{$friend->id}}                           
                                 </span>                                

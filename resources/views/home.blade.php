@@ -27,7 +27,7 @@
                     <div class="card-body">
                       <ul>
                         @foreach ($usersArray as $friend)
-                          <li>{{ $friend->name }}</li>
+                          <li>{{ $friend->username }}</li>
                         @endforeach
                       </ul>
                     </div>

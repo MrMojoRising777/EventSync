@@ -76,7 +76,7 @@ public function friends()
 
         $friends->where(function ($query) use ($search) {
             $own = auth()->user();
-            $query->where('name', 'like', '%' . $search . '%')
+            $query->where('username', 'like', '%' . $search . '%')
                 ->orWhere('id', 'like', '%' . $search . '%')
                 ->where('id', '!=', $own->id);
         })
@@ -114,7 +114,7 @@ public function friends()
                         
                         $selectedItem = reset($selectedItem);
                         $json[] += $selectedItem['id'];
-                        echo "<li>{$selectedItem['name']} (ID: {$selectedItem['id']})</li>";
+                        echo "<li>{$selectedItem['username']} (ID: {$selectedItem['id']})</li>";
                     }
                 }
                 echo "</ul>";
@@ -182,7 +182,7 @@ public function friends()
                         $selectedItem = reset($selectedItem);
                         $deleteFriends[] += $selectedItem['id'];
                         
-                        echo "<li>{$selectedItem['name']} (ID: {$selectedItem['id']})</li>";
+                        echo "<li>{$selectedItem['username']} (ID: {$selectedItem['id']})</li>";
                     }
                 }
                 //dd($json, $updatedFriendIds);
