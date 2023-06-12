@@ -147,7 +147,7 @@ public function friends()
             }
         }
         
-        
+        $deleteFriends = [];
 
             // Execute when form is submitted otherwise ignore this snippet...
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -164,11 +164,13 @@ public function friends()
                     if (!empty($selectedItem)) {
                         
                         $selectedItem = reset($selectedItem);
-                        $updatedFriendIds = array_diff($json, [$selectedItem['id']]);
+                        $deleteFriends[] += $selectedItem['id'];
+                        
                         echo "<li>{$selectedItem['name']} (ID: {$selectedItem['id']})</li>";
                     }
                 }
                 //dd($json, $updatedFriendIds);
+                $updatedFriendIds = array_diff($json, $deleteFriends);
                 echo "</ul>";
             }
         }
