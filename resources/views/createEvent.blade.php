@@ -69,4 +69,7 @@
       });
     });
   </script>
+
+  <!-- Add ol.css manually -->
+  <link rel="stylesheet" href="{{ asset('css/ol.css') }}">
 @endsection
