@@ -17,6 +17,9 @@ class HomeController extends Controller
         $this->middleware('auth');
     }
 
+
+
+//private functions
     private function getFriendJson() {
 
         // get the friends['id'] of the current user as an array
@@ -59,16 +62,16 @@ class HomeController extends Controller
     
 
 
-public function friends()
-{
+    public function friends()
+    {
 
-    $usersArray = $this->getCurrentFriends();
-    
-    
-    return view('friends', compact('usersArray'));
-}
+        $usersArray = $this->getCurrentFriends();
+        
+        
+        return view('friends', compact('usersArray'));
+    }
 
-
+// Add friends functions
     public function searchFriends(request $request){
         $users = \App\Models\User::all();
         $search = $request->input('search');
@@ -137,7 +140,7 @@ public function friends()
     }
 
 
-
+// Delete friends functions
     Public function FindFriends() {
 
         $usersArray = $this->getCurrentFriends();
@@ -176,6 +179,7 @@ public function friends()
                     }
                 }
                 
+                // delete the selected items from the json array
                 $updatedFriendIds = array_diff($json, $deleteFriends);
                 
                 echo "</ul>";
