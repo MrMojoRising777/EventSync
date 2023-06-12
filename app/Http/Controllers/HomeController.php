@@ -188,6 +188,7 @@ class HomeController extends Controller
         // save updated friend information to database
         if (isset($updatedFriendIds)) {    
             $user = auth()->user();
+            $updatedFriendIds = array_values($updatedFriendIds); // Convert to indexed array
             $user->friends = json_encode($updatedFriendIds);
             $user->save();
         }
