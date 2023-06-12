@@ -186,16 +186,24 @@ public function friends()
                     }
                 }
                 //dd($json, $updatedFriendIds);
+                
                 $updatedFriendIds = array_diff($json, $deleteFriends);
+                
                 echo "</ul>";
             }
         }
 
-        $user = auth()->user();
-        if (!empty($updatedFriendIds)) {
+
+
+        
+        
+        if (isset($updatedFriendIds)) {
+            
+            $user = auth()->user();
             $user->friends = json_encode($updatedFriendIds);
+            $user->save();
         }
-        $user->save();
+        
 
         return redirect()->route('friends');
     }
