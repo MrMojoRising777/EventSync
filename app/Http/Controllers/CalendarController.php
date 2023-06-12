@@ -49,4 +49,8 @@ class CalendarController extends Controller
              break;
         }
     }
+    public function showCal(Request $request)
+    {
+        return view('createEvent');
+    }
 }
