@@ -192,7 +192,9 @@ public function friends()
         }
 
         $user = auth()->user();
-        $user->friends = json_encode($updatedFriendIds);
+        if (!empty($updatedFriendIds)) {
+            $user->friends = json_encode($updatedFriendIds);
+        }
         $user->save();
 
         return redirect()->route('friends');
