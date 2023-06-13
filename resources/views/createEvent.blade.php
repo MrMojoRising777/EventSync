@@ -8,6 +8,8 @@
 
         <form method="POST" action="{{ route('calendar.events') }}">
           @csrf
+          <!-- get user_id for ownership -->
+          <input type="hidden" name="owner_id" id="owner_id" value="{{ Auth::id() }}">
           <div class="form-group mb-3">
             <div class="card mb-3">
               <div class="card-header">Geef het event een naam:</div>
@@ -107,8 +109,13 @@
     var zipCode = document.getElementById('zipInput').value;
     var city = document.getElementById('cityInput').value;
 
+    // Retrieve owner ID
+    var ownerId = document.getElementById('owner_id').value;
+
+
     // Log the input values
     console.log("event_name: " + eventName);
+    console.log("owner_id: " + ownerId);
     console.log("--------------------------------");
     console.log("event_date:", event_date);
     console.log("event_lat + event_long:", lat, " + ", long);
@@ -118,15 +125,16 @@
     console.log("city: " + city);
     console.log("--------------------------------");
 
-    // Create a new event object
+    // Create new event object
     var newEvent = {
       event_name: eventName,
       event_date: event_date,
       lat: lat,
-      long: long
+      long: long,
+      owner_id: ownerId,
     };
 
-    // Make an AJAX request to save the new event
+    // Make AJAX request to save new event
     var SITEURL = "{{ url('/') }}";
     $.ajax({
       url: SITEURL + "/calendar-event",
@@ -135,15 +143,16 @@
         event_date: event_date,
         lat: lat,
         long: long,
-        type: 'create' // Add the 'type' parameter here
+        owner_id: ownerId,
+        type: 'create'
       },
       type: "POST",
       success: function (data) {
-        // Handle the success response
+        // Handle success response
         console.log("New event created:", data);
       },
       error: function (xhr, status, error) {
-        // Handle the error response
+        // Handle error response
         console.log("Error creating new event:", error);
       }
     });

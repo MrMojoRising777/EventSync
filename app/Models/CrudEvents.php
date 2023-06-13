@@ -11,5 +11,6 @@ class CrudEvents extends Model
         'event_date',
         'lat',
         'long',
+        'owner_id',
     ];    
 }
