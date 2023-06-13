@@ -19,6 +19,8 @@ class CreateCrudEventsTable extends Migration
             $table->date('event_date');
             $table->float('lat');
             $table->float('long');
+            $table->unsignedBigInteger('owner_id'); // Add owner_id column
+            $table->foreign('owner_id')->references('id')->on('users'); // Add foreign key constraint
             $table->timestamps();
         });
     }
