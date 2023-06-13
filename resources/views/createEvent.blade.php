@@ -201,6 +201,7 @@
   var lat;
   var long;
   var event_date;
+  var eventId;
 
   // Event listener: capture emitted MAP event
   window.addEventListener('coordinates-updated', function (event) {
@@ -277,11 +278,14 @@
         toastr.success('Event created successfully');
 
         // Get the event ID
-        var eventId = data.event_id;
+        eventId = data.event.id;
+
+        console.log("Event ID:", eventId);
+        console.log("Selected Friends:", selectedFriends);
 
         // Make AJAX request to update pivot table
         $.ajax({
-          url: SITEURL + "/event",
+          url: "{{ route('event.updatePivot') }}",
           data: {
             event_id: eventId,
             selected_friends: selectedFriends,

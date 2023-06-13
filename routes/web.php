@@ -42,3 +42,4 @@ Route::delete('/profile/delete-account', 'App\Http\Controllers\ProfileController
 Route::get('/event', [CalendarController::class, 'showCal'])->name('event.create');
 Route::get('/event', [App\Http\Controllers\HomeController::class, 'createEvent'])->name('event.create');
 Route::post('/event', [App\Http\Controllers\HomeController::class, 'createEvent'])->name('event.create');
+Route::post('/event/updatePivot', 'App\Http\Controllers\CalendarController@updatePivot')->name('event.updatePivot');

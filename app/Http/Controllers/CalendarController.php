@@ -56,4 +56,22 @@ class CalendarController extends Controller
     {
         return view('createEvent');
     }
+
+    public function updatePivot(Request $request)
+    {
+        $eventId = $request->input('event_id');
+        $selectedFriends = $request->input('selected_friends');
+
+        // Find the event
+        $event = CrudEvents::find($eventId);
+
+        if (!$event) {
+            return response()->json(['message' => 'Event not found'], 404);
+        }
+
+        // Update the pivot table
+        $event->users()->sync($selectedFriends);
+
+        return response()->json(['message' => 'Pivot table updated']);
+    }
 }

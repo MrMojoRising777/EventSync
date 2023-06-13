@@ -15,11 +15,11 @@ class CreateCrudEventUserTable extends Migration
     {
         Schema::create('crud_event_user', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('crud_event_id');
+            $table->unsignedBigInteger('crud_events_id');
             $table->unsignedBigInteger('user_id');
             $table->timestamps();
 
-            $table->foreign('crud_event_id')->references('id')->on('crud_events')->onDelete('cascade');
+            $table->foreign('crud_events_id')->references('id')->on('crud_events')->onDelete('cascade');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
