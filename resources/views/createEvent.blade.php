@@ -80,6 +80,9 @@
   </div>
   <!-- Add ol.css manually -->
   <link rel="stylesheet" href="{{ asset('css/ol.css') }}">
+
+  <!-- toastr -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
 @endsection
 
 <script>
@@ -150,10 +153,21 @@
       success: function (data) {
         // Handle success response
         console.log("New event created:", data);
+
+        // Show toastr popup
+        toastr.success('Event created successfully');
+
+        // Redirect to home page after a delay
+        setTimeout(function () {
+          window.location.href = "{{ route('home') }}";
+        }, 2000); // Delay in milliseconds
       },
       error: function (xhr, status, error) {
         // Handle error response
         console.log("Error creating new event:", error);
+
+        // Show toastr popup for error
+        toastr.error('Error creating event');
       }
     });
   }
