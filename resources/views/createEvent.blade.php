@@ -64,11 +64,18 @@
             <div class="card mb-3">
               <div class="card-header">{{ __('Nodig vrienden uit:') }}</div>
               <div class="card-body">
-                <ul>
-                  <li>friend 1</li>
-                  <li>friend 2</li>
-                  <li>friend 3</li>
-                </ul>
+              @foreach($usersArray as $friend)
+
+                <div class="col-md-3">
+                  <div class="card mb-4">
+                    <div class="card-body text-center align-middle">
+                      <h3 class="card-title">{{$friend->username}}</h3>
+                      <h5 class="card-content">{{"id: ". $friend->id}}</h5>
+                    </div>
+                  </div>
+                </div>
+
+                @endforeach
               </div>
             </div>
           </div>

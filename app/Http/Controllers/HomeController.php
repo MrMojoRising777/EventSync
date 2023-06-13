@@ -17,6 +17,13 @@ class HomeController extends Controller
         $this->middleware('auth');
     }
 
+    // create event ~ ALEXANDER TESTING
+    public function createEvent()
+    {
+        $usersArray = $this->getCurrentFriends();
+        return view('createEvent', ['usersArray' => $usersArray]);
+    }
+
 
 
 //private functions
