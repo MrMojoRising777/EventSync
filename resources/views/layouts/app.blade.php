@@ -41,7 +41,7 @@
                         </li>
 
                         <li class="nav-item">
-                            <a class="nav-link" href="{{url('map')}}">{{"Map"}}</a>
+                            <a class="nav-link" href="{{route('event.create')}}">{{"Create event"}}</a>
                         </li>
 
 
