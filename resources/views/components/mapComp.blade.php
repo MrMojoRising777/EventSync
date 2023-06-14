@@ -1,7 +1,7 @@
 <div class="card">
   <div class="card-body">
-    <!-- Map container -->
-    <div id="map" style="height: 400px;"></div>
+      <!-- Map container -->
+      <div id="map" style="height: 400px;"></div>
   </div>
 </div>
 
@@ -14,8 +14,7 @@
   var marker;
   var vectorSource;
 
-  function initMap(response) {
-    console.log(response);
+  function initMap() {
     // Map initialization code
     map = new ol.Map({
       target: 'map',
@@ -30,62 +29,158 @@
       })
     });
 
-    vectorSource = new ol.source.Vector();
+    // Create a marker overlay
+    marker = new ol.Feature({
+      geometry: new ol.geom.Point(ol.proj.fromLonLat([5.5368901, 50.995])) // Marker coordinates: [longitude, latitude]
+    });
+
+    var markerStyle = new ol.style.Style({
+      image: new ol.style.Icon({
+        anchor: [0.5, 1], // Set the anchor point of the marker icon
+        src: 'https://openlayers.org/en/latest/examples/data/icon.png' // URL to the marker icon image
+      })
+    });
+
+    marker.setStyle(markerStyle);
+
+    vectorSource = new ol.source.Vector({
+      features: [marker]
+    });
 
     var vectorLayer = new ol.layer.Vector({
       source: vectorSource
     });
 
-    map.addLayer(vectorLayer);
-
-    // Iterate over the response array and create markers
-    response.forEach(function(event) {
-      console.log('Latitude:', event.lat, 'Longitude:', event.long);
-      var lat = event.lat;
-      var long = event.long;
-
-      var marker = new ol.Feature({
-        geometry: new ol.geom.Point(ol.proj.fromLonLat([long, lat])) // Marker coordinates: [longitude, latitude]
-      });
-
-      var markerStyle = new ol.style.Style({
-        image: new ol.style.Icon({
-          anchor: [0.5, 1], // Set the anchor point of the marker icon
-          src: 'https://openlayers.org/en/latest/examples/data/icon.png' // URL to the marker icon image
-        })
-      });
-
-      marker.setStyle(markerStyle);
-      vectorSource.addFeature(marker);
+    // Make the marker draggable
+    var dragInteraction = new ol.interaction.Translate({
+      features: new ol.Collection([marker])
     });
 
-    // Fit the view to the extent of the vector source with padding
-    map.getView().fit(vectorSource.getExtent(), { padding: [50, 50, 50, 50] });
+    map.addInteraction(dragInteraction);
+
+    // Display the latitude and longitude when the marker is dragged
+    marker.on('change', function () {
+      var coordinates = marker.getGeometry().getCoordinates();
+      var lonLat = ol.proj.toLonLat(coordinates);
+      console.log('Latitude: ' + lonLat[0] + ', Longitude: ' + lonLat[1]);
+      // Emit event with latitude and longitude
+      window.dispatchEvent(new CustomEvent('coordinates-updated', { detail: { latitude: lonLat[0], longitude: lonLat[1] } }));
+    });
+
+    map.addLayer(vectorLayer);
   }
 
   $(document).ready(function() {
-    // Set moment.js locale to Dutch
-    moment.locale('nl');
-
-    // fetch header information
-    var SITEURL = "{{ url('/') }}";
-    $.ajaxSetup({
-      headers: {
-        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    $('#streetInput').autocomplete({
+      source: function(request, response) {
+        $.ajax({
+          url: 'https://nominatim.openstreetmap.org/search',
+          method: 'GET',
+          headers: {
+            'Accept-Language': 'nl' // Specify the language as Dutch
+          },
+          dataType: 'json',
+          data: {
+            q: request.term,
+            format: 'json',
+            addressdetails: 1,
+            countrycodes: 'be', // Limit the search to Belgium
+            limit: 5
+          },
+          success: function(data) {
+            var uniqueStreets = getUniqueStreets(data);
+            response($.map(uniqueStreets, function(item) {
+              var address = item.address;
+              var street = address.road || '';
+              var city = address.city || address.town || address.village || address.hamlet;
+              var zip = address.postcode || '';
+              return {
+                label: street + ', ' + city,
+                value: street + ', ' + city,
+                zip: zip,
+                city: city // Added city property
+              };
+            }));
+          }
+        });
+      },
+      minLength: 2,
+      select: function(event, ui) {
+        updateZipCode(ui.item.zip);
+        updateCity(ui.item.city);
       }
     });
 
-    $.ajax({
-      url: SITEURL + "/map",
-      type: "GET",
-      success: function(response) {
-        console.log('Response:', response);
-        initMap(response); // Pass the events directly to the initMap function
-      },
-      error: function() {
-        // Handle error if the AJAX request fails
-        console.log('Failed to fetch map events');
+    // get unique streets from Nominatim API
+    function getUniqueStreets(data) {
+      var uniqueStreets = [];
+      var streetsMap = new Map();
+
+      data.forEach(function(item) {
+        var address = item.address;
+        var street = address.road || '';
+
+        if (street && !streetsMap.has(street)) {
+          streetsMap.set(street, true);
+          uniqueStreets.push(item);
+        }
+      });
+
+      return uniqueStreets;
+    }
+
+    // update zip code
+    function updateZipCode(zip) {
+      $('#zipInput').val(zip);
+    }
+
+    // update city
+    function updateCity(city) {
+      $('#cityInput').val(city);
+    }
+  });
+
+  function geocodeAddress() {
+    var street = document.getElementById('streetInput').value;
+    var zip = document.getElementById('zipInput').value;
+    var city = document.getElementById('cityInput').value;
+    var address = street + ', ' + zip + ' ' + city + ', Belgium';
+
+    var url =
+      'https://nominatim.openstreetmap.org/search?format=json&q=' +
+      encodeURIComponent(address) +
+      '&countrycodes=be&limit=1';
+
+    fetch(url)
+    .then(function(response) {
+      return response.json();
+    })
+    .then(function(data) {
+      if (data.length > 0) {
+        var lat = parseFloat(data[0].lat);
+        var lon = parseFloat(data[0].lon);
+        var coordinate = ol.proj.fromLonLat([lon, lat]);
+
+        marker.setGeometry(new ol.geom.Point(coordinate));
+
+        map.getView().setCenter(coordinate);
+        map.getView().setZoom(15);
+      } else {
+        alert('Address not found');
       }
+    })
+    .catch(function(error) {
+      console.log('Error:', error);
+    });
+  }
+
+  document.addEventListener('DOMContentLoaded', function() {
+    initMap();
+
+    var searchButton = document.querySelector('.btn-primary');
+    searchButton.addEventListener('click', function(event) {
+      event.preventDefault();
+      geocodeAddress();
     });
   });
 </script>
