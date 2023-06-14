@@ -4,18 +4,47 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\CrudEvents;
+use Illuminate\Support\Facades\Auth;
 
 class CalendarController extends Controller
 {
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            $events = CrudEvents::all(['id as id', 'event_name as title', 'event_date as start', 'event_date as end']);
-            return response()->json($events);
+            $userId = Auth::user()->id;
+    
+            $events = CrudEvents::where('owner_id', $userId)
+                ->orWhereHas('users', function ($query) use ($userId) {
+                    $query->where('user_id', $userId);
+                })
+                ->select(['id as id', 'event_name as title', 'event_date as start', 'event_date as end'])
+                ->get();
+    
+                $formattedEvents = [];
+                foreach ($events as $event) {
+                    $formattedEvents[] = [
+                        'id' => $event->id,
+                        'title' => $event->title,
+                        'start' => date('Y-m-d', strtotime($event->start)),
+                        'end' => date('Y-m-d', strtotime($event->end)),
+                        // Add any additional properties you need
+                    ];
+                }                
+    
+                return response()->json($formattedEvents);
         }
-
+    
         return view('components.calendar');
     }
+    // public function index(Request $request)
+    // {
+    //     if ($request->ajax()) {
+    //         $events = CrudEvents::all(['id as id', 'event_name as title', 'event_date as start', 'event_date as end']);
+    //         return response()->json($events);
+    //     }
+
+    //     return view('components.calendar');
+    // }
 
     public function calendarEvents(Request $request)
     {
