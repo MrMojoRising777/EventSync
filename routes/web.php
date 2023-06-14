@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CalendarController;
+use App\Http\Controllers\MapController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -25,7 +26,7 @@ Route::get('/findFriends', [App\Http\Controllers\HomeController::class, 'findFri
 Route::post('/showDelete', [App\Http\Controllers\HomeController::class, 'DeleteFriends'])->name('DeleteFriends');
 
 // map
-Route::get('/map', 'App\Http\Controllers\MapController@index');
+Route::get('/map', [MapController::class, 'index'])->name('map_events');
 
 // calendar
 Route::get('/calendar', [CalendarController::class, 'index'])->name('calendar.index');
