@@ -27,7 +27,9 @@
                     <div class="card-body">
                       <ul>
                         @foreach ($usersArray as $friend)
-                          <li>{{ $friend->username }}</li>
+                          <li>
+                            <a href="/friends">{{ $friend->username }}</a>
+                          </li>
                         @endforeach
                       </ul>
                     </div>
