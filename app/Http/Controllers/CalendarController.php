@@ -27,7 +27,6 @@ class CalendarController extends Controller
                         'title' => $event->title,
                         'start' => date('Y-m-d', strtotime($event->start)),
                         'end' => date('Y-m-d', strtotime($event->end)),
-                        // Add any additional properties you need
                     ];
                 }                
     
@@ -36,15 +35,6 @@ class CalendarController extends Controller
     
         return view('components.calendar');
     }
-    // public function index(Request $request)
-    // {
-    //     if ($request->ajax()) {
-    //         $events = CrudEvents::all(['id as id', 'event_name as title', 'event_date as start', 'event_date as end']);
-    //         return response()->json($events);
-    //     }
-
-    //     return view('components.calendar');
-    // }
 
     public function calendarEvents(Request $request)
     {
