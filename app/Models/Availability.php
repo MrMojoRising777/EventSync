@@ -7,10 +7,17 @@ use Illuminate\Database\Eloquent\Model;
 
 class Availability extends Model
 {
-    protected $fillable = ['user_id', 'start_time', 'end_time'];
+    use HasFactory;
+
+    protected $fillable = ['user_id', 'event_id', 'start_date', 'end_date'];
 
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function event()
+    {
+        return $this->belongsTo(Event::class);
     }
 }

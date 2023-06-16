@@ -1,15 +1,13 @@
-<!-- availabilities/show.blade.php -->
-@extends('layouts.app')
+public function create()
+{
+    $users = User::all();
+    $events = Event::all();
+    return view('availabilities.create', compact('users', 'events'));
+}
 
-@section('content')
-    <h1>Availability Details</h1>
-
-    <div class="card">
-        <div class="card-body">
-            <h5 class="card-title">User: {{ $availability->user->name }}</h5>
-            <p class="card-text">Start Time: {{ $availability->start_time }}</p>
-            <p class="card-text">End Time: {{ $availability->end_time }}</p>
-            <a href="{{ route('availabilities.index') }}" class="btn btn-primary">Back</a>
-        </div>
-    </div>
-@endsection
+public function edit(Availability $availability)
+{
+    $users = User::all();
+    $events = Event::all();
+    return view('availabilities.edit', compact('availability', 'users', 'events'));
+}

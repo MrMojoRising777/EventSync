@@ -1,31 +1,29 @@
-<!-- availabilities/create.blade.php -->
 @extends('layouts.app')
 
 @section('content')
-    <h1>Add Availability</h1>
+    <h1>Add New Availability</h1>
 
-    <form action="{{ route('availabilities.store') }}" method="POST">
+    <form method="POST" action="{{ route('availabilities.store') }}">
         @csrf
-
-        <div class="form-group">
-            <label for="user_id">User:</label>
-            <select class="form-control" id="user_id" name="user_id">
-                @foreach($users as $user)
-                    <option value="{{ $user->id }}">{{ $user->name }}</option>
+        <input type="hidden" name="user_id" value="{{ Auth::id() }}">
+        
+        <label>Event:</label>
+        @if ($events->isEmpty())
+            <p>No events available.</p>
+        @else
+            <select name="event_id">
+                @foreach ($events as $event)
+                    <option value="{{ $event->id }}">{{ $event->name }}</option>
                 @endforeach
             </select>
-        </div>
+        @endif
 
-        <div class="form-group">
-            <label for="start_time">Start Time:</label>
-            <input type="datetime-local" class="form-control" id="start_time" name="start_time" required>
-        </div>
+        <label>Start Date:</label>
+        <input type="date" name="start_date">
 
-        <div class="form-group">
-            <label for="end_time">End Time:</label>
-            <input type="datetime-local" class="form-control" id="end_time" name="end_time" required>
-        </div>
+        <label>End Date:</label>
+        <input type="date" name="end_date">
 
-        <button type="submit" class="btn btn-primary">Add</button>
+        <button type="submit">Add</button>
     </form>
 @endsection

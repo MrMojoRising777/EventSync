@@ -20,4 +20,8 @@ class Event extends Model
     {
         return $this->belongsToMany(User::class);
     }
+    public function availabilities()
+    {
+        return $this->hasMany(Availability::class);
+    }
 }
