@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\CrudEvents;
+use App\Models\Events;
 use Illuminate\Support\Facades\Auth;
 
 class CalendarController extends Controller
@@ -13,11 +13,11 @@ class CalendarController extends Controller
         if ($request->ajax()) {
             $userId = Auth::user()->id;
     
-            $events = CrudEvents::where('owner_id', $userId)
+            $events = Events::where('owner_id', $userId)
                 ->orWhereHas('users', function ($query) use ($userId) {
                     $query->where('user_id', $userId);
                 })
-                ->select(['id as id', 'event_name as title', 'event_date as start', 'event_date as end'])
+                ->select(['id as id', 'name as title', 'date as start', 'date as end'])
                 ->get();
     
                 $formattedEvents = [];
@@ -39,12 +39,12 @@ class CalendarController extends Controller
     public function calendarEvents(Request $request)
     {
         $event = null;
-
+        //dd($request->event_name);
         switch ($request->type) {
             case 'create':
-                $event = CrudEvents::create([
-                    'event_name' => $request->event_name,
-                    'event_date' => $request->event_date,
+                $event = Events::create([
+                    'name' => $request->event_name,
+                    'date' => $request->event_date,
                     'lat' => $request->lat,
                     'long' => $request->long,
                     'owner_id' => $request->owner_id,
@@ -52,17 +52,17 @@ class CalendarController extends Controller
                 return response()->json(['message' => 'Event created successfully', 'event' => $event]);
             
             case 'edit':
-                $event = CrudEvents::findOrFail($request->id);
+                $event = Events::findOrFail($request->id);
                 $event->update([
-                    'event_name' => $request->event_name,
-                    'event_date' => $request->event_date,
+                    'name' => $request->event_name,
+                    'date' => $request->event_date,
                     'lat' => $request->lat,
                     'long' => $request->long,
                 ]);
                 return response()->json(['message' => 'Event updated successfully', 'event' => $event]);
             
             case 'delete':
-                $event = CrudEvents::findOrFail($request->id);
+                $event = Events::findOrFail($request->id);
                 $event->delete();
                 return response()->json(['message' => 'Event deleted successfully']);
             
@@ -82,7 +82,8 @@ class CalendarController extends Controller
         $selectedFriends = $request->input('selected_friends');
 
         // Find the event
-        $event = CrudEvents::find($eventId);
+        dd($eventID);
+        $event = Events::find($eventId);
 
         if (!$event) {
             return response()->json(['message' => 'Event not found'], 404);

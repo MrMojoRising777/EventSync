@@ -46,6 +46,6 @@ class User extends Authenticatable
 
     public function crudEvents()
     {
-        return $this->belongsToMany(CrudEvents::class, 'crud_event_user');
+        return $this->belongsToMany(Events::class);
     }
 }

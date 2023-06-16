@@ -4,13 +4,13 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
-class CrudEvents extends Model
+class Events extends Model
 {
     use HasFactory;
     
     protected $fillable = [
-        'event_name', 
-        'event_date',
+        'name', 
+        'date',
         'lat',
         'long',
         'owner_id',
@@ -18,6 +18,6 @@ class CrudEvents extends Model
 
     public function users()
     {
-        return $this->belongsToMany(User::class, 'crud_event_user');
+        return $this->belongsToMany(User::class);
     }
 }
