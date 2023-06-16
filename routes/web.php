@@ -3,7 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\MapController;
 use App\Http\Controllers\CalendarController;
-use App\Http\Controllers\AvailabilityController;
+use App\Http\Controllers\MapController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -45,12 +45,3 @@ Route::get('/event', [CalendarController::class, 'showCal'])->name('event.create
 Route::get('/event', [App\Http\Controllers\HomeController::class, 'createEvent'])->name('event.create');
 Route::post('/event', [App\Http\Controllers\HomeController::class, 'createEvent'])->name('event.create');
 Route::post('/event/updatePivot', 'App\Http\Controllers\CalendarController@updatePivot')->name('event.updatePivot');
-
-//availability
-Route::get('/availabilities', [AvailabilityController::class, 'index'])->name('availabilities.index');
-Route::get('/availabilities/create', [AvailabilityController::class, 'create'])->name('availabilities.create');
-Route::post('/availabilities', [AvailabilityController::class, 'store'])->name('availabilities.store');
-Route::get('/availabilities/{id}', [AvailabilityController::class, 'show'])->name('availabilities.show');
-Route::get('/availabilities/{id}/edit', [AvailabilityController::class, 'edit'])->name('availabilities.edit');
-Route::put('/availabilities/{id}', [AvailabilityController::class, 'update'])->name('availabilities.update');
-Route::delete('/availabilities/{id}', [AvailabilityController::class, 'destroy'])->name('availabilities.destroy');

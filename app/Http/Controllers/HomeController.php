@@ -27,7 +27,7 @@ class HomeController extends Controller
             $selectedUsers = $request->input('selectedUsers');
 
             // Create the event
-            $event = new CrudEvents;
+            $event = new Events;
             $event->event_name = $request->input('event_name');
             // Set other event properties as needed
             $event->save();

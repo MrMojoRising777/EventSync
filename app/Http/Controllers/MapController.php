@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\CrudEvents;
+use App\Models\Events;
 use Illuminate\Support\Facades\Auth;
 
 class MapController extends Controller
@@ -13,7 +13,7 @@ class MapController extends Controller
         if ($request->ajax()) {
             $userId = Auth::user()->id;
 
-            $events = CrudEvents::where('owner_id', $userId)
+            $events = Events::where('owner_id', $userId)
                 ->select(['event_name', 'lat', 'long'])
                 ->get();
 
