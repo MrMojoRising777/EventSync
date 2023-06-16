@@ -18,6 +18,3 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::post('/testmas', function (Request $request){
-    return $request->event_name;
-});

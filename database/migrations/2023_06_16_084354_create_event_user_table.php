@@ -9,18 +9,25 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
-     public function up(): void
+    public function up()
     {
         Schema::create('event_user', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('event_id');
+            $table->unsignedBigInteger('user_id');
             $table->timestamps();
+
+            $table->foreign('event_id')->references('id')->on('events')->onDelete('cascade');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
 
     /**
      * Reverse the migrations.
+     *
+     * @return void
      */
-    public function down(): void
+    public function down()
     {
         Schema::dropIfExists('event_user');
     }

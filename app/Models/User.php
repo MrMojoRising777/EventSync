@@ -44,8 +44,8 @@ class User extends Authenticatable
         'password' => 'hashed',
     ];
 
-    public function crudEvents()
+    public function Events()
     {
-        return $this->belongsToMany(Events::class);
+        return $this->belongsToMany(Event::class);
     }
 }

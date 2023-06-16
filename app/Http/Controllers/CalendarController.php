@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Events;
+use App\Models\Event;
 use Illuminate\Support\Facades\Auth;
 
 class CalendarController extends Controller
@@ -13,7 +13,7 @@ class CalendarController extends Controller
         if ($request->ajax()) {
             $userId = Auth::user()->id;
     
-            $events = Events::where('owner_id', $userId)
+            $events = Event::where('owner_id', $userId)
                 ->orWhereHas('users', function ($query) use ($userId) {
                     $query->where('user_id', $userId);
                 })
@@ -42,7 +42,7 @@ class CalendarController extends Controller
         //dd($request->event_name);
         switch ($request->type) {
             case 'create':
-                $event = Events::create([
+                $event = Event::create([
                     'name' => $request->event_name,
                     'date' => $request->event_date,
                     'lat' => $request->lat,
@@ -52,7 +52,7 @@ class CalendarController extends Controller
                 return response()->json(['message' => 'Event created successfully', 'event' => $event]);
             
             case 'edit':
-                $event = Events::findOrFail($request->id);
+                $event = Event::findOrFail($request->id);
                 $event->update([
                     'name' => $request->event_name,
                     'date' => $request->event_date,
@@ -62,7 +62,7 @@ class CalendarController extends Controller
                 return response()->json(['message' => 'Event updated successfully', 'event' => $event]);
             
             case 'delete':
-                $event = Events::findOrFail($request->id);
+                $event = Event::findOrFail($request->id);
                 $event->delete();
                 return response()->json(['message' => 'Event deleted successfully']);
             
@@ -82,8 +82,7 @@ class CalendarController extends Controller
         $selectedFriends = $request->input('selected_friends');
 
         // Find the event
-        dd($eventID);
-        $event = Events::find($eventId);
+        $event = Event::find($eventId);
 
         if (!$event) {
             return response()->json(['message' => 'Event not found'], 404);
