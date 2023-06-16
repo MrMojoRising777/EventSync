@@ -40,3 +40,6 @@ Route::delete('/profile/delete-account', 'App\Http\Controllers\ProfileController
 
 // create activity/event
 Route::get('/event', [CalendarController::class, 'showCal'])->name('event.create');
+
+//events display page
+Route::get('/currentEvents', [App\Http\Controllers\EventController::class, 'index'])->name('eventsPage');

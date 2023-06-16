@@ -31,7 +31,7 @@ class HomeController extends Controller
     }
 
 
-    private function getCurrentFriends() {
+    public function getCurrentFriends() {
 
         // get the current users friends info as an array
         $json = $this->getFriendJson();
