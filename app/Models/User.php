@@ -36,7 +36,7 @@ class User extends Authenticatable
     ];
 
     /**
-     * The attributes that should be cast.
+     * The attributes that should be cast.s
      *
      * @var array<string, string>
      */
@@ -45,8 +45,8 @@ class User extends Authenticatable
         'password' => 'hashed',
     ];
 
-    public function crud_events()
+    public function Events()
     {
-        return $this->belongsToMany(CrudEvents::class);
+        return $this->belongsToMany(Event::class);
     }
 }

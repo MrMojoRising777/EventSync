@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\CrudEvents;
 
 class HomeController extends Controller
 {
@@ -17,6 +18,31 @@ class HomeController extends Controller
         $this->middleware('auth');
     }
 
+    // create event ~ ALEXANDER TESTING
+    public function createEvent(Request $request)
+    {
+        $usersArray = $this->getCurrentFriends();
+
+        if ($request->isMethod('post')) {
+            $selectedUsers = $request->input('selectedUsers');
+
+            // Create the event
+            $event = new Events;
+            $event->event_name = $request->input('event_name');
+            // Set other event properties as needed
+            $event->save();
+
+            $eventId = $event->id;
+
+            // Attach the selected users to the event in the pivot table
+            $event->users()->sync($selectedUsers);
+
+            // Redirect or display a success message
+            return redirect()->route('event.create')->with('success', 'Event created successfully');
+        }
+
+        return view('createEvent', ['usersArray' => $usersArray]);
+    }
 
 
 //private functions

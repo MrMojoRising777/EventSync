@@ -2,6 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CalendarController;
+use App\Http\Controllers\MapController;
+use Illuminate\Http\Request;
 
 Route::get('/', function () {
     return view('welcome');
@@ -25,7 +27,7 @@ Route::get('/findFriends', [App\Http\Controllers\HomeController::class, 'findFri
 Route::post('/showDelete', [App\Http\Controllers\HomeController::class, 'DeleteFriends'])->name('DeleteFriends');
 
 // map
-Route::get('/map', 'App\Http\Controllers\MapController@index');
+Route::get('/map', [MapController::class, 'index'])->name('map_events');
 
 // calendar
 Route::get('/calendar', [CalendarController::class, 'index'])->name('calendar.index');
@@ -43,3 +45,11 @@ Route::get('/event', [CalendarController::class, 'showCal'])->name('event.create
 
 //events display page
 Route::get('/currentEvents', [App\Http\Controllers\EventController::class, 'index'])->name('eventsPage');
+Route::get('/event', [App\Http\Controllers\HomeController::class, 'createEvent'])->name('event.create');
+Route::post('/event', [App\Http\Controllers\HomeController::class, 'createEvent'])->name('event.create');
+Route::post('/event/updatePivot', 'App\Http\Controllers\CalendarController@updatePivot')->name('event.updatePivot');
+
+
+Route::post('/testmas', function (Request $request){
+    return $request->event_name;
+});
