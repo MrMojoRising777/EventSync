@@ -14,6 +14,9 @@ class Event extends Model
         'lat',
         'long',
         'owner_id',
+        'address',
+        'zipcode',
+        'city',
     ];
 
     public function users()

@@ -48,6 +48,9 @@ class CalendarController extends Controller
                     'lat' => $request->lat,
                     'long' => $request->long,
                     'owner_id' => $request->owner_id,
+                    'address' => $request->address,
+                    'zipcode' => $request->zipcode,
+                    'city' => $request->city,
                 ]);
                 return response()->json(['message' => 'Event created successfully', 'event' => $event]);
             

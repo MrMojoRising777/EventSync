@@ -255,6 +255,9 @@
       lat: lat,
       long: long,
       owner_id: ownerId,
+      address: street,
+      zipcode: zipCode,
+      city: city,
     };
 
     // Make AJAX request to save new event
@@ -267,6 +270,10 @@
         lat: lat,
         long: long,
         owner_id: ownerId,
+        owner_id: ownerId,
+        address: street,
+        zipcode: zipCode,
+        city: city,
         type: 'create'
       },
       type: "POST",
