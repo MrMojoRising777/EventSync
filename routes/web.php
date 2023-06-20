@@ -60,8 +60,8 @@ Route::post('availabilities/store', [AvailabilityController::class, 'store'])->n
 // MAIL
 Route::get('/send-test-email', function () {
     $details = [
-        'title' => 'Test Email',
-        'body' => 'This is a test email sent from Laravel using Gmail as the mail service provider.',
+        'title' => 'Invitation',
+        'body' => 'You have been invited to an event created by ${name}. Please let ${name} know when you are available.',
     ];
 
     \Mail::to('goodoltrickyvik@gmail.com')->send(new \App\Mail\TestEmail($details));
