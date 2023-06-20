@@ -48,4 +48,4 @@ Route::post('/event/updatePivot', 'App\Http\Controllers\CalendarController@updat
 
 //availabilities
 Route::resource('availabilities', AvailabilityController::class);
-
+Route::post('availabilities/store', [AvailabilityController::class, 'store'])->name('store');
