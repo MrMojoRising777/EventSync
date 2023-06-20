@@ -14,10 +14,17 @@ class Event extends Model
         'lat',
         'long',
         'owner_id',
+        'address',
+        'zipcode',
+        'city',
     ];
 
     public function users()
     {
         return $this->belongsToMany(User::class);
+    }
+    public function availabilities()
+    {
+        return $this->hasMany(Availability::class);
     }
 }

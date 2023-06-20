@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Events;
+use App\Models\Event;
 use Illuminate\Support\Facades\Auth;
 
 class MapController extends Controller
@@ -13,8 +13,8 @@ class MapController extends Controller
         if ($request->ajax()) {
             $userId = Auth::user()->id;
 
-            $events = Events::where('owner_id', $userId)
-                ->select(['event_name', 'lat', 'long'])
+            $events = Event::where('owner_id', $userId)
+                ->select(['name', 'lat', 'long'])
                 ->get();
 
             return response()->json($events);

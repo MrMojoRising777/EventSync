@@ -1,9 +1,9 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\CalendarController;
 use App\Http\Controllers\MapController;
-use Illuminate\Http\Request;
+use App\Http\Controllers\CalendarController;
+use App\Http\Controllers\AvailabilityController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -51,6 +51,7 @@ Route::post('/event', [App\Http\Controllers\HomeController::class, 'createEvent'
 Route::post('/event/updatePivot', 'App\Http\Controllers\CalendarController@updatePivot')->name('event.updatePivot');
 
 
-Route::post('/testmas', function (Request $request){
-    return $request->event_name;
-});
+//availabilities
+Route::resource('availabilities', AvailabilityController::class);
+Route::post('availabilities/store', [AvailabilityController::class, 'store'])->name('store');
+

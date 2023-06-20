@@ -15,10 +15,13 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->date('date');
-            $table->float('lat');
-            $table->float('long');
-            $table->unsignedBigInteger('owner_id'); // Add owner_id column
-            $table->foreign('owner_id')->references('id')->on('users'); // Add foreign key constraint
+            $table->decimal('lat', 18, 14);
+            $table->decimal('long', 18, 14);
+            $table->string('address');
+            $table->string('zipcode');
+            $table->string('city');
+            $table->unsignedBigInteger('owner_id');
+            $table->foreign('owner_id')->references('id')->on('users'); 
             $table->timestamps();
         });
     }
