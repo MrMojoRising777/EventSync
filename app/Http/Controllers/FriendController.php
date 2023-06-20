@@ -45,7 +45,7 @@ class FriendController extends Controller
         $usersArray = $this->getCurrentFriends();
         
         
-        return view('friends', compact('usersArray'));
+        return view('friends.friends', compact('usersArray'));
     }
 
 // Add friends functions
