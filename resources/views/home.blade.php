@@ -92,7 +92,7 @@
       ],
       view: new ol.View({
         center: ol.proj.fromLonLat([5.5368901, 50.995]), // Center on Belgium coordinates: [longitude, latitude]
-        zoom: 10 // Adjust the zoom level as needed
+        minZoom: 7, // Minimum zoom
       })
     });
 
@@ -111,7 +111,7 @@
       var long = event.long;
 
       var marker = new ol.Feature({
-        geometry: new ol.geom.Point(ol.proj.fromLonLat([long, lat])) // Marker coordinates: [longitude, latitude]
+        geometry: new ol.geom.Point(ol.proj.fromLonLat([lat, long])) // Marker coordinates: [latitude, longitude]
       });
 
       var markerStyle = new ol.style.Style({
