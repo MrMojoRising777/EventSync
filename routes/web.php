@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\MapController;
 use App\Http\Controllers\CalendarController;
+use App\Http\Controllers\FriendController;
 use App\Http\Controllers\AvailabilityController;
 
 Route::get('/', function () {
@@ -15,16 +16,16 @@ Auth::routes();
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 // friend routes
-Route::get('/friends', [App\Http\Controllers\HomeController::class, 'friends'])->name('friends');
+Route::get('/friends', [App\Http\Controllers\FriendController::class, 'friends'])->name('friends');
 
 // add friend routes
-Route::get('/searchFriends', [App\Http\Controllers\HomeController::class, 'searchFriends'])->name('searchFriends');
-Route::post('/searchFriends', [App\Http\Controllers\HomeController::class, 'searchFriends'])->name('searchFriends');
-Route::post('/showAdd', [App\Http\Controllers\HomeController::class, 'AddFriends'])->name('AddFriends');
+Route::get('/searchFriends', [App\Http\Controllers\FriendController::class, 'searchFriends'])->name('searchFriends');
+Route::post('/searchFriends', [App\Http\Controllers\FriendController::class, 'searchFriends'])->name('searchFriends');
+Route::post('/showAdd', [App\Http\Controllers\FriendController::class, 'AddFriends'])->name('AddFriends');
 
 // delete friend routes
-Route::get('/findFriends', [App\Http\Controllers\HomeController::class, 'findFriends'])->name('findFriends');
-Route::post('/showDelete', [App\Http\Controllers\HomeController::class, 'DeleteFriends'])->name('DeleteFriends');
+Route::get('/findFriends', [App\Http\Controllers\FriendController::class, 'findFriends'])->name('findFriends');
+Route::post('/showDelete', [App\Http\Controllers\FriendController::class, 'DeleteFriends'])->name('DeleteFriends');
 
 // map
 Route::get('/map', [MapController::class, 'index'])->name('map_events');
@@ -41,14 +42,13 @@ Route::put('/profile/update-password', 'App\Http\Controllers\ProfileController@u
 Route::delete('/profile/delete-account', 'App\Http\Controllers\ProfileController@deleteAccount')->name('profile.delete');
 
 // create activity/event
-Route::get('/event', [CalendarController::class, 'showCal'])->name('event.create');
+//Route::get('/event', [CalendarController::class, 'showCal'])->name('event.create');
 
 //events display page
 Route::get('/currentEvents', [App\Http\Controllers\EventController::class, 'index'])->name('eventsPage');
 Route::get('/events/{id}', [App\Http\Controllers\EventController::class, 'show'] )->name('Event');
-Route::get('/event', [App\Http\Controllers\HomeController::class, 'createEvent'])->name('event.create');
-Route::post('/event', [App\Http\Controllers\HomeController::class, 'createEvent'])->name('event.create');
-Route::post('/event/updatePivot', 'App\Http\Controllers\CalendarController@updatePivot')->name('event.updatePivot');
+Route::get('/event', [App\Http\Controllers\EventController::class, 'createEvent'])->name('event.create');
+Route::post('/event/updatePivot', [App\Http\Controllers\eventController::class, 'updatePivot'])->name('event.updatePivot');
 
 
 //availabilities
