@@ -28,8 +28,8 @@ class HomeController extends Controller
      */
     public function index()
     {   
-        $controller = new FriendController();
-        $usersArray = $controller->getCurrentFriends();
+        $usersArray = new FriendController();
+        $usersArray->getCurrentFriends();
 
         return view('home', compact('usersArray'));
     }

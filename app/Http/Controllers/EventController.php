@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Http\Controllers\HomeController as  HomeController;
+use App\Http\Controllers\FriendController as  FriendController;
 use App\Models\Event;
 use App\Models\User;
 use Carbon\Carbon;
@@ -53,7 +53,7 @@ class EventController extends Controller
     public function createEvent(Request $request)
     {
         
-        $controller = new HomeController;
+        $controller = new FriendController;
         $usersArray = $controller->getCurrentFriends();
 
         return view('events.createEvent', ['usersArray' => $usersArray]);
