@@ -17,8 +17,11 @@ return new class extends Migration
             $table->date('date');
             $table->float('lat');
             $table->float('long');
-            $table->unsignedBigInteger('owner_id'); // Add owner_id column
-            $table->foreign('owner_id')->references('id')->on('users'); // Add foreign key constraint
+            $table->string('address');
+            $table->string('zipcode');
+            $table->string('city');
+            $table->unsignedBigInteger('owner_id');
+            $table->foreign('owner_id')->references('id')->on('users'); 
             $table->timestamps();
         });
     }
