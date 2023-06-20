@@ -82,7 +82,7 @@
                     url: SITEURL + "/availabilities/store",
                     type: "POST",
                     data: {
-                        event_id: 4,
+                        event_id: 4, // HARDCODED
                         start_date: selectedDates,
                         end_date: selectedDates,
                     },
