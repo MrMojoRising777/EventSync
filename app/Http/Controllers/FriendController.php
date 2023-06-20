@@ -69,7 +69,7 @@ class FriendController extends Controller
 
         $friends = $friends->get();
 
-        return view('addFriends', compact('friends'));
+        return view('friends.addFriends', compact('friends'));
     }
 
     
@@ -108,7 +108,7 @@ class FriendController extends Controller
         $user->friends = json_encode($json);
         $user->save();
 
-        return redirect()->route('friends');
+        return redirect()->route('friends.friends');
 
 
     }
@@ -119,7 +119,7 @@ class FriendController extends Controller
 
         $usersArray = $this->getCurrentFriends();
 
-        return view('deleteFriends', compact('usersArray'));
+        return view('friends.deleteFriends', compact('usersArray'));
     }
 
     public function DeleteFriends(request $request) {
@@ -164,7 +164,7 @@ class FriendController extends Controller
         }
         
 
-        return redirect()->route('friends');
+        return redirect()->route('friends.friends');
     }
 }
 
