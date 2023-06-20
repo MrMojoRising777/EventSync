@@ -92,7 +92,7 @@
       ],
       view: new ol.View({
         center: ol.proj.fromLonLat([5.5368901, 50.995]), // Center on Belgium coordinates: [longitude, latitude]
-        minZoom: 7, // Minimum zoom
+        minZoom: 7 // Minimum zoom
       })
     });
 
@@ -125,8 +125,20 @@
       vectorSource.addFeature(marker);
     });
 
-    // Fit the view to the extent of the vector source with padding
-    map.getView().fit(vectorSource.getExtent(), { padding: [50, 50, 50, 50] });
+    // Calculate the extent of the vector source
+    var extent = vectorSource.getExtent();
+
+    // Check the number of features in the vector source
+    var featureCount = vectorSource.getFeatures().length;
+
+    // Fit the view to the extent or set zoom level manually
+    if (featureCount > 1) {
+      map.getView().fit(extent, { padding: [50, 50, 50, 50] });
+    } else if (featureCount === 1) {
+      var markerCoordinates = vectorSource.getFeatures()[0].getGeometry().getCoordinates();
+      map.getView().setCenter(markerCoordinates);
+      map.getView().setZoom(12); // Adjust the zoom level as desired
+    }
   }
 
   $(document).ready(function() {
