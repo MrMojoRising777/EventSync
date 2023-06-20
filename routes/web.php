@@ -4,6 +4,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\MapController;
 use App\Http\Controllers\CalendarController;
 use App\Http\Controllers\AvailabilityController;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\TestEmail;
 
 Route::get('/', function () {
     return view('welcome');
@@ -55,3 +57,14 @@ Route::post('/event/updatePivot', 'App\Http\Controllers\CalendarController@updat
 Route::resource('availabilities', AvailabilityController::class);
 Route::post('availabilities/store', [AvailabilityController::class, 'store'])->name('store');
 
+// MAIL
+Route::get('/send-test-email', function () {
+    $details = [
+        'title' => 'Invitation',
+        'body' => 'You have been invited to an event created by ${name}. Please let ${name} know when you are available.',
+    ];
+
+    \Mail::to('goodoltrickyvik@gmail.com')->send(new \App\Mail\TestEmail($details));
+
+    return 'Test email sent successfully!';
+});
