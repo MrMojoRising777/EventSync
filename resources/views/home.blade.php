@@ -104,40 +104,48 @@
 
     map.addLayer(vectorLayer);
 
-    // Iterate over the response array and create markers
-    response.forEach(function(event) {
-      console.log('Latitude:', event.lat, 'Longitude:', event.long);
-      var lat = event.lat;
-      var long = event.long;
+    if (response && response.length > 0) {
+      // Iterate over the response array and create markers
+      response.forEach(function(event) {
+        console.log('Latitude:', event.lat, 'Longitude:', event.long);
+        var lat = event.lat;
+        var long = event.long;
 
-      var marker = new ol.Feature({
-        geometry: new ol.geom.Point(ol.proj.fromLonLat([lat, long])) // Marker coordinates: [latitude, longitude]
+        var marker = new ol.Feature({
+          geometry: new ol.geom.Point(ol.proj.fromLonLat([lat, long])) // Marker coordinates: [latitude, longitude]
+        });
+
+        var markerStyle = new ol.style.Style({
+          image: new ol.style.Icon({
+            anchor: [0.5, 1], // Set the anchor point of the marker icon
+            src: 'https://openlayers.org/en/latest/examples/data/icon.png' // URL to the marker icon image
+          })
+        });
+
+        marker.setStyle(markerStyle);
+        vectorSource.addFeature(marker);
       });
 
-      var markerStyle = new ol.style.Style({
-        image: new ol.style.Icon({
-          anchor: [0.5, 1], // Set the anchor point of the marker icon
-          src: 'https://openlayers.org/en/latest/examples/data/icon.png' // URL to the marker icon image
-        })
-      });
+      // Calculate the extent of the vector source
+      var extent = vectorSource.getExtent();
 
-      marker.setStyle(markerStyle);
-      vectorSource.addFeature(marker);
-    });
+      // Check the number of features in the vector source
+      var featureCount = vectorSource.getFeatures().length;
 
-    // Calculate the extent of the vector source
-    var extent = vectorSource.getExtent();
-
-    // Check the number of features in the vector source
-    var featureCount = vectorSource.getFeatures().length;
-
-    // Fit the view to the extent or set zoom level manually
-    if (featureCount > 1) {
-      map.getView().fit(extent, { padding: [50, 50, 50, 50] });
-    } else if (featureCount === 1) {
-      var markerCoordinates = vectorSource.getFeatures()[0].getGeometry().getCoordinates();
-      map.getView().setCenter(markerCoordinates);
-      map.getView().setZoom(12); // Adjust the zoom level as desired
+      // Fit the view to the extent or set zoom level manually
+      if (featureCount > 1) {
+        map.getView().fit(extent, { padding: [50, 50, 50, 50] });
+      } else if (featureCount === 1) {
+        var markerCoordinates = vectorSource.getFeatures()[0].getGeometry().getCoordinates();
+        map.getView().setCenter(markerCoordinates);
+        map.getView().setZoom(12); // Adjust the zoom level as desired
+      }
+    } else {
+      // Set a default extent and zoom level for the view
+      var defaultCenter = ol.proj.fromLonLat([5.5368901, 50.995]);
+      var defaultZoom = 7;
+      map.getView().setCenter(defaultCenter);
+      map.getView().setZoom(defaultZoom);
     }
   }
 
