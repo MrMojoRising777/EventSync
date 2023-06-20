@@ -40,6 +40,15 @@
                         <li class="nav-item">
                             <a class="nav-link" href="{{route('event.create')}}">{{"Create event"}}</a>
                         </li>
+
+
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('availabilities.index') }}">{{ "Availabilities" }}</a>
+                        </li>
+
+
+
+
                     </ul>
 
                     <ul class="navbar-nav ms-auto">
