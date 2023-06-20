@@ -45,6 +45,7 @@ Route::get('/event', [CalendarController::class, 'showCal'])->name('event.create
 
 //events display page
 Route::get('/currentEvents', [App\Http\Controllers\EventController::class, 'index'])->name('eventsPage');
+Route::get('/events/{id}', [App\Http\Controllers\EventController::class, 'show'] )->name('Event');
 Route::get('/event', [App\Http\Controllers\HomeController::class, 'createEvent'])->name('event.create');
 Route::post('/event', [App\Http\Controllers\HomeController::class, 'createEvent'])->name('event.create');
 Route::post('/event/updatePivot', 'App\Http\Controllers\CalendarController@updatePivot')->name('event.updatePivot');

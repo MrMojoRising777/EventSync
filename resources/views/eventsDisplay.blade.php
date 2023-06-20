@@ -24,7 +24,7 @@
               </div>
 
               <div class="col-4">
-                <a href="{{-- route('event.show', ['id' => $ownedevent->id]) --}}">{{"info"}}</a>
+                <a href="{{route('Event', ['id' => $ownedevent->id])}}">{{"info"}}</a>
               </div>
               
             </div>
@@ -62,7 +62,7 @@
               </div>
 
               <div class="col-4">
-                <a href="{{-- route('event.show', ['id' => $event->id]) --}}">{{"info"}}</a>
+                <a href="{{route('Event', ['id' => $event->id])}}">{{"info"}}</a>
               </div>
               
             </div>

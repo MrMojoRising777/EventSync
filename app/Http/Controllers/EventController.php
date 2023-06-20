@@ -35,4 +35,18 @@ class EventController extends Controller
 
         return view('eventsDisplay', compact('events', 'ownedEvents'));
     }
+
+    public function show($id){
+        $event = Event::find($id);
+
+        if ($event) {
+            $users = $event->users()->get();
+            // Return the view with the event data
+            return view('Event.DisplayEvent', compact('event', 'users'));
+        } else {
+            // Event not found, handle the error or redirect
+            return redirect()->back()->with('error', 'Event not found.');
+        }
+
+    }
 }
