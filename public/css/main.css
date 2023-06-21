@@ -92,6 +92,30 @@ main {
   height: 100%;
 }
 
+/* Small screens */
+@media (max-width: 767.98px) {
+  .dashboard-container {
+    margin: 1rem;
+  }
+
+  .card-header {
+    font-size: 1.2rem;
+  }
+
+  .col-lg-6 {
+    padding: 0.5rem;
+  }
+
+  .calendar-container {
+    height: 400px;
+  }
+
+  .map-container {
+    height: 300px; /* Adjust the height as needed */
+    margin-bottom: 1rem; /* Add margin between the cards */
+  }
+}
+
 /* welcome.blade */
 .body-welcome {
   font-family: 'Figtree', sans-serif;
