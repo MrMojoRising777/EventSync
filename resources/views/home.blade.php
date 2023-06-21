@@ -1,6 +1,43 @@
 @extends('layouts.app')
 
 @section('content')
+  <!-- styles -->
+  <style>
+    .card .card-header {
+      background-color: #FAF096;
+    }
+
+    .dashboard-container .card-header {
+      font-weight: bold;
+    }
+
+    .friends-container .card-body {
+      background-color: #F6F6E9;
+    }
+
+    .calendar-container .card-body {
+      background-color: #F6F6E9;
+    }
+
+    .card-body a {
+      color: black;
+      text-decoration: none;
+    }
+
+    .map-container {
+      height: 100%;
+      overflow: hidden;
+    }
+
+    .map-container .card-body {
+      padding: 0;
+    }
+
+    #map {
+      height: 100%;
+    }
+  </style>
+
   <div class="container-fluid">
     <div class="row justify-content-center">
       <div class="col-lg-10">
@@ -9,14 +46,14 @@
             <h2>{{ __('Dashboard') }}</h2>
           </div>
 
-          <div class="card-body">
+          <div class="card-body"  style="background-color:#C5F8C8;">
             @if (session('status'))
               <div class="alert alert-success" role="alert">
                 {{ session('status') }}
               </div>
             @endif
 
-            <h4>{{ __('Welkom, :name', ['name' => Auth::user()->username]) }}</h4>
+            <h4>{{ __('Welkom, :name', ['name' => Auth::user()->username]) }}!</h4>
 
             <div class="dashboard-container">
               <div class="row">
@@ -53,7 +90,7 @@
                       <div class="card-header">{{ __('Map') }}</div>
                         <div class="card-body">
                           <!-- Map Component -->
-                          <div id="map" style="height: 400px;"></div>
+                          <div id="map"></div>
                         </div>
                       </div>
                     </div>

@@ -15,6 +15,10 @@
 
     <!-- styles -->
     <style>
+        main {
+            background-color: #FCCB8F;
+        }
+
         .navbar {
             position: relative;
             min-height: 6rem;
