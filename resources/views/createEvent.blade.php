@@ -270,7 +270,6 @@
         lat: lat,
         long: long,
         owner_id: ownerId,
-        owner_id: ownerId,
         address: street,
         zipcode: zipCode,
         city: city,
@@ -303,15 +302,38 @@
             // Handle success response
             console.log("Pivot table updated:", data);
 
-            // Redirect to home page after a delay
-            setTimeout(function () {
-              // window.location.href = "{{ route('home') }}";
-            }, 2000); // Delay in milliseconds
+            // Make AJAX request to send invitations
+            $.ajax({
+              url: "{{ route('invitations') }}",
+              data: {
+                selected_friends: selectedFriends, // Pass selectedFriends as an array
+                type: 'create'
+              },
+              type: "POST",
+              success: function (data) {
+                // Handle success response
+                console.log("Invitations sent:", data);
+
+                // Show toastr popup
+                toastr.success('Invitations sent successfully');
+
+                // Redirect to home page after a delay
+                setTimeout(function () {
+                  // window.location.href = "{{ route('home') }}";
+                }, 2000); // Delay in milliseconds
+              },
+              error: function (xhr, status, error) {
+                // Handle error response
+                console.log("Error sending invitations:", error);
+
+                // Show toastr popup for error
+                toastr.error('Error sending invitations');
+              }
+            });
           },
           error: function (xhr, status, error) {
             // Handle error response
             console.log("Error updating pivot table:", error);
-
             // Show toastr popup for error
             toastr.error('Error creating event');
           }
