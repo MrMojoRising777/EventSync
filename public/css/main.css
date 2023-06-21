@@ -139,3 +139,8 @@ main {
 .button.login:hover {
   background-color: #4dbf77;
 }
+
+/* login.blade */
+.card-body {
+  background-color: #F6F6E9;
+}
