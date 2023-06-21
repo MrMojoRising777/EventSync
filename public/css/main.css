@@ -142,6 +142,25 @@ main {
   background-color: #4dbf77;
 }
 
+/* Add responsive CSS here */
+@media (max-width: 768px) {
+  /* Adjustments for screens up to 768px wide */
+  .welcome-container {
+    text-align: center;
+  }
+
+  .button-container {
+    flex-direction: column;
+  }
+
+  .button {
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+}
+
 /* login.blade */
 .login-container .card-body {
   background-color: #F6F6E9;
