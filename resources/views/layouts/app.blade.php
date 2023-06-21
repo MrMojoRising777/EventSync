@@ -67,25 +67,36 @@
                 </button>
 
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul class="navbar-nav me-auto">
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{route('home')}}" >{{"Home"}}</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{route('friends')}}">{{"Friends"}}</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{route('event.create')}}">{{"Create event"}}</a>
-                        </li>
+                @guest
+                    @if (Route::has('login'))
 
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{route('eventsPage')}}">{{"Events"}}</a>
-                        </li>
+                    @endif
+                    @if (Route::has('register'))
 
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ route('availabilities.index') }}">{{ "Availabilities" }}</a>
-                        </li>
-                    </ul>
+                    @endif
+
+                    @else
+
+                        <ul class="navbar-nav me-auto">
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{route('home')}}" >{{"Home"}}</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{route('friends')}}">{{"Friends"}}</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{route('event.create')}}">{{"Create event"}}</a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{route('eventsPage')}}">{{"Events"}}</a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('availabilities.index') }}">{{ "Availabilities" }}</a>
+                            </li>
+                        </ul>
+                @endguest
 
                     <ul class="navbar-nav ms-auto">
                         <!-- Authentication Links -->
