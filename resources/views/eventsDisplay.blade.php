@@ -4,7 +4,7 @@
 <div class="container">
   @if ($ownedEvents->isEmpty())
   <h2>Your Events</h2>
-  <p><i>Currently you aren't part of any events. Don't wait on friends, create your own and invite them!</i></p>
+  <p><i><b>Currently you aren't part of any events. Don't wait on friends, create your own and invite them!</b></i></p>
   @else
   <h2>Your Events</h2>
   @foreach ($ownedEvents as $ownedevent)

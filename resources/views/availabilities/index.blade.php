@@ -5,13 +5,14 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/fullcalendar.min.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" />
 
-    <h1>Availabilities</h1>
-
-    <a href="{{ route('availabilities.create') }}">Add New Availability</a>
-
-    <div class="container mt-5" style="max-width: 700px">
-        <div id="full_calendar_events"></div>
-        <button id="save-button" class="btn btn-primary mt-3">Save</button>
+    <div class="card">
+        <div class="card-body">
+            <h1 class="card-header">Availabilities</h1>
+            <div class="container mt-5" style="max-width: 700px">
+            <div id="full_calendar_events"></div>
+            <button id="save-button" class="btn btn-primary mt-3">Save</button>
+            </div>
+        </div>
     </div>
 
 
