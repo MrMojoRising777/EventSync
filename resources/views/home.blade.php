@@ -1,52 +1,22 @@
 @extends('layouts.app')
 
 @section('content')
-  <!-- styles -->
+
+<!-- Add ol.css manually -->
+<link rel="stylesheet" href="{{ asset('css/ol.css') }}">
   <style>
-    .card .card-header {
-      background-color: #FAF096;
-    }
-
-    .dashboard-container .card-header {
-      font-weight: bold;
-    }
-
-    .friends-container .card-body {
-      background-color: #F6F6E9;
-    }
-
-    .calendar-container .card-body {
-      background-color: #F6F6E9;
-    }
-
-    .card-body a {
-      color: black;
-      text-decoration: none;
-    }
-
-    .map-container {
-      height: 100%;
-      overflow: hidden;
-    }
-
-    .map-container .card-body {
-      padding: 0;
-    }
-
-    #map {
-      height: 100%;
-    }
+    
   </style>
 
   <div class="container-fluid">
     <div class="row justify-content-center">
       <div class="col-lg-10">
-        <div class="card">
+        <div class="card dashboard-container">
           <div class="card-header">
             <h2>{{ __('Dashboard') }}</h2>
           </div>
 
-          <div class="card-body"  style="background-color:#C5F8C8;">
+          <div class="card-body">
             @if (session('status'))
               <div class="alert alert-success" role="alert">
                 {{ session('status') }}
@@ -55,7 +25,6 @@
 
             <h4>{{ __('Welkom, :name', ['name' => Auth::user()->username]) }}!</h4>
 
-            <div class="dashboard-container">
               <div class="row">
                 <div class="col-lg-2">
 
@@ -97,14 +66,11 @@
                   </div>
                 </div>
               </div>
-            </div>
           </div>
         </div>
       </div>
     </div>
   </div>
-  <!-- Add ol.css manually -->
-  <link rel="stylesheet" href="{{ asset('css/ol.css') }}">
 @endsection
 
 <!-- JavaScript -->
