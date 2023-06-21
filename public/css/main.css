@@ -80,7 +80,10 @@ main {
 /* welcome.blade */
 .body-welcome {
   font-family: 'Figtree', sans-serif;
-  background-color: #f7fafc;
+  /* background-color: #f7fafc; */
+  background-image: url('../build/assets/images/background.jpg');
+  background-size: cover;
+  background-position: center;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -91,12 +94,11 @@ main {
 .card .welcome-container {
   max-width: 500px;
   padding: 2rem;
-  background-color: #ffffff;
-  border-radius: 0.5rem;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  background-color: transparent;
 }
 
 .welcome-title {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   font-size: 2rem;
   font-weight: 600;
   margin-bottom: 1.5rem;
