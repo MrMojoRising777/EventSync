@@ -19,7 +19,7 @@
     <!-- main style sheet -->
     <link rel="stylesheet" href="{{ asset('css/main.css') }}">
 </head>
-<body>
+<body class="@yield('body-class')">
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-light shadow-sm">
             <div class="container">
