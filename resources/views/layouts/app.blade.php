@@ -13,6 +13,43 @@
     <link rel="dns-prefetch" href="//fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet">
 
+    <!-- styles -->
+    <style>
+        .navbar {
+            position: relative;
+            min-height: 6rem;
+            background: rgb(255, 165, 0);
+            background: linear-gradient(45deg, rgba(255, 165, 0, 1) 0%, rgba(254, 152, 24, 1) 35%, rgba(252, 139, 48, 1) 100%);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .navbar-logo {
+            position: absolute;
+            transform: translate(-50%, -50%);
+            height: 9rem;
+            object-fit: contain;
+        }
+
+        .navbar-nav {
+            margin-left: 10rem;
+        }
+
+        .navbar-nav .nav-link {
+            line-height: 5rem;
+            padding: 1rem;
+            color: white !important;
+        }
+
+        .footer{
+            background: rgb(255, 165, 0);
+            background: linear-gradient(45deg, rgba(255, 165, 0, 1) 0%, rgba(254, 152, 24, 1) 35%, rgba(252, 139, 48, 1) 100%);
+        }
+
+        .footer p{
+            color: white;
+        }
+    </style>
+
     <!-- Scripts -->
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
 
@@ -20,7 +57,7 @@
 </head>
 <body>
     <div id="app">
-        <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
+        <nav class="navbar navbar-expand-md navbar-light shadow-sm">
             <div class="container">
                 <a class="navbar-brand" href="{{route('home')}}">
                     <img src="{{ asset('build/assets/images/logo.png') }}" alt="Logo" class="navbar-logo">
@@ -32,7 +69,7 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav me-auto">
                         <li class="nav-item">
-                            <a class="nav-link" href="{{route('home')}}">{{"Home"}}</a>
+                            <a class="nav-link" href="{{route('home')}}" >{{"Home"}}</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="{{route('friends')}}">{{"Friends"}}</a>
@@ -45,14 +82,9 @@
                             <a class="nav-link" href="{{route('eventsPage')}}">{{"Events"}}</a>
                         </li>
 
-
                         <li class="nav-item">
                             <a class="nav-link" href="{{ route('availabilities.index') }}">{{ "Availabilities" }}</a>
                         </li>
-
-
-
-
                     </ul>
 
                     <ul class="navbar-nav ms-auto">
@@ -102,42 +134,17 @@
             @yield('content')
         </main>
 
-        <footer class="footer bg-light">
+        <footer class="footer">
             <div class="container py-4">
                 <div class="row">
                     <div class="col text-center">
                         <p class="mb-1">&copy; {{ date('Y') }} EventSync. All rights reserved.</p>
                         <p class="mb-1">Thor Park 8300, 3600 Genk, Belgium</p>
-                        <p class="mb-0">Email: info@sitenaam.com</p>
+                        <p class="mb-0">Email: eventsync.mail@gmail.com</p>
                     </div>
                 </div>
             </div>
         </footer>
-
-
     </div>
 </body>
 </html>
-
-<style>
-    .navbar {
-        position: relative;
-        min-height: 6rem; /* Set a minimum height for the navbar */
-    }
-
-    .navbar-logo {
-        position: absolute;
-        transform: translate(-50%, -50%);
-        height: 9rem; /* Increase the height to make the logo a little bigger */
-        object-fit: contain;
-    }
-
-    .navbar-nav {
-        margin-left: 10rem; /* Adjust the margin as desired to create space for the logo */
-    }
-
-    .navbar-nav .nav-link {
-        line-height: 5rem; /* Adjust the line-height to match the logo height */
-        padding: 1rem; /* Increase the padding as desired */
-    }
-</style>
