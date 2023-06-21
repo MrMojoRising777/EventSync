@@ -3,19 +3,18 @@ main {
   background-color: #FCCB8F;
 }
 
+/* header */
 .navbar {
   position: relative;
-  min-height: 6rem;
+  min-height: 7rem;
   background: rgb(255, 165, 0);
   background: linear-gradient(45deg, rgba(255, 165, 0, 1) 0%, rgba(254, 152, 24, 1) 35%, rgba(252, 139, 48, 1) 100%);
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
 .navbar-logo {
-  position: absolute;
-  transform: translate(-50%, -50%);
-  height: 9rem;
-  object-fit: contain;
+  height: 11rem;
+  max-width: 100%;
 }
 
 .navbar-nav {
@@ -28,6 +27,22 @@ main {
   color: white !important;
 }
 
+/* Small screens */
+@media (max-width: 767.98px) {
+  .navbar-nav {
+    margin-left: 0;
+  }
+  .navbar-logo {
+    margin-right: 1rem;
+  }
+  .navbar-nav .nav-link {
+    line-height: 3rem;
+    padding: 0.5rem 1rem;
+    font-size: 14px;
+  }
+}
+
+/* footer */
 .footer{
   background: rgb(255, 165, 0);
   background: linear-gradient(45deg, rgba(255, 165, 0, 1) 0%, rgba(254, 152, 24, 1) 35%, rgba(252, 139, 48, 1) 100%);
@@ -80,7 +95,6 @@ main {
 /* welcome.blade */
 .body-welcome {
   font-family: 'Figtree', sans-serif;
-  /* background-color: #f7fafc; */
   background-image: url('../build/assets/images/background.jpg');
   background-size: cover;
   background-position: center;
