@@ -12,26 +12,49 @@ class MailController extends Controller
     public function sendInvitations(Request $request)
     {
         $selectedFriendIds = $request->selected_friends;
+        $ownerId = $request->owner_id;
+        $eventDate = $request->event_date;
+        $event_name = $request->event_name;
+        $street = $request->address;
+        $zipcode = $request->zipcode;
+        $city = $request->city;
 
-        // Log the selected friend IDs
-        \Log::info('Selected Friend IDs:', ['selectedFriendIds' => $selectedFriendIds]);
+        // Fetch the owner from the users table
+        $owner = User::find($ownerId);
+        \Log::info('Owner:', ['owner' => $owner]);
 
-        if (!empty($selectedFriendIds)) {
-            $selected_friends = User::whereIn('id', $selectedFriendIds)->get();
+        if ($owner) {
+            // Log the selected friend IDs
+            \Log::info('Selected Friend IDs:', ['selectedFriendIds' => $selectedFriendIds]);
 
-            // Log the selected friends
-            \Log::info('Selected Friends Controller:', ['selectedFriends' => $selected_friends->toArray()]);
+            if (!empty($selectedFriendIds)) {
+                $selected_friends = User::whereIn('id', $selectedFriendIds)->get();
 
-            $details = [
-                'title' => 'Invitation',
-                'body' => "You have been invited to an event created by {Name}. Please let {Name} know when you are available.",
-            ];
+                // Log the selected friends
+                \Log::info('Selected Friends Controller:', ['selectedFriends' => $selected_friends->toArray()]);
 
-            foreach ($selected_friends as $friend) {
-                Mail::to($friend->email)->send(new TestEmail($details));
+                $details = [
+                    'title' => "Invitation for $event_name",
+                    'body' => "You have been invited to an event created by {$owner->username}.
+                               Event details:
+                               
+                                   Place: $street, $zipcode, $city
+                                   Date: $eventDate
+                               
+                               Please let {$owner->username} know when you are available.",
+                ];
+                
+
+                foreach ($selected_friends as $friend) {
+                    Mail::to($friend->email)->send(new TestEmail($details, function (Message $message) {
+                        $message->setContentType('text/html');
+                    }));
+                }
             }
-        }
 
-        return response()->json(['message' => 'Invitations sent successfully']);
+            return response()->json(['message' => 'Invitations sent successfully']);
+        } else {
+            return response()->json(['message' => 'Invalid owner ID'], 400);
+        }
     }
 }

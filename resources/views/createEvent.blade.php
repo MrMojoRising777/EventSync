@@ -307,6 +307,12 @@
               url: "{{ route('invitations') }}",
               data: {
                 selected_friends: selectedFriends, // Pass selectedFriends as an array
+                owner_id: ownerId,
+                event_name: eventName,
+                event_date: event_date,
+                address: street,
+                zipcode: zipCode,
+                city: city,
                 type: 'create'
               },
               type: "POST",
