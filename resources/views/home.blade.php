@@ -29,7 +29,7 @@
                     <div class="card-header">{{ __('Vrienden') }}</div>
                     <div class="card-body">
                       <ul>
-                        @foreach ($usersArray as $friend)
+                        @foreach ($friends as $friend)
                           <li>
                             <a href="/friends">{{ $friend->username }}</a>
                           </li>
