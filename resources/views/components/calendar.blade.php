@@ -35,7 +35,6 @@
             var calendar = $('#full_calendar_events').fullCalendar({
                 editable: true,
                 displayEventTime: true,
-                defaultView: 'basicWeek',
                 // contentHeight: 436,
                 // aspectRatio: 1.35,
                 handleWindowResize: true,
