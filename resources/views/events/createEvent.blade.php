@@ -66,13 +66,13 @@
             </div>
           </div>
 
-          <div id="friends-container" class="friends-container">
+          <div id="friends-container" class="eventsfriends-container">
             <div class="card mb-3">
               <div class="card-header">{{ __('Nodig vrienden uit:') }}</div>
-              <div class="card-body">
-                <div class="row">
+              <div class="card-body px-2 pt-3">
+                <div class="row justify-content-start flex-wrap">
                   @foreach ($usersArray as $friend)
-                    <div class="col-md-4">
+                    <div class="col-md-4 col-sm-6 col-12 mb-3">
                       <div class="checkbox-wrapper-16">
                         <label class="checkbox-wrapper">
                           <input type="checkbox" class="checkbox-input" id="friend_{{$friend->id}}" name="selectedItems[]" value="{{$friend->id}}" />
