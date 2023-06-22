@@ -13,7 +13,7 @@ main {
 }
 
 .navbar-logo {
-  height: 11rem;
+  height: 6rem;
   max-width: 100%;
 }
 
@@ -22,24 +22,10 @@ main {
 }
 
 .navbar-nav .nav-link {
+  font-size: 22px;
   line-height: 5rem;
   padding: 1rem;
   color: white !important;
-}
-
-/* Small screens */
-@media (max-width: 767.98px) {
-  .navbar-nav {
-    margin-left: 0;
-  }
-  .navbar-logo {
-    margin-right: 1rem;
-  }
-  .navbar-nav .nav-link {
-    line-height: 3rem;
-    padding: 0.5rem 1rem;
-    font-size: 14px;
-  }
 }
 
 /* footer */
@@ -92,28 +78,29 @@ main {
   height: 100%;
 }
 
-/* Small screens */
-@media (max-width: 767.98px) {
-  .dashboard-container {
-    margin: 1rem;
-  }
+.fc {
+  margin-bottom: 1em;
+}
 
-  .card-header {
-    font-size: 1.2rem;
-  }
+.fc-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+}
 
-  .col-lg-6 {
-    padding: 0.5rem;
-  }
+.fc-header-toolbar {
+  margin-bottom: 1em;
+}
 
-  .calendar-container {
-    height: 400px;
-  }
+.fc-header-title {
+  flex-grow: 1;
+  text-align: center;
+}
 
-  .map-container {
-    height: 300px; /* Adjust the height as needed */
-    margin-bottom: 1rem; /* Add margin between the cards */
-  }
+.fc-header-right {
+  flex-grow: 1;
+  text-align: right;
 }
 
 /* welcome.blade */
@@ -178,25 +165,6 @@ main {
 
 .button.login:hover {
   background-color: #4dbf77;
-}
-
-/* Add responsive CSS here */
-@media (max-width: 768px) {
-  /* Adjustments for screens up to 768px wide */
-  .welcome-container {
-    text-align: center;
-  }
-
-  .button-container {
-    flex-direction: column;
-  }
-
-  .button {
-    margin-bottom: 10px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
 }
 
 /* login.blade */
@@ -304,4 +272,65 @@ main {
   color: #707070;
   transition: 0.375s ease;
   text-align: center;
+}
+
+/* Small screens */
+@media (max-width: 767.98px) {
+  /* header */
+  .navbar-nav {
+    margin-left: 0;
+  }
+  .navbar-logo {
+    margin-right: 1rem;
+  }
+  .navbar-nav .nav-link {
+    line-height: 3rem;
+    padding: 0.5rem 1rem;
+    font-size: 14px;
+  }
+
+  /* welcome.blade */
+  .welcome-container {
+    text-align: center;
+  }
+
+  .button-container {
+    flex-direction: column;
+  }
+
+  .button {
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .dashboard-container {
+    margin: 1rem;
+  }
+
+  .card-header {
+    font-size: 1.2rem;
+  }
+
+  .col-lg-6 {
+    padding: 0.5rem;
+  }
+
+  /* .calendar-container {
+    height: 200px;
+  } */
+  #full_calendar_events {
+    width: 100%;
+    margin: 0 auto;
+  }
+
+  .map-container {
+    height: 100%;
+    margin-bottom: 1rem;
+  }
+
+  .fc-header-right {
+    text-align: left;
+  }
 }

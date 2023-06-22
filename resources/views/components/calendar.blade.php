@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" />
 </head>
 <body>
-    <div class="container mt-5" style="max-width: 700px">
+    <div class="container mt-5">
         <div id='full_calendar_events'></div>
     </div>
 
@@ -35,6 +35,10 @@
             var calendar = $('#full_calendar_events').fullCalendar({
                 editable: true,
                 displayEventTime: true,
+                defaultView: 'basicWeek',
+                // contentHeight: 436,
+                // aspectRatio: 1.35,
+                handleWindowResize: true,
                 eventRender: function (event, element, view) {
                     element.find('.fc-title').text(event.title);
                 },
