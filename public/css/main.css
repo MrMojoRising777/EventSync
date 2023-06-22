@@ -173,8 +173,13 @@ main {
 }
 
 /* createEvent.blade */
-.create-event {
-  background-color: red;
+.addfriends-container .row {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.addfriends-container .col-md-4 {
+  flex-basis: 33.33%; /* Three columns per row on larger screens */
 }
 
 .checkbox-wrapper-16 *,
@@ -235,7 +240,7 @@ main {
 .checkbox-wrapper-16 .checkbox-tile:before {
   content: "";
   position: absolute;
-  display: block;
+  display: flex;
   width: 1.25rem;
   height: 1.25rem;
   border: 2px solid #b5bfd9;
@@ -274,7 +279,7 @@ main {
   text-align: center;
 }
 
-/* Small screens */
+/* RESPONSIVE --- Small screens */
 @media (max-width: 767.98px) {
   /* header */
   .navbar-nav {
