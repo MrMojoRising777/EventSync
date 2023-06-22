@@ -173,11 +173,13 @@ main {
 }
 
 /* createEvent.blade */
+.deletefriends-container .row,
 .addfriends-container .row {
   display: flex;
   flex-wrap: wrap;
 }
 
+.deletefriends-container .col-md-4,
 .addfriends-container .col-md-4 {
   flex-basis: 33.33%; /* Three columns per row on larger screens */
 }
