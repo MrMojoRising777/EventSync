@@ -340,4 +340,15 @@ main {
   .fc-header-right {
     text-align: left;
   }
+
+  .row {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .col-md-3 {
+    flex: 0 0 50%;
+    max-width: 50%;
+  }
 }
