@@ -16,11 +16,12 @@
     <!-- Scripts -->
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
 
-    @yield('styles')
+    <!-- main style sheet -->
+    <link rel="stylesheet" href="{{ asset('css/main.css') }}">
 </head>
-<body>
+<body class="@yield('body-class')">
     <div id="app">
-        <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
+        <nav class="navbar navbar-expand-md navbar-light shadow-sm">
             <div class="container">
                 <a class="navbar-brand" href="{{route('home')}}">
                     <img src="{{ asset('build/assets/images/logo.png') }}" alt="Logo" class="navbar-logo">
@@ -30,30 +31,36 @@
                 </button>
 
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul class="navbar-nav me-auto">
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{route('home')}}">{{"Home"}}</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{route('friends')}}">{{"Friends"}}</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{route('event.create')}}">{{"Create event"}}</a>
-                        </li>
+                @guest
+                    @if (Route::has('login'))
 
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{route('eventsPage')}}">{{"Events"}}</a>
-                        </li>
+                    @endif
+                    @if (Route::has('register'))
 
+                    @endif
 
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ route('availabilities.index') }}">{{ "Availabilities" }}</a>
-                        </li>
+                    @else
 
+                        <ul class="navbar-nav me-auto">
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{route('home')}}" >{{"Home"}}</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{route('friends')}}">{{"Friends"}}</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{route('event.create')}}">{{"Create event"}}</a>
+                            </li>
 
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{route('eventsPage')}}">{{"Events"}}</a>
+                            </li>
 
-
-                    </ul>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('availabilities.index') }}">{{ "Availabilities" }}</a>
+                            </li>
+                        </ul>
+                @endguest
 
                     <ul class="navbar-nav ms-auto">
                         <!-- Authentication Links -->
@@ -102,42 +109,17 @@
             @yield('content')
         </main>
 
-        <footer class="footer bg-light">
+        <footer class="footer">
             <div class="container py-4">
                 <div class="row">
                     <div class="col text-center">
                         <p class="mb-1">&copy; {{ date('Y') }} EventSync. All rights reserved.</p>
                         <p class="mb-1">Thor Park 8300, 3600 Genk, Belgium</p>
-                        <p class="mb-0">Email: info@sitenaam.com</p>
+                        <p class="mb-0">Email: eventsync.mail@gmail.com</p>
                     </div>
                 </div>
             </div>
         </footer>
-
-
     </div>
 </body>
 </html>
-
-<style>
-    .navbar {
-        position: relative;
-        min-height: 6rem; /* Set a minimum height for the navbar */
-    }
-
-    .navbar-logo {
-        position: absolute;
-        transform: translate(-50%, -50%);
-        height: 9rem; /* Increase the height to make the logo a little bigger */
-        object-fit: contain;
-    }
-
-    .navbar-nav {
-        margin-left: 10rem; /* Adjust the margin as desired to create space for the logo */
-    }
-
-    .navbar-nav .nav-link {
-        line-height: 5rem; /* Adjust the line-height to match the logo height */
-        padding: 1rem; /* Increase the padding as desired */
-    }
-</style>

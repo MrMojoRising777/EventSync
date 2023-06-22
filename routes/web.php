@@ -5,6 +5,9 @@ use App\Http\Controllers\MapController;
 use App\Http\Controllers\CalendarController;
 use App\Http\Controllers\FriendController;
 use App\Http\Controllers\AvailabilityController;
+use App\Http\Controllers\MailController;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\TestEmail;
 
 Route::get('/', function () {
     return view('welcome');
@@ -55,3 +58,5 @@ Route::post('/event/updatePivot', [App\Http\Controllers\eventController::class, 
 Route::resource('availabilities', AvailabilityController::class);
 Route::post('availabilities/store', [AvailabilityController::class, 'store'])->name('store');
 
+// MAIL
+Route::match(['get', 'post'], '/send-invitations', [MailController::class, 'sendInvitations'])->name('invitations');

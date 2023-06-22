@@ -1,10 +1,17 @@
 @extends('layouts.app')
 
 @section('content')
+
+<!-- Add ol.css manually -->
+<link rel="stylesheet" href="{{ asset('css/ol.css') }}">
+  <style>
+    
+  </style>
+
   <div class="container-fluid">
     <div class="row justify-content-center">
       <div class="col-lg-10">
-        <div class="card">
+        <div class="card dashboard-container">
           <div class="card-header">
             <h2>{{ __('Dashboard') }}</h2>
           </div>
@@ -16,9 +23,8 @@
               </div>
             @endif
 
-            <h4>{{ __('Welkom, :name', ['name' => Auth::user()->username]) }}</h4>
+            <h4>{{ __('Welkom, :name', ['name' => Auth::user()->username]) }}!</h4>
 
-            <div class="dashboard-container">
               <div class="row">
                 <div class="col-lg-2">
 
@@ -53,21 +59,18 @@
                       <div class="card-header">{{ __('Map') }}</div>
                         <div class="card-body">
                           <!-- Map Component -->
-                          <div id="map" style="height: 400px;"></div>
+                          <div id="map"></div>
                         </div>
                       </div>
                     </div>
                   </div>
                 </div>
               </div>
-            </div>
           </div>
         </div>
       </div>
     </div>
   </div>
-  <!-- Add ol.css manually -->
-  <link rel="stylesheet" href="{{ asset('css/ol.css') }}">
 @endsection
 
 <!-- JavaScript -->

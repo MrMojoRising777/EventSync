@@ -1,106 +1,11 @@
 @extends('layouts.app')
 
 @section('content')
+  <!-- Add ol.css manually -->
+  <link rel="stylesheet" href="{{ asset('css/ol.css') }}">
 
-<style>
-    .checkbox-wrapper-16 *,
-    .checkbox-wrapper-16 *:after,
-    .checkbox-wrapper-16 *:before {
-      box-sizing: border-box;
-    }
-  
-    .checkbox-wrapper-16 .checkbox-input {
-      clip: rect(0 0 0 0);
-      -webkit-clip-path: inset(100%);
-              clip-path: inset(100%);
-      height: 1px;
-      overflow: hidden;
-      position: absolute;
-      white-space: nowrap;
-      width: 1px;
-    }
-    .checkbox-wrapper-16 .checkbox-input:checked + .checkbox-tile {
-      border-color: #2260ff;
-      box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
-      color: #2260ff;
-    }
-    .checkbox-wrapper-16 .checkbox-input:checked + .checkbox-tile:before {
-      transform: scale(1);
-      opacity: 1;
-      background-color: #2260ff;
-      border-color: #2260ff;
-    }
-    .checkbox-wrapper-16 .checkbox-input:checked + .checkbox-tile .checkbox-icon,
-    .checkbox-wrapper-16 .checkbox-input:checked + .checkbox-tile .checkbox-label {
-      color: #2260ff;
-    }
-    .checkbox-wrapper-16 .checkbox-input:focus + .checkbox-tile {
-      border-color: #2260ff;
-      box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1), 0 0 0 4px #b5c9fc;
-    }
-    .checkbox-wrapper-16 .checkbox-input:focus + .checkbox-tile:before {
-      transform: scale(1);
-      opacity: 1;
-    }
-  
-    .checkbox-wrapper-16 .checkbox-tile {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      width: 7rem;
-      min-height: 7rem;
-      border-radius: 0.5rem;
-      border: 2px solid #b5bfd9;
-      background-color: #fff;
-      box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
-      transition: 0.15s ease;
-      cursor: pointer;
-      position: relative;
-    }
-    .checkbox-wrapper-16 .checkbox-tile:before {
-      content: "";
-      position: absolute;
-      display: block;
-      width: 1.25rem;
-      height: 1.25rem;
-      border: 2px solid #b5bfd9;
-      background-color: #fff;
-      border-radius: 50%;
-      top: 0.25rem;
-      left: 0.25rem;
-      opacity: 0;
-      transform: scale(0);
-      transition: 0.25s ease;
-      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='192' height='192' fill='%23FFFFFF' viewBox='0 0 256 256'%3E%3Crect width='256' height='256' fill='none'%3E%3C/rect%3E%3Cpolyline points='216 72.005 104 184 48 128.005' fill='none' stroke='%23FFFFFF' stroke-linecap='round' stroke-linejoin='round' stroke-width='32'%3E%3C/polyline%3E%3C/svg%3E");
-      background-size: 12px;
-      background-repeat: no-repeat;
-      background-position: 50% 50%;
-    }
-    .checkbox-wrapper-16 .checkbox-tile:hover {
-      border-color: #2260ff;
-    }
-    .checkbox-wrapper-16 .checkbox-tile:hover:before {
-      transform: scale(1);
-      opacity: 1;
-    }
-  
-    .checkbox-wrapper-16 .checkbox-icon {
-      transition: 0.375s ease;
-      color: #494949;
-    }
-    .checkbox-wrapper-16 .checkbox-icon svg {
-      width: 3rem;
-      height: 3rem;
-    }
-  
-    .checkbox-wrapper-16 .checkbox-label {
-      color: #707070;
-      transition: 0.375s ease;
-      text-align: center;
-    }
-  </style>
-
+  <!-- toastr -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
 
   <div class="container">
     <div class="card mb-3">
@@ -114,7 +19,7 @@
           <div class="form-group mb-3">
             <div class="card mb-3">
               <div class="card-header">Geef het event een naam:</div>
-                <div class="card-body">
+                <div class="card-body create_event">
                   <input type="text" name="event_name" id="event_name" class="form-control" required placeholder="Typ hier de naam van het event">
                 </div>
             </div>
@@ -124,7 +29,7 @@
           <div class="form-group">
             <div class="card mb-3">
               <div class="card-header">{{ __('Kies een datum:') }}</div>
-              <div class="card-body">
+              <div class="card-body create_event">
                 <div class="calendar-container" id="calendarContainer">
                   @include('components.calendar')
                 </div>
@@ -136,7 +41,7 @@
           <div class="form-group">
             <div class="card mb-3">
               <div class="card-header">{{ __('Kies een locatie:') }}</div>
-              <div class="card-body">
+              <div class="card-body create_event">
                 <form>
                   <div class="row">
                     <div class="col-md-4 mb-3">
@@ -190,11 +95,6 @@
       </div>
     </div>
   </div>
-  <!-- Add ol.css manually -->
-  <link rel="stylesheet" href="{{ asset('css/ol.css') }}">
-
-  <!-- toastr -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
 @endsection
 
 <script>
@@ -270,7 +170,6 @@
         lat: lat,
         long: long,
         owner_id: ownerId,
-        owner_id: ownerId,
         address: street,
         zipcode: zipCode,
         city: city,
@@ -303,15 +202,44 @@
             // Handle success response
             console.log("Pivot table updated:", data);
 
-            // Redirect to home page after a delay
-            setTimeout(function () {
-              // window.location.href = "{{ route('home') }}";
-            }, 2000); // Delay in milliseconds
+            // Make AJAX request to send invitations
+            $.ajax({
+              url: "{{ route('invitations') }}",
+              data: {
+                selected_friends: selectedFriends, // Pass selectedFriends as an array
+                owner_id: ownerId,
+                event_name: eventName,
+                event_date: event_date,
+                address: street,
+                zipcode: zipCode,
+                city: city,
+                type: 'create'
+              },
+              type: "POST",
+              success: function (data) {
+                // Handle success response
+                console.log("Invitations sent:", data);
+
+                // Show toastr popup
+                toastr.success('Invitations sent successfully');
+
+                // Redirect to home page after a delay
+                setTimeout(function () {
+                  // window.location.href = "{{ route('home') }}";
+                }, 2000); // Delay in milliseconds
+              },
+              error: function (xhr, status, error) {
+                // Handle error response
+                console.log("Error sending invitations:", error);
+
+                // Show toastr popup for error
+                toastr.error('Error sending invitations');
+              }
+            });
           },
           error: function (xhr, status, error) {
             // Handle error response
             console.log("Error updating pivot table:", error);
-
             // Show toastr popup for error
             toastr.error('Error creating event');
           }
