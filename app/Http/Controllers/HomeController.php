@@ -29,9 +29,9 @@ class HomeController extends Controller
     public function index()
     {   
         $usersArray = new FriendController();
-        $usersArray->getCurrentFriends();
+        $friends = $usersArray->getCurrentFriends();
 
-        return view('home', compact('usersArray'));
+        return view('home', compact('friends'));
     }
     
 
