@@ -1,7 +1,7 @@
 <div class="card">
-  <div class="card-body">
+  <div class="card-body-map">
       <!-- Map container -->
-      <div id="map" style="height: 400px;"></div>
+      <div id="map" class="initial-map"></div>
   </div>
 </div>
 

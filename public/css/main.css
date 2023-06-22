@@ -74,10 +74,6 @@ main {
   padding: 0;
 }
 
-#map {
-  height: 100%;
-}
-
 .fc {
   margin-bottom: 1em;
 }
@@ -357,6 +353,17 @@ main {
   text-align: center;
 }
 
+.card-body-map {
+  display: flex;
+  justify-content: center;
+}
+
+.initial-map {
+  height: 400px; /* Default height for the map */
+  width: 100%; /* Ensure the map container takes the full width available */
+  max-width: 100%; /* Ensure the map container does not exceed the parent container's width */
+}
+
 /* RESPONSIVE --- Small screens */
 @media (max-width: 767.98px) {
   /* header */
@@ -370,6 +377,11 @@ main {
     line-height: 3rem;
     padding: 0.5rem 1rem;
     font-size: 14px;
+  }
+
+  /* map component */
+  .initial-map {
+    height: 200px;
   }
 
   /* welcome.blade */
