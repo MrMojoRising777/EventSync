@@ -9,7 +9,7 @@
                 <div class="deletefriends-container">
                     <div class="row justify-content-start flex-wrap">
                         @foreach ($usersArray as $friend)
-                        <div class="col-md-4 col-sm-6 col-12 mb-3">
+                        <div class="col-md-6 col-lg-4 col-xl-3 mb-3">
                         <div class="checkbox-wrapper-16">
                             <label class="checkbox-wrapper">
                               <input type="checkbox" class="checkbox-input" name="selectedItems[]" value="{{$friend->id}}" />
@@ -27,8 +27,6 @@
                 </div>
                 <button class="btn btn-primary mt-2" type="submit">{{ "Delete friend(s)" }}</button>
             </form>
-
-            
         </div>
     </div>
 </div>

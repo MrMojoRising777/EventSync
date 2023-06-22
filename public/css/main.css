@@ -1,3 +1,5 @@
+/* MAIN STYLING */
+
 /* app.blade */
 main {
   background-color: #FCCB8F;
@@ -359,13 +361,41 @@ main {
 }
 
 .initial-map {
-  height: 400px; /* Default height for the map */
-  width: 100%; /* Ensure the map container takes the full width available */
-  max-width: 100%; /* Ensure the map container does not exceed the parent container's width */
+  height: 400px;
+  width: 100%;
+  max-width: 100%;
 }
 
-/* RESPONSIVE --- Small screens */
-@media (max-width: 767.98px) {
+/* RESPONSIVE STYLING */
+
+/* Styles for iPads and smaller tablets */
+@media (min-width: 768px) and (max-width: 991px) {
+  /* header */
+  .navbar-nav {
+    margin-left: 0;
+  }
+  .navbar-logo {
+    margin-right: 1rem;
+  }
+  .navbar-nav .nav-link {
+    line-height: 3rem;
+    padding: 0.5rem 1rem;
+    font-size: 14px;
+  }
+
+  /* map component */
+  .initial-map {
+    height: 200px;
+  }
+
+  .map-container {
+    height: 200px;
+    margin-bottom: 1rem;
+  }
+}
+
+/* Styles for phones and smaller devices */
+@media (max-width: 767px) {
   /* header */
   .navbar-nav {
     margin-left: 0;
