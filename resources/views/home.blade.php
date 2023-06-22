@@ -4,9 +4,6 @@
 
 <!-- Add ol.css manually -->
 <link rel="stylesheet" href="{{ asset('css/ol.css') }}">
-  <style>
-    
-  </style>
 
   <div class="container-fluid">
     <div class="row justify-content-center">

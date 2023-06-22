@@ -3,19 +3,18 @@ main {
   background-color: #FCCB8F;
 }
 
+/* header */
 .navbar {
   position: relative;
-  min-height: 6rem;
+  min-height: 7rem;
   background: rgb(255, 165, 0);
   background: linear-gradient(45deg, rgba(255, 165, 0, 1) 0%, rgba(254, 152, 24, 1) 35%, rgba(252, 139, 48, 1) 100%);
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
 .navbar-logo {
-  position: absolute;
-  transform: translate(-50%, -50%);
-  height: 9rem;
-  object-fit: contain;
+  height: 6rem;
+  max-width: 100%;
 }
 
 .navbar-nav {
@@ -23,11 +22,13 @@ main {
 }
 
 .navbar-nav .nav-link {
+  font-size: 22px;
   line-height: 5rem;
   padding: 1rem;
   color: white !important;
 }
 
+/* footer */
 .footer{
   background: rgb(255, 165, 0);
   background: linear-gradient(45deg, rgba(255, 165, 0, 1) 0%, rgba(254, 152, 24, 1) 35%, rgba(252, 139, 48, 1) 100%);
@@ -77,10 +78,108 @@ main {
   height: 100%;
 }
 
+.fc {
+  margin-bottom: 1em;
+}
+
+.fc-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.fc-header-toolbar {
+  margin-bottom: 1em;
+}
+
+.fc-header-title {
+  flex-grow: 1;
+  text-align: center;
+}
+
+.fc-header-right {
+  flex-grow: 1;
+  text-align: right;
+}
+/* map.blade */
+/* user input form/card */
+.input-container {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+.input-container label {
+  margin-right: 10px;
+  font-weight: bold;
+}
+.input-container input {
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+.input-container button {
+  padding: 5px 10px;
+  background-color: #4caf50;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+/* user input auto complete */
+.ui-autocomplete {
+  max-height: 200px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+.ui-autocomplete .ui-menu-item {
+  padding: 8px 12px;
+  cursor: pointer;
+}
+
+.ui-autocomplete .ui-menu-item:hover {
+  background-color: #f5f5f5;
+}
+
+/* show.blade */
+.form-group {
+  margin-bottom: 20px;
+}
+
+.card-header {
+  font-weight: bold;
+}
+
+.btn-primary {
+  background-color: #007bff;
+  border-color: #007bff;
+  margin-bottom: 0.5em;
+}
+
+.btn-primary:hover {
+  background-color: #0069d9;
+  border-color: #0062cc;
+}
+
+.btn-danger {
+  background-color: #dc3545;
+  border-color: #dc3545;
+}
+
+.btn-danger:hover {
+  background-color: #c82333;
+  border-color: #bd2130;
+}
+
 /* welcome.blade */
 .body-welcome {
   font-family: 'Figtree', sans-serif;
-  /* background-color: #f7fafc; */
   background-image: url('../build/assets/images/background.jpg');
   background-size: cover;
   background-position: center;
@@ -148,8 +247,15 @@ main {
 }
 
 /* createEvent.blade */
-.create-event {
-  background-color: red;
+.deletefriends-container .row,
+.addfriends-container .row {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.deletefriends-container .col-md-4,
+.addfriends-container .col-md-4 {
+  flex-basis: 33.33%; /* Three columns per row on larger screens */
 }
 
 .checkbox-wrapper-16 *,
@@ -210,7 +316,7 @@ main {
 .checkbox-wrapper-16 .checkbox-tile:before {
   content: "";
   position: absolute;
-  display: block;
+  display: flex;
   width: 1.25rem;
   height: 1.25rem;
   border: 2px solid #b5bfd9;
@@ -247,4 +353,83 @@ main {
   color: #707070;
   transition: 0.375s ease;
   text-align: center;
+}
+
+/* RESPONSIVE --- Small screens */
+@media (max-width: 767.98px) {
+  /* header */
+  .navbar-nav {
+    margin-left: 0;
+  }
+  .navbar-logo {
+    margin-right: 1rem;
+  }
+  .navbar-nav .nav-link {
+    line-height: 3rem;
+    padding: 0.5rem 1rem;
+    font-size: 14px;
+  }
+
+  /* welcome.blade */
+  .welcome-container {
+    text-align: center;
+  }
+
+  .button-container {
+    flex-direction: column;
+  }
+
+  .button {
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .dashboard-container {
+    margin: 1rem;
+  }
+
+  .card-header {
+    font-size: 1.2rem;
+  }
+
+  .col-lg-6 {
+    padding: 0.5rem;
+  }
+
+  /* .calendar-container {
+    height: 200px;
+  } */
+  #full_calendar_events {
+    width: 100%;
+    margin: 0 auto;
+  }
+
+  .map-container {
+    height: 100%;
+    margin-bottom: 1rem;
+  }
+
+  .fc-header-right {
+    text-align: left;
+  }
+
+  .row {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .col-md-3 {
+    flex: 0 0 50%;
+    max-width: 50%;
+  }
+
+  .card-title {
+    font-size: 1rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
 }

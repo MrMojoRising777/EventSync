@@ -6,53 +6,46 @@
         <div class="col-md-8">
             <div class="card">
                 <div class="card-header">{{ __('Friends') }}</div>
-
                 <div class="card-body">
                     @if (session('status'))
-                        <div class="alert alert-success" role="alert">
-                            {{ session('status') }}
-                        </div>
+                    <div class="alert alert-success" role="alert">
+                        {{ session('status') }}
+                    </div>
                     @endif
 
-                    {{ __('here are your friends displayed') }}
+                    {{ __('Here are your friends displayed') }}
                     <br>
                     <br>
-                    
+
                     <div class="container">
                         <div class="row">
-                    @foreach($usersArray as $friend)
-
-                          <div class="col-md-3">
-                            <div class="card mb-4">
-                              <div class="card-body text-center align-middle">
-                                <h3 class="card-title">{{$friend->username}}</h3>
-                                <h5 class="card-content">{{"id: ". $friend->id}}</h5>
-                              </div>
+                            @foreach($usersArray as $friend)
+                            <div class="col-md-3 col-sm-6 mb-4">
+                                <div class="card">
+                                    <div class="card-body text-center align-middle">
+                                        <h3 class="card-title">{{$friend->username}}</h3>
+                                        <h5 class="card-content">{{"id: ". $friend->id}}</h5>
+                                    </div>
+                                </div>
                             </div>
-                          </div>
-                        
-                    @endforeach
+                            @endforeach
                         </div>
                     </div>
-                </div>
-            <div class="card">
-                    <div class="card-header">{{"Add Friends"}}</div>
 
-                    <div class="card-body">
-                        <a type="button" class="btn btn-primary" href="{{route('searchFriends')}}">{{"Search"}}</a>
-                        
-                        
-                    </div>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-header">{{"Add Friends"}}</div>
+                <div class="card-body">
+                    <a type="button" class="btn btn-primary" href="{{route('searchFriends')}}">{{"Search"}}</a>
+                </div>
             </div>
             <div class="card">
                 <div class="card-header">{{"Delete Friends"}}</div>
-
                 <div class="card-body">
                     <a type="button" class="btn btn-primary" href="{{route('findFriends')}}">{{"Search"}}</a>
-                    
-                    
                 </div>
-        </div>
+            </div>
         </div>
     </div>
 </div>
