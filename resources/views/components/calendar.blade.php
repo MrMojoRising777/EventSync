@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" />
 </head>
 <body>
-    <div class="container mt-5">
+    <div class="container mt-2">
         <div id='full_calendar_events'></div>
     </div>
 

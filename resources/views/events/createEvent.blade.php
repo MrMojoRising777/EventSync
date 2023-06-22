@@ -19,7 +19,7 @@
           <div class="form-group mb-3">
             <div class="card mb-3">
               <div class="card-header">Geef het event een naam:</div>
-                <div class="card-body create_event">
+                <div class="card-body">
                   <input type="text" name="event_name" id="event_name" class="form-control" required placeholder="Typ hier de naam van het event">
                 </div>
             </div>
@@ -27,10 +27,10 @@
 
           <!-- Calendar Component -->
           <div class="form-group">
-            <div class="card mb-3">
+            <div class="card card-custom mb-3">
               <div class="card-header">{{ __('Kies een datum:') }}</div>
-              <div class="card-body create_event">
-                <div class="calendar-container" id="calendarContainer">
+              <div class="card-body card-body-custom p-0">
+                <div class="events-calendar-container" id="calendarContainer">
                   @include('components.calendar')
                 </div>
               </div>
@@ -41,7 +41,7 @@
           <div class="form-group">
             <div class="card mb-3">
               <div class="card-header">{{ __('Kies een locatie:') }}</div>
-              <div class="card-body create_event">
+              <div class="card-body">
                 <form>
                   <div class="row">
                     <div class="col-md-4 mb-3">

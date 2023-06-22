@@ -261,10 +261,10 @@ main {
 }
 
 .checkbox-wrapper-16 *,
-    .checkbox-wrapper-16 *:after,
-    .checkbox-wrapper-16 *:before {
-      box-sizing: border-box;
-    }
+.checkbox-wrapper-16 *:after,
+.checkbox-wrapper-16 *:before {
+  box-sizing: border-box;
+}
   
 .checkbox-wrapper-16 .checkbox-input {
   clip: rect(0 0 0 0);
@@ -400,16 +400,8 @@ main {
     padding: 0.5rem;
   }
 
-  /* .calendar-container {
-    height: 200px;
-  } */
-  #full_calendar_events {
-    width: 100%;
-    margin: 0 auto;
-  }
-
   .map-container {
-    height: 100%;
+    height: 200px;
     margin-bottom: 1rem;
   }
 
