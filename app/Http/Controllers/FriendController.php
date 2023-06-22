@@ -108,7 +108,7 @@ class FriendController extends Controller
         $user->friends = json_encode($json);
         $user->save();
 
-        return redirect()->route('friends.friends');
+        return redirect()->Route('friends');
 
 
     }
@@ -164,7 +164,7 @@ class FriendController extends Controller
         }
         
 
-        return redirect()->route('friends.friends');
+        return redirect()->route('friends');
     }
 }
 
