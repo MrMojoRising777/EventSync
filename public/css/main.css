@@ -351,4 +351,11 @@ main {
     flex: 0 0 50%;
     max-width: 50%;
   }
+
+  .card-title {
+    font-size: 1rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
 }
