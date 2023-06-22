@@ -6,7 +6,7 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
-class TestEmail extends Mailable
+class CancelEmail extends Mailable
 {
     use Queueable, SerializesModels;
 
@@ -30,7 +30,7 @@ class TestEmail extends Mailable
      */
     public function build()
     {
-        return $this->subject('Test Email')
+        return $this->subject('Cancelation')
                     ->view('test-email');
     }
 }

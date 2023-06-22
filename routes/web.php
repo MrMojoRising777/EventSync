@@ -7,7 +7,7 @@ use App\Http\Controllers\FriendController;
 use App\Http\Controllers\AvailabilityController;
 use App\Http\Controllers\MailController;
 use Illuminate\Support\Facades\Mail;
-use App\Mail\TestEmail;
+use App\Mail\InviteEmail;
 
 Route::get('/', function () {
     return view('welcome');
@@ -60,3 +60,5 @@ Route::post('availabilities/store', [AvailabilityController::class, 'store'])->n
 
 // MAIL
 Route::match(['get', 'post'], '/send-invitations', [MailController::class, 'sendInvitations'])->name('invitations');
+
+Route::match(['get', 'post'], '/send-cancellations', [MailController::class, 'sendCancelations'])->name('send-cancellations');

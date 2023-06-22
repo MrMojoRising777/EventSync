@@ -2,7 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Mail\TestEmail;
+use App\Mail\InviteEmail;
+use App\Mail\CancelEmail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use App\Models\User;
@@ -46,7 +47,7 @@ class MailController extends Controller
                 
 
                 foreach ($selected_friends as $friend) {
-                    Mail::to($friend->email)->send(new TestEmail($details, function (Message $message) {
+                    Mail::to($friend->email)->send(new InviteEmail($details, function (Message $message) {
                         $message->setContentType('text/html');
                     }));
                 }
@@ -56,5 +57,20 @@ class MailController extends Controller
         } else {
             return response()->json(['message' => 'Invalid owner ID'], 400);
         }
+    }
+
+    public function sendCancelations(Request $request)
+    {
+        // Send a test cancellation email to "test@test.com"
+        $details = [
+            'title' => 'Cancellation Test Email',
+            'body' => 'This is a test cancellation email.',
+        ];
+
+        Mail::to('goodoltrickyvik@gmail.com')->send(new CancelEmail($details));
+
+        // Your existing code...
+
+        return response()->json(['message' => 'Cancellation emails sent successfully']);
     }
 }
