@@ -46,7 +46,7 @@
           @method('DELETE')
           <div class="form-group row mb-0">
             <div class="col-md-8 offset-md-4">
-              <button type="submit" class="btn btn-danger" onclick="confirmDelete(event)">Cancel event</button>
+              <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete your event')">Cancel event</button>
             </div>
           </div>
         </form>
@@ -107,7 +107,7 @@
               @method('DELETE')
               <div class="form-group row mb-0">
                 <div class="col-md-8 offset-md-4">
-                  <button type="submit" class="btn btn-danger" onclick="confirmDelete(event)">Decline event</button>
+                  <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete your event')">Decline event</button>
                 </div>
               </div>
             </form>

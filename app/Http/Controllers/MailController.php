@@ -70,18 +70,17 @@ class MailController extends Controller
 
         $users = $event->users()->get();
 
-        if ($users->isEmpty()) {
-            return response()->json(['message' => 'No users associated with the event']);
-        }
-
         $details = [
             'title' => 'Cancellation Test Email',
             'body' => 'This is a test cancellation email.',
         ];
 
-        foreach ($users as $user) {
-            $email = $user->email;
-            Mail::to($email)->send(new CancelEmail($details));
+        if (!empty($users)) {
+
+            foreach ($users as $user) {
+                $email = $user->email;
+                Mail::to($email)->send(new CancelEmail($details));
+            }
         }
 
         $event->delete();
