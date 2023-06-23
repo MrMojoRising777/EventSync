@@ -46,7 +46,7 @@
           @method('DELETE')
           <div class="form-group row mb-0">
             <div class="col-md-8 offset-md-4">
-              <button type="submit" class="btn btn-danger" onclick="confirmDelete(event)">Cancel event</button>
+              <button type="submit" class="btn btn-danger" onclick="confirmDelete($event->id)">Cancel event</button>
             </div>
           </div>
         </form>
@@ -107,7 +107,7 @@
               @method('DELETE')
               <div class="form-group row mb-0">
                 <div class="col-md-8 offset-md-4">
-                  <button type="submit" class="btn btn-danger" onclick="confirmDelete(event)">Decline event</button>
+                  <button type="submit" class="btn btn-danger" onclick="confirmDelete($event->id)">Decline event</button>
                 </div>
               </div>
             </form>
@@ -126,6 +126,8 @@
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/ol/dist/ol.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+
 <script>
   // Map initialization $OwnedEvents
   @foreach ($ownedEvents as $ownedevent)
