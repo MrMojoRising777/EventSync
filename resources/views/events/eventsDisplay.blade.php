@@ -41,12 +41,12 @@
             </div>
           </div>
         </form>
-        <form method="POST" action="{{ route('event.delete', ['id' => $ownedevent->id]) }}">
+        <form method="POST" action="{{ route('send-cancellations', ['id' => $ownedevent->id]) }}">
           @csrf
           @method('DELETE')
           <div class="form-group row mb-0">
             <div class="col-md-8 offset-md-4">
-              <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete your event')">Cancel event</button>
+              <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete your event?')">Cancel event</button>
             </div>
           </div>
         </form>
@@ -194,6 +194,6 @@
   }
   window.addEventListener('load', initMap_{{ $event->id }});
 @endforeach
-
-  
 </script>
+
+
