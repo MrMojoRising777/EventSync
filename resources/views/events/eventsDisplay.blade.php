@@ -144,3 +144,74 @@
 </div>
 @endsection
 
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/ol/dist/ol.js"></script>
+<script>
+  // Map initialization $OwnedEvents
+  @foreach ($ownedEvents as $ownedevent)
+    function initMap_{{ $ownedevent->id }}() {
+      const eventLatLng = ol.proj.fromLonLat([{{ $ownedevent->lat }}, {{ $ownedevent->long }}]);
+      const map = new ol.Map({
+        target: 'map_{{ $ownedevent->id }}',
+        layers: [
+          new ol.layer.Tile({
+            source: new ol.source.OSM()
+          })
+        ],
+        view: new ol.View({
+          center: eventLatLng,
+          zoom: 12
+        })
+      });
+      const marker = new ol.Feature({
+        geometry: new ol.geom.Point(eventLatLng)
+      });
+      const markerLayer = new ol.layer.Vector({
+        source: new ol.source.Vector({
+          features: [marker]
+        }),
+        style: new ol.style.Style({
+          image: new ol.style.Icon({
+            src: 'https://openlayers.org/en/latest/examples/data/icon.png'
+          })
+        })
+      });
+      map.addLayer(markerLayer);
+    }
+    window.addEventListener('load', initMap_{{ $ownedevent->id }});
+  @endforeach
+  // Map initialization $InvitedEvents
+  @foreach ($events as $event)
+  function initMap_{{ $event->id }}() {
+    const eventLatLng = ol.proj.fromLonLat([{{ $event->lat }}, {{ $event->long }}]);
+    const map = new ol.Map({
+      target: 'map_{{ $event->id }}',
+      layers: [
+        new ol.layer.Tile({
+          source: new ol.source.OSM()
+        })
+      ],
+      view: new ol.View({
+        center: eventLatLng,
+        zoom: 12
+      })
+    });
+    const marker = new ol.Feature({
+      geometry: new ol.geom.Point(eventLatLng)
+    });
+    const markerLayer = new ol.layer.Vector({
+      source: new ol.source.Vector({
+        features: [marker]
+      }),
+      style: new ol.style.Style({
+        image: new ol.style.Icon({
+          src: 'https://openlayers.org/en/latest/examples/data/icon.png'
+        })
+      })
+    });
+    map.addLayer(markerLayer);
+  }
+  window.addEventListener('load', initMap_{{ $event->id }});
+@endforeach
+
+
