@@ -51,8 +51,11 @@ Route::delete('/profile/delete-account', 'App\Http\Controllers\ProfileController
 Route::get('/currentEvents', [App\Http\Controllers\EventController::class, 'index'])->name('eventsPage');
 Route::get('/events/{id}', [App\Http\Controllers\EventController::class, 'show'] )->name('Event');
 Route::get('/event', [App\Http\Controllers\EventController::class, 'createEvent'])->name('event.create');
-Route::post('/event/updatePivot', [App\Http\Controllers\eventController::class, 'updatePivot'])->name('event.updatePivot');
+Route::post('/event/updatePivot', [App\Http\Controllers\EventController::class, 'updatePivot'])->name('event.updatePivot');
 
+//event interactions
+Route::delete('/deleteEvent/{id}', [App\Http\Controllers\EventController::class, 'deleteEvent'])->name('event.delete');
+Route::delete('/deleteEventPivot/{id}', [App\Http\Controllers\EventController::class, 'deletePivot'])->name('event.pivot.delete');
 
 //availabilities
 Route::resource('availabilities', AvailabilityController::class);

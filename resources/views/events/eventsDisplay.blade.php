@@ -9,18 +9,38 @@
     @foreach ($ownedEvents as $ownedevent)
     <div class="card mb-3">
       <div class="card-header">
-        {{$ownedevent->name}}
+        {{"Event Name: " . $ownedevent->name}}
       </div>
       <div class="container text-center">
         <div class="row justify-content-start">
           <div class="col-4">
-            {{-- {{$ownedevent->location}} --}}
+            {{"Location: " . $ownedevent->address . ', ' . $ownedevent->zipcode . ' ' . $ownedevent->city}}
           </div>
           <div class="col-4">
-            {{$ownedevent->date}}
+            {{"Date: " . $ownedevent->date}}
           </div>
           <div class="col-4">
-            <a href="{{route('Event', ['id' => $ownedevent->id])}}">info</a>
+
+            <form method="POST" action="{{ route('Event', ['id' => $ownedevent->id]) }}">
+              @csrf
+              @method('GET')
+              <div class="form-group row mb-0">
+                <div class="col-md-8 offset-md-4">
+                  <button type="submit" class="btn btn-success" href="{{route('Event', ['id' => $ownedevent->id])}}">info</button>
+                </div>
+              </div>
+            </form>
+            
+            <form method="POST" action="{{ route('event.delete', ['id' => $ownedevent->id]) }}">
+              @csrf
+              @method('DELETE')
+              <div class="form-group row mb-0">
+                <div class="col-md-8 offset-md-4">
+                  <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete your event?')">Verwijder event</button>
+                </div>
+              </div>
+            </form>
+            
           </div>
         </div>
       </div>
@@ -44,18 +64,38 @@
     @foreach ($events as $event)
     <div class="card">
       <div class="card-header">
-        {{$event->name}}
+        {{"Event Name: " . $event->name}}
       </div>
       <div class="container text-center">
         <div class="row justify-content-start">
           <div class="col-4">
-            {{-- {{$event->location}} --}}
+            {{"Location: " . $event->address . ', ' . $event->zipcode . ' ' . $event->city}}
           </div>
           <div class="col-4">
-            {{$event->date}}
+            {{"Date: " . $event->date}}
           </div>
           <div class="col-4">
-            <a href="{{route('Event', ['id' => $event->id])}}">info</a>
+
+            <form method="POST" action="{{ route('Event', ['id' => $event->id]) }}">
+              @csrf
+              @method('GET')
+              <div class="form-group row mb-0">
+                <div class="col-md-8 offset-md-4">
+                  <button type="submit" class="btn btn-success" href="{{route('Event', ['id' => $event->id])}}">info</button>
+                </div>
+              </div>
+            </form>
+            
+            <form method="POST" action="{{ route('event.pivot.delete', ['id' => $event->id]) }}">
+              @csrf
+              @method('DELETE')
+              <div class="form-group row mb-0">
+                <div class="col-md-8 offset-md-4">
+                  <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete your event?')">Verwijder event</button>
+                </div>
+              </div>
+            </form>
+
           </div>
         </div>
       </div>

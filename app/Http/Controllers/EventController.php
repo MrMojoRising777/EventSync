@@ -76,4 +76,20 @@ class EventController extends Controller
 
         return response()->json(['message' => 'Pivot table updated']);
     }
+
+    public function deleteEvent($id) {
+        $event = Event::find($id);
+        $event->delete();
+
+        return redirect()->back()->with('success', 'Event deleted successfully.');
+    }
+
+    public function deletePivot($id) {
+        $user = auth()->user();
+        $event = Event::find($id);
+
+        $user->events()->detach($event);
+
+        return redirect()->back()->with('success', 'You no longer go to this event.');
+    }
 }
