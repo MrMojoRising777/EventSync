@@ -63,5 +63,4 @@ Route::post('availabilities/store', [AvailabilityController::class, 'store'])->n
 
 // MAIL
 Route::match(['get', 'post'], '/send-invitations', [MailController::class, 'sendInvitations'])->name('invitations');
-
 Route::match(['get', 'post'], '/send-cancellations', [MailController::class, 'sendCancelations'])->name('send-cancellations');
