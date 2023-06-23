@@ -66,6 +66,8 @@ class MailController extends Controller
     public function sendCancelations($id)
     {        
         $event = Event::find($id);
+        $ownerId = $event->owner_id;
+        $owner = User::find($ownerId); 
 
         if (!$event) {
             return response()->json(['message' => 'Event not found'], 404);
@@ -73,12 +75,12 @@ class MailController extends Controller
 
         $users = $event->users()->get();
 
-        $body = "{$owner->username} has cancelled event $event_name.
+        $body = "{$owner->username} has cancelled event {$event->name}.
 
                 No need to feel sad however. Create your own event, ReSync with your friends and keep creating memories!";
 
         $details = [
-            'title' => "Cancellation $event_name",
+            'title' => "Cancellation {$event->name}",
             'body' => nl2br($body),
         ];
 
