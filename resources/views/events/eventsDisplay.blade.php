@@ -46,30 +46,10 @@
           @method('DELETE')
           <div class="form-group row mb-0">
             <div class="col-md-8 offset-md-4">
-              <button type="submit" class="btn btn-danger" onclick="confirmDelete($event->id)">Cancel event</button>
+              <button type="submit" class="btn btn-danger" onclick="confirmDelete(event)">Cancel event</button>
             </div>
           </div>
-          <div class="col-4">
-
-            <form method="POST" action="{{ route('Event', ['id' => $ownedevent->id]) }}">
-              @csrf
-              @method('GET')
-              <div class="form-group row mb-0">
-                <div class="col-md-8 offset-md-4">
-                  <button type="submit" class="btn btn-success" href="{{route('Event', ['id' => $ownedevent->id])}}">info</button>
-                </div>
-              </div>
-            </form>
-            
-            <form method="POST" action="{{ route('send-cancellations', ['id' => $ownedevent->id]) }}">
-              @csrf
-              @method('DELETE')
-              <div class="form-group row mb-0">
-                <div class="col-md-8 offset-md-4">
-                  <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete your event?')">Verwijder event</button>
-                </div>
-              </div>
-            </form>
+        </form>
       </div>
     </div>
   </div>
@@ -127,7 +107,7 @@
               @method('DELETE')
               <div class="form-group row mb-0">
                 <div class="col-md-8 offset-md-4">
-                  <button type="submit" class="btn btn-danger" onclick="confirmDelete($event->id)">Decline event</button>
+                  <button type="submit" class="btn btn-danger" onclick="confirmDelete(event)">Decline event</button>
                 </div>
               </div>
             </form>
@@ -146,8 +126,6 @@
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/ol/dist/ol.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
-
 <script>
   // Map initialization $OwnedEvents
   @foreach ($ownedEvents as $ownedevent)
@@ -182,6 +160,7 @@
     }
     window.addEventListener('load', initMap_{{ $ownedevent->id }});
   @endforeach
+
   // Map initialization $InvitedEvents
   @foreach ($events as $event)
   function initMap_{{ $event->id }}() {
@@ -216,4 +195,5 @@
   window.addEventListener('load', initMap_{{ $event->id }});
 @endforeach
 
-
+  
+</script>
