@@ -59,7 +59,6 @@ Route::delete('/deleteEventPivot/{id}', [App\Http\Controllers\EventController::c
 
 //availabilities
 Route::resource('availabilities', AvailabilityController::class);
-Route::post('availabilities/store', [AvailabilityController::class, 'store'])->name('store');
 
 // MAIL
 Route::match(['get', 'post'], '/send-invitations', [MailController::class, 'sendInvitations'])->name('invitations');
