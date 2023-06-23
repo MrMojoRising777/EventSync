@@ -50,6 +50,14 @@
                     // Emit event with event date
                     window.dispatchEvent(new CustomEvent('date-updated', { detail: { date: selectedDate } }));
                 },
+
+                // disable selecting past dates
+                selectAllow: function (selectInfo) {
+                    var today = moment().startOf('day');
+                    var selectedStartDate = selectInfo.start.startOf('day');
+                    // Only allow selection of future dates
+                    return selectedStartDate.isSameOrAfter(today);
+                },
                 events: function (start, end, timezone, callback) {
                     $.ajax({
                         url: SITEURL + "/calendar",

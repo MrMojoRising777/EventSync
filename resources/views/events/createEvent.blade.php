@@ -20,7 +20,7 @@
             <div class="card mb-3">
               <div class="card-header">Geef het event een naam:</div>
                 <div class="card-body">
-                  <input type="text" name="event_name" id="event_name" class="form-control" required placeholder="Typ hier de naam van het event">
+                  <input type="text" name="event_name" id="event_name" class="form-control" required placeholder="Typ hier de naam van het event" required>
                 </div>
             </div>
           </div>
@@ -46,15 +46,15 @@
                   <div class="row">
                     <div class="col-md-4 mb-3">
                       <label for="streetInput">Straat:</label>
-                      <input id="streetInput" class="form-control" type="text" placeholder="Geef een straatnaam">
+                      <input id="streetInput" class="form-control" type="text" placeholder="Geef een straatnaam" required>
                     </div>
                     <div class="col-md-4 mb-3">
                       <label for="zipInput">Postcode:</label>
-                      <input id="zipInput" class="form-control" type="text" placeholder="Geef een postcode">
+                      <input id="zipInput" class="form-control" type="text" placeholder="Geef een postcode" required>
                     </div>
                     <div class="col-md-4 mb-3">
                       <label for="cityInput">Stad:</label>
-                      <input id="cityInput" class="form-control" type="text" placeholder="Geef een stad">
+                      <input id="cityInput" class="form-control" type="text" placeholder="Geef een stad" required>
                     </div>
                   </div>
                   <div class="form-group">
@@ -225,7 +225,7 @@
 
                 // Redirect to home page after a delay
                 setTimeout(function () {
-                  // window.location.href = "{{ route('home') }}";
+                  window.location.href = "{{ route('eventsPage') }}";
                 }, 2000); // Delay in milliseconds
               },
               error: function (xhr, status, error) {
