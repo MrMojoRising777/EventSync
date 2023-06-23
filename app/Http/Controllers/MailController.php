@@ -35,15 +35,18 @@ class MailController extends Controller
                 // Log the selected friends
                 \Log::info('Selected Friends Controller:', ['selectedFriends' => $selected_friends->toArray()]);
 
+                $body = "You have been invited to an event created by {$owner->username}.
+
+                        Event details:
+                        
+                        Place: $street, $zipcode, $city
+                        Date: $eventDate
+                        
+                        Please let {$owner->username} know when you are available.";
+
                 $details = [
-                    'title' => "Invitation for $event_name",
-                    'body' => "You have been invited to an event created by {$owner->username}.
-                               Event details:
-                               
-                                   Place: $street, $zipcode, $city
-                                   Date: $eventDate
-                               
-                               Please let {$owner->username} know when you are available.",
+                    'title' => "Invitation $event_name",
+                    'body' => nl2br($body),
                 ];
                 
 
@@ -70,9 +73,13 @@ class MailController extends Controller
 
         $users = $event->users()->get();
 
+        $body = "{$owner->username} has cancelled event $event_name.
+
+                No need to feel sad however. Create your own event, ReSync with your friends and keep creating memories!";
+
         $details = [
-            'title' => 'Cancellation Test Email',
-            'body' => 'This is a test cancellation email.',
+            'title' => "Cancellation $event_name",
+            'body' => nl2br($body),
         ];
 
         if (!empty($users)) {

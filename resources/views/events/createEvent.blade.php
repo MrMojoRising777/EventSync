@@ -46,15 +46,15 @@
                   <div class="row">
                     <div class="col-md-4 mb-3">
                       <label for="streetInput">Street:</label>
-                      <input id="streetInput" class="form-control" type="text" placeholder="Geef een straatnaam" required>
+                      <input id="streetInput" class="form-control" type="text" placeholder="Typ the street here" required>
                     </div>
                     <div class="col-md-4 mb-3">
                       <label for="zipInput">Zipcode:</label>
-                      <input id="zipInput" class="form-control" type="text" placeholder="Geef een postcode" required>
+                      <input id="zipInput" class="form-control" type="text" placeholder="Typ the zipcode here" required>
                     </div>
                     <div class="col-md-4 mb-3">
                       <label for="cityInput">City:</label>
-                      <input id="cityInput" class="form-control" type="text" placeholder="Geef een stad" required>
+                      <input id="cityInput" class="form-control" type="text" placeholder="Typ the city here" required>
                     </div>
                   </div>
                   <div class="form-group">
