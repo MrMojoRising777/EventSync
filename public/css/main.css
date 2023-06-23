@@ -76,6 +76,10 @@ main {
   padding: 0;
 }
 
+.map_events-display {
+  height: 175px;
+  overflow: hidden;
+}
 .fc {
   margin-bottom: 1em;
 }
