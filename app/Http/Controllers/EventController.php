@@ -21,16 +21,12 @@ class EventController extends Controller
         $events = $user->events()
             ->whereDate('date', '>=', $currentDate)
             ->orderBy('date', 'asc')
-            ->paginate(10);
+            ->paginate(5);
 
         $ownedEvents = Event::where('owner_id', '=', $user->id)
             ->whereDate('date', '>=', $currentDate)
             ->orderBy('date', 'asc')
-            ->paginate(10);
-        //$events = $own->events()->orderBy('date', 'asc')->cursorPaginate(1);
-        
-        //dd($events);
-        
+            ->paginate(5);
         
 
         return view('events.eventsDisplay', compact('events', 'ownedEvents'));
