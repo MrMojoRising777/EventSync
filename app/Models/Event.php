@@ -1,5 +1,6 @@
 <?php
 namespace App\Models;
+
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -7,9 +8,9 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 class Event extends Model
 {
     use HasFactory;
-    
+
     protected $fillable = [
-        'name', 
+        'name',
         'date',
         'lat',
         'long',
@@ -27,4 +28,9 @@ class Event extends Model
     {
         return $this->hasMany(Availability::class);
     }
+    public function recommendedDates()
+    {
+        return $this->hasMany(RecommendedDate::class);
+    }
+
 }

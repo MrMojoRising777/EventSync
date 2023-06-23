@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use App\Models\Event;
 use App\Models\Availability;
+use App\Models\RecommendedDate;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -22,7 +23,6 @@ class AvailabilityController extends Controller
         $events = Event::all();
         return view('availabilities.create', compact('users', 'events'));
     }
-
 
     public function store(Request $request)
     {
@@ -60,12 +60,11 @@ class AvailabilityController extends Controller
             }
         }
 
+        $this->calculateOverlappingDates($event_id);
+
         return redirect()->route('availabilities.index')
             ->with('success', 'Availabilities created successfully.');
     }
-
-
-
 
     public function show(Availability $availability)
     {
@@ -100,16 +99,39 @@ class AvailabilityController extends Controller
         }
 
         $availability->update($validatedData);
+        
+        $this->calculateOverlappingDates($validatedData['event_id']);
 
         return redirect()->route('availabilities.index')
             ->with('success', 'Availability updated successfully.');
     }
 
-
-
     public function destroy(Availability $availability)
     {
         $availability->delete();
         return redirect()->route('availabilities.index');
+    }
+
+    private function calculateOverlappingDates($event_id)
+    {
+        // Fetch all the availabilities for the event.
+        $availabilities = Availability::where('event_id', $event_id)
+            ->orderBy('start_date', 'asc')
+            ->get();
+
+        // Clear previous recommended dates for the event.
+        RecommendedDate::where('event_id', $event_id)->delete();
+
+        for ($i = 0; $i < count($availabilities); $i++) {
+            for ($j = $i + 1; $j < count($availabilities); $j++) {
+                if ($availabilities[$i]->end_date >= $availabilities[$j]->start_date) {
+                    RecommendedDate::create([
+                        'event_id' => $event_id,
+                        'start_date' => max($availabilities[$i]->start_date, $availabilities[$j]->start_date),
+                        'end_date' => min($availabilities[$i]->end_date, $availabilities[$j]->end_date),
+                    ]);
+                }
+            }
+        }
     }
 }
