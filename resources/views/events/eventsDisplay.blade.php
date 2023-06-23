@@ -132,7 +132,7 @@
           // Show toastr popup
           toastr.success('Cancellation sent successfully');
 
-          // Redirect to home page after a delay
+          // Redirect to home page after delay
           setTimeout(function () {
             // window.location.href = "{{ route('home') }}";
           }, 2000); // Delay in milliseconds
@@ -147,5 +147,4 @@
       });
     }
   }
-
 </script>

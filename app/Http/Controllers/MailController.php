@@ -7,6 +7,7 @@ use App\Mail\CancelEmail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use App\Models\User;
+use App\Models\Event;
 
 class MailController extends Controller
 {
@@ -61,15 +62,29 @@ class MailController extends Controller
 
     public function sendCancelations(Request $request)
     {
-        // Send a test cancellation email to "test@test.com"
+        $eventId = $request->event_id;
+
+        $event = Event::find($eventId);
+
+        if (!$event) {
+            return response()->json(['message' => 'Event not found'], 404);
+        }
+
+        $users = $event->users()->get();
+
+        if ($users->isEmpty()) {
+            return response()->json(['message' => 'No users associated with the event']);
+        }
+
         $details = [
             'title' => 'Cancellation Test Email',
             'body' => 'This is a test cancellation email.',
         ];
 
-        Mail::to('goodoltrickyvik@gmail.com')->send(new CancelEmail($details));
-
-        // Your existing code...
+        foreach ($users as $user) {
+            $email = $user->email;
+            Mail::to($email)->send(new CancelEmail($details));
+        }
 
         return response()->json(['message' => 'Cancellation emails sent successfully']);
     }
