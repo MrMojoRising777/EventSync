@@ -10,7 +10,7 @@
   <div class="container">
     <div class="card mb-3">
       <div class="card-body">
-        <h1 class="card-title">Maak een event aan</h1>
+        <h1 class="card-title">Create an event.. And memories!</h1>
 
         <form method="POST" action="{{ route('calendar.events') }}">
           @csrf
@@ -18,9 +18,9 @@
           <input type="hidden" name="owner_id" id="owner_id" value="{{ Auth::id() }}">
           <div class="form-group mb-3">
             <div class="card mb-3">
-              <div class="card-header">Geef het event een naam:</div>
+              <div class="card-header">Give your event a name:</div>
                 <div class="card-body">
-                  <input type="text" name="event_name" id="event_name" class="form-control" required placeholder="Typ hier de naam van het event" required>
+                  <input type="text" name="event_name" id="event_name" class="form-control" required placeholder="Typ the name of your event here" required>
                 </div>
             </div>
           </div>
@@ -28,7 +28,7 @@
           <!-- Calendar Component -->
           <div class="form-group">
             <div class="card card-custom mb-3">
-              <div class="card-header">{{ __('Kies een datum:') }}</div>
+              <div class="card-header">{{ __('Select a date:') }}</div>
               <div class="card-body card-body-custom p-0">
                 <div class="events-calendar-container" id="calendarContainer">
                   @include('components.calendar')
@@ -40,25 +40,25 @@
           <!-- Map Component -->
           <div class="form-group">
             <div class="card mb-3">
-              <div class="card-header">{{ __('Kies een locatie:') }}</div>
+              <div class="card-header">{{ __('Select a location:') }}</div>
               <div class="card-body">
                 <form>
                   <div class="row">
                     <div class="col-md-4 mb-3">
-                      <label for="streetInput">Straat:</label>
+                      <label for="streetInput">Street:</label>
                       <input id="streetInput" class="form-control" type="text" placeholder="Geef een straatnaam" required>
                     </div>
                     <div class="col-md-4 mb-3">
-                      <label for="zipInput">Postcode:</label>
+                      <label for="zipInput">Zipcode:</label>
                       <input id="zipInput" class="form-control" type="text" placeholder="Geef een postcode" required>
                     </div>
                     <div class="col-md-4 mb-3">
-                      <label for="cityInput">Stad:</label>
+                      <label for="cityInput">City:</label>
                       <input id="cityInput" class="form-control" type="text" placeholder="Geef een stad" required>
                     </div>
                   </div>
                   <div class="form-group">
-                    <button class="btn btn-primary" onclick="geocodeAddress()">Zoek</button>
+                    <button class="btn btn-primary" onclick="geocodeAddress()">Search</button>
                   </div>
                 </form>
                 @include('components.mapComp')
@@ -68,7 +68,7 @@
 
           <div id="friends-container" class="eventsfriends-container">
             <div class="card mb-3">
-              <div class="card-header">{{ __('Nodig vrienden uit:') }}</div>
+              <div class="card-header">{{ __('Invite your friends:') }}</div>
               <div class="card-body px-2 pt-3">
                 <div class="row justify-content-start flex-wrap">
                   @foreach ($usersArray as $friend)

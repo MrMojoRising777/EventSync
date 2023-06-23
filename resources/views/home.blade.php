@@ -20,13 +20,13 @@
               </div>
             @endif
 
-            <h4>{{ __('Welkom, :name', ['name' => Auth::user()->username]) }}!</h4>
+            <h4>{{ __('Welcome, :name', ['name' => Auth::user()->username]) }}!</h4>
 
               <div class="row">
                 <div class="col-lg-2">
 
                   <div class="card friends-container">
-                    <div class="card-header">{{ __('Vrienden') }}</div>
+                    <div class="card-header">{{ __('Friends') }}</div>
                     <div class="card-body">
                       <ul>
                         @foreach ($friends as $friend)
@@ -43,7 +43,7 @@
                 <div class="row">
                   <div class="col-lg-6">
                     <div class="card calendar-container">
-                      <div class="card-header">{{ __('Geplande activiteiten') }}</div>
+                      <div class="card-header">{{ __('Planned events') }}</div>
                       <div class="card-body">
                         <!-- Calendar Component -->
                         @include('components.calendar')

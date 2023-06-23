@@ -4,7 +4,7 @@
       <div class="row justify-content-center">
         <div class="col-md-8">
           <div class="card">
-            <div class="card-header">Gebruikersprofiel</div>
+            <div class="card-header">User profile</div>
 
             <div class="card-body">
               @if(session('success'))
@@ -19,7 +19,7 @@
                 @method('PUT')
 
                 <div class="form-group row">
-                  <label for="username" class="col-md-4 col-form-label text-md-right">Gebruikersnaam</label>
+                  <label for="username" class="col-md-4 col-form-label text-md-right">Username</label>
 
                   <div class="col-md-8">
                     <input id="username" type="text" class="form-control @error('username') is-invalid @enderror" name="username" value="{{ $user->username }}" required autofocus>
@@ -34,7 +34,7 @@
 
                 <div class="form-group row mb-4">
                   <div class="col-md-8 offset-md-4">
-                    <button type="submit" class="btn btn-primary">Wijzig gebruikersnaam</button>
+                    <button type="submit" class="btn btn-primary">Change username</button>
                   </div>
                 </div>
               </form>
@@ -47,7 +47,7 @@
                 @method('PUT')
 
                 <div class="form-group row">
-                  <label for="password" class="col-md-4 col-form-label text-md-right">Wachtwoord</label>
+                  <label for="password" class="col-md-4 col-form-label text-md-right">Password</label>
 
                   <div class="col-md-8">
                     <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="new-password">
@@ -70,7 +70,7 @@
 
                 <div class="form-group row mb-4">
                   <div class="col-md-8 offset-md-4">
-                    <button type="submit" class="btn btn-primary">Wijzig wachtwoord</button>
+                    <button type="submit" class="btn btn-primary">Change password</button>
                   </div>
                 </div>
               </form>

@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Welkom</title>
+  <title>Welcome</title>
 
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.bunny.net">
@@ -18,10 +18,10 @@
 
   <div class="card">
     <div class="welcome-container">
-      <h1 class="welcome-title">Welkom</h1>
+      <h1 class="welcome-title">Welcome</h1>
       <div class="button-container">
-        <a class="button login" href="/login">Aanmelden</a>
-        <a class="button register" href="/register">Account aanmaken</a>
+        <a class="button login" href="/login">Login</a>
+        <a class="button register" href="/register">Register</a>
       </div>
     </div>
 

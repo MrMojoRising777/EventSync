@@ -5,15 +5,15 @@
       <form>
         <div class="form-row">
           <div class="col-md-4 mb-3">
-            <label for="streetInput">Straat:</label>
+            <label for="streetInput">Street:</label>
             <input id="streetInput" class="form-control" type="text" placeholder="Geef een straatnaam" />
           </div>
           <div class="col-md-4 mb-3">
-            <label for="zipInput">Postcode:</label>
+            <label for="zipInput">Zipcode:</label>
             <input id="zipInput" class="form-control" type="text" placeholder="Geef een postcode" />
           </div>
           <div class="col-md-4 mb-3">
-            <label for="cityInput">Stad:</label>
+            <label for="cityInput">City:</label>
             <input id="cityInput" class="form-control" type="text" placeholder="Geef een stad" />
           </div>
         </div>

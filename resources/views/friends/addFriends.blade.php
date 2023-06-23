@@ -6,8 +6,8 @@
         <div class="col-md-4">
             <form action="{{ route('searchFriends') }}" method="POST">
                 @csrf
-                <input type="text" id="search" name="search" class="form-control" placeholder="Zoek een vriend">
-                <button class="btn btn-primary mt-2" type="submit">Zoek</button>
+                <input type="text" id="search" name="search" class="form-control" placeholder="Search a friend using 'username' or their 'id'">
+                <button class="btn btn-primary mt-2" type="submit">Search</button>
             </form>
         </div>
     </div>
