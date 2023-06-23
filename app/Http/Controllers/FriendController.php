@@ -84,25 +84,22 @@ class FriendController extends Controller
         //get current friends from the DB
         $json = $this->getFriendJson();
 
-            // Check if any items are selected
-            if (isset($_POST['selectedItems']) && is_array($_POST['selectedItems'])) {
-                foreach ($_POST['selectedItems'] as $selectedItemId) {
-                    // Find the selected item by id
-                    $selectedItem = array_filter($items, function ($item) use ($selectedItemId) {
-                        return $item['id'] == $selectedItemId;
-                    });
+        // Check if any items are selected
+        if ($request->has('selectedItems') && is_array($request->input('selectedItems'))) {
+            foreach ($request->input('selectedItems') as $selectedItemId) {
+                // Find the selected item by id
+                $selectedItem = array_filter($items, function ($item) use ($selectedItemId) {
+                    return $item['id'] == $selectedItemId;
+                });
 
-                    if (!empty($selectedItem)) {
+                if (!empty($selectedItem)) {
                         
-                        $selectedItem = reset($selectedItem);
-                        $json[] += $selectedItem['id'];
-                        echo "<li>{$selectedItem['username']} (ID: {$selectedItem['id']})</li>";
-                    }
+                    $selectedItem = reset($selectedItem);
+                    $json[] += $selectedItem['id'];
                 }
             }
-        
-
-         
+        }
+          
         // save selected friends to database
         $user = auth()->user();
         $user->friends = json_encode($json);
@@ -134,26 +131,26 @@ class FriendController extends Controller
         
         $deleteFriends = [];
 
-            // Check if any items are selected
-            if (isset($_POST['selectedItems']) && is_array($_POST['selectedItems'])) {
-                foreach ($_POST['selectedItems'] as $selectedItemId) {
-                    // Find the selected item by id
-                    $selectedItem = array_filter($items, function ($item) use ($selectedItemId) {
-                        return $item['id'] == $selectedItemId;
-                    });
+        // Check if any items are selected
+        if ($request->has('selectedItems') && is_array($request->input('selectedItems'))) {
+            foreach ($request->input('selectedItems') as $selectedItemId) {
+                // Find the selected item by id
+                $selectedItem = array_filter($items, function ($item) use ($selectedItemId) {
+                    return $item['id'] == $selectedItemId;
+                });
 
-                    if (!empty($selectedItem)) {
+                if (!empty($selectedItem)) {
                         
-                        $selectedItem = reset($selectedItem);
-                        $deleteFriends[] += $selectedItem['id'];
+                    $selectedItem = reset($selectedItem);
+                    $deleteFriends[] += $selectedItem['id'];
                         
-                    }
                 }
-                
-                // delete the selected items from the json array
-                $updatedFriendIds = array_diff($json, $deleteFriends);
-                
             }
+               
+            // delete the selected items from the json array
+             $updatedFriendIds = array_diff($json, $deleteFriends);
+                
+        }
         
         // save updated friend information to database
         if (isset($updatedFriendIds)) {    
