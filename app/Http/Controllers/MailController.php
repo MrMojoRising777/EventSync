@@ -60,11 +60,9 @@ class MailController extends Controller
         }
     }
 
-    public function sendCancelations(Request $request)
-    {
-        $eventId = $request->event_id;
-
-        $event = Event::find($eventId);
+    public function sendCancelations($id)
+    {        
+        $event = Event::find($id);
 
         if (!$event) {
             return response()->json(['message' => 'Event not found'], 404);
@@ -86,6 +84,9 @@ class MailController extends Controller
             Mail::to($email)->send(new CancelEmail($details));
         }
 
-        return response()->json(['message' => 'Cancellation emails sent successfully']);
+        $event->delete();
+
+        return redirect()->back()->with('success', 'Event deleted and cancellation emails sent successfully.');
+
     }
 }

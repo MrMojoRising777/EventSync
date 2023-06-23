@@ -49,7 +49,27 @@
               <button type="submit" class="btn btn-danger" onclick="confirmDelete($event->id)">Cancel event</button>
             </div>
           </div>
-        </form>
+          <div class="col-4">
+
+            <form method="POST" action="{{ route('Event', ['id' => $ownedevent->id]) }}">
+              @csrf
+              @method('GET')
+              <div class="form-group row mb-0">
+                <div class="col-md-8 offset-md-4">
+                  <button type="submit" class="btn btn-success" href="{{route('Event', ['id' => $ownedevent->id])}}">info</button>
+                </div>
+              </div>
+            </form>
+            
+            <form method="POST" action="{{ route('send-cancellations', ['id' => $ownedevent->id]) }}">
+              @csrf
+              @method('DELETE')
+              <div class="form-group row mb-0">
+                <div class="col-md-8 offset-md-4">
+                  <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete your event?')">Verwijder event</button>
+                </div>
+              </div>
+            </form>
       </div>
     </div>
   </div>
@@ -162,7 +182,6 @@
     }
     window.addEventListener('load', initMap_{{ $ownedevent->id }});
   @endforeach
-
   // Map initialization $InvitedEvents
   @foreach ($events as $event)
   function initMap_{{ $event->id }}() {
@@ -197,40 +216,4 @@
   window.addEventListener('load', initMap_{{ $event->id }});
 @endforeach
 
-  function confirmDelete(event) {
-    event.preventDefault(); // Prevent the default form submission
-    
-    if (confirm('Are you sure you want to delete your event?')) {
-      // Make AJAX request to send cancellation
-      $.ajax({
-        url: "{{ route('send-cancellations') }}",
-        headers: {
-          'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        },
-        data: {
-          type: 'create'
-        },
-        type: "POST",
-        success: function (data) {
-          // Handle success response
-          console.log("Cancellation sent:", data);
 
-          // Show toastr popup
-          toastr.success('Cancellation sent successfully');
-
-          // Redirect to home page after delay
-          setTimeout(function () {
-            // window.location.href = "{{ route('home') }}";
-          }, 2000); // Delay in milliseconds
-        },
-        error: function (xhr, status, error) {
-          // Handle error response
-          console.log("Error sending Cancellation:", error);
-
-          // Show toastr popup for error
-          toastr.error('Error sending Cancellation');
-        }
-      });
-    }
-  }
-</script>
