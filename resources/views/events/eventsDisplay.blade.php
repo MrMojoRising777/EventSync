@@ -1,23 +1,53 @@
 @extends('layouts.app')
 
 @section('content')
+<!-- Add ol.css manually -->
+<link rel="stylesheet" href="{{ asset('css/ol.css') }}">
+
 <div class="container">
-  <h2>Your Events</h2>
+  <h2 class="mb-4">Your Events</h2>
   @if ($ownedEvents->isEmpty())
-    <p><i><b>Currently you don't have any organized events. Invite some friends, Sync up and create memories!</b></i></p>
+    <p class="text-center"><i><b>Currently you don't have any organized events. Invite some friends, Sync up and create memories!</b></i></p>
   @else
     @foreach ($ownedEvents as $ownedevent)
     <div class="card mb-3">
-      <div class="card-header">
-        {{"Event Name: " . $ownedevent->name}}
-      </div>
-      <div class="container text-center">
-        <div class="row justify-content-start">
-          <div class="col-4">
-            {{"Location: " . $ownedevent->address . ', ' . $ownedevent->zipcode . ' ' . $ownedevent->city}}
+  <div class="card-header">
+    <strong>Event Name:</strong> {{ $ownedevent->name }}
+  </div>
+  <div class="container text-center">
+    <div class="row align-items-center">
+      <div class="col-4">
+        <div class="container m-2">
+          <div class="card map-container">
+            <div class="card-header">{{ __('Map') }}</div>
+            <div class="card-body">
+              <!-- Map Component -->
+              <div id="map_{{ $ownedevent->id }}" class="map_events-display"></div>
+            </div>
           </div>
-          <div class="col-4">
-            {{"Date: " . $ownedevent->date}}
+          <strong>Location:</strong> {{ $ownedevent->address }}, {{ $ownedevent->zipcode }} {{ $ownedevent->city }}
+        </div>
+      </div>
+      <div class="col-4">
+        <strong>Date:</strong> {{ $ownedevent->date }}
+      </div>
+      <div class="col-4">
+        <form method="POST" action="{{ route('Event', ['id' => $ownedevent->id]) }}">
+          @csrf
+          @method('GET')
+          <div class="form-group row mb-0">
+            <div class="col-md-8 offset-md-4">
+              <button type="submit" class="btn btn-success mt-2">info</button>
+            </div>
+          </div>
+        </form>
+        <form method="POST" action="{{ route('event.delete', ['id' => $ownedevent->id]) }}">
+          @csrf
+          @method('DELETE')
+          <div class="form-group row mb-0">
+            <div class="col-md-8 offset-md-4">
+              <button type="submit" class="btn btn-danger" onclick="confirmDelete(event)">Verwijder event</button>
+            </div>
           </div>
           <div class="col-4">
 
@@ -40,11 +70,10 @@
                 </div>
               </div>
             </form>
-            
-          </div>
-        </div>
       </div>
     </div>
+  </div>
+</div>
     @endforeach
   @endif
 
@@ -62,30 +91,37 @@
   @else
     <h2>Invited Events</h2>
     @foreach ($events as $event)
-    <div class="card">
+    <div class="card mb-3">
       <div class="card-header">
-        {{"Event Name: " . $event->name}}
+        Event Name: {{ $event->name }}
       </div>
       <div class="container text-center">
-        <div class="row justify-content-start">
+        <div class="row align-items-center">
           <div class="col-4">
-            {{"Location: " . $event->address . ', ' . $event->zipcode . ' ' . $event->city}}
+            <div class="container m-2">
+              <div class="card map-container">
+                <div class="card-header">{{ __('Map') }}</div>
+                <div class="card-body">
+                  <!-- Map Component -->
+                  <div id="map_{{ $event->id }}" class="map_events-display"></div>
+                </div>
+              </div>
+              <strong>Location:</strong> {{ $event->address }}, {{ $event->zipcode }} {{ $event->city }}
+            </div>
           </div>
           <div class="col-4">
-            {{"Date: " . $event->date}}
+            Date: {{ $event->date }}
           </div>
           <div class="col-4">
-
             <form method="POST" action="{{ route('Event', ['id' => $event->id]) }}">
               @csrf
               @method('GET')
               <div class="form-group row mb-0">
                 <div class="col-md-8 offset-md-4">
-                  <button type="submit" class="btn btn-success" href="{{route('Event', ['id' => $event->id])}}">info</button>
+                  <button type="submit" class="btn btn-success">info</button>
                 </div>
               </div>
             </form>
-            
             <form method="POST" action="{{ route('event.pivot.delete', ['id' => $event->id]) }}">
               @csrf
               @method('DELETE')
@@ -95,7 +131,6 @@
                 </div>
               </div>
             </form>
-
           </div>
         </div>
       </div>
@@ -108,3 +143,4 @@
   </div>
 </div>
 @endsection
+
