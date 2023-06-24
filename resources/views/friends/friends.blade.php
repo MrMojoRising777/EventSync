@@ -21,12 +21,19 @@
                         <div class="row">
                             @foreach($usersArray as $friend)
                             <div class="col-md-3 col-sm-6 mb-4">
-                                <div class="card">
-                                    <div class="card-body text-center align-middle">
-                                        <h3 class="card-title">{{$friend->username}}</h3>
-                                        <h5 class="card-content">{{"id: ". $friend->id}}</h5>
-                                    </div>
+                            <div class="card">
+                                <div class="card-body text-center">
+                                <div class="profile-picture-container d-flex justify-content-center align-items-center">
+                                    @if($friend->profile_picture)
+                                    <img src="{{ $friend->profile_picture }}" alt="Profile Picture" class="img-fluid rounded-circle friends-profile-picture">
+                                    @else
+                                    <img src="{{ asset('build/assets/images/default_avatar.png') }}" alt="Default Profile Picture" class="img-fluid rounded-circle friends-profile-picture">
+                                    @endif
                                 </div>
+                                <h3 class="card-title">{{$friend->username}}</h3>
+                                <h5 class="card-content">{{"id: ". $friend->id}}</h5>
+                                </div>
+                            </div>
                             </div>
                             @endforeach
                         </div>

@@ -14,6 +14,14 @@
                             <label class="checkbox-wrapper">
                               <input type="checkbox" class="checkbox-input" name="selectedItems[]" value="{{$friend->id}}" />
                                 <span class="checkbox-tile text-center align-middle">
+                                    <div class="profile-picture-container d-flex justify-content-center align-items-center">
+                                        @if($friend->profile_picture)
+                                        <img src="{{ $friend->profile_picture }}" alt="Profile Picture" class="img-fluid rounded-circle friends-profile-picture">
+                                        @else
+                                        <img src="{{ asset('build/assets/images/default_avatar.png') }}" alt="Default Profile Picture" class="img-fluid rounded-circle friends-profile-picture">
+                                        @endif
+                                    </div>
+                                    <br>
                                     {{$friend->username}}
                                     <br>
                                     {{$friend->id}}                           
