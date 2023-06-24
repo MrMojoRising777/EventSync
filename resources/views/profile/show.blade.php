@@ -77,6 +77,33 @@
 
               <hr>
 
+              <form method="POST" action="{{ route('profile.update.picture') }}" enctype="multipart/form-data">
+                @csrf
+                @method('PUT')
+
+                <div class="form-group row">
+                  <label for="picture" class="col-md-4 col-form-label text-md-right">Profile Picture</label>
+
+                  <div class="col-md-8">
+                    <input id="picture" type="file" class="form-control-file @error('picture') is-invalid @enderror" name="picture" accept="image/*">
+
+                    @error('picture')
+                      <span class="invalid-feedback" role="alert">
+                        <strong>{{ $message }}</strong>
+                      </span>
+                    @enderror
+                  </div>
+                </div>
+
+                <div class="form-group row mb-4">
+                  <div class="col-md-8 offset-md-4">
+                    <button type="submit" class="btn btn-primary">Upload Picture</button>
+                  </div>
+                </div>
+              </form>
+
+              <hr>
+
               <form method="POST" action="{{ route('profile.delete') }}">
                 @csrf
                 @method('DELETE')

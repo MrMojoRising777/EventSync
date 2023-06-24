@@ -36,7 +36,6 @@ Route::get('/map', [MapController::class, 'index'])->name('map_events');
 // calendar
 Route::get('/calendar', [CalendarController::class, 'index'])->name('calendar.index');
 Route::post('/calendar-event', [CalendarController::class, 'calendarEvents'])->name('calendar.events');
-// Route::get('/calendar-event', [CalendarController::class, 'calendarEvents']);
 
 // profile page
 Route::get('/profile', 'App\Http\Controllers\ProfileController@show')->name('profile.show');
@@ -44,8 +43,7 @@ Route::put('/profile/update-username', 'App\Http\Controllers\ProfileController@u
 Route::put('/profile/update-password', 'App\Http\Controllers\ProfileController@updatePassword')->name('profile.update.password');
 Route::delete('/profile/delete-account', 'App\Http\Controllers\ProfileController@deleteAccount')->name('profile.delete');
 
-// create activity/event
-//Route::get('/event', [CalendarController::class, 'showCal'])->name('event.create');
+Route::put('/profile/update/picture', 'App\Http\Controllers\ProfileController@updatePicture')->name('profile.update.picture');
 
 //events display page
 Route::get('/currentEvents', [App\Http\Controllers\EventController::class, 'index'])->name('eventsPage');
@@ -59,6 +57,7 @@ Route::delete('/deleteEventPivot/{id}', [App\Http\Controllers\EventController::c
 
 //availabilities
 Route::resource('availabilities', AvailabilityController::class);
+Route::post('availabilities/store', [AvailabilityController::class, 'store'])->name('store');
 
 // MAIL
 Route::match(['get', 'post'], '/send-invitations', [MailController::class, 'sendInvitations'])->name('invitations');

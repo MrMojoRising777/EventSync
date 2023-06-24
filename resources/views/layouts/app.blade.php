@@ -77,6 +77,14 @@
                                 </li>
                             @endif
                         @else
+                            <div class="profile-picture-container">
+                                @if(Auth::user()->profile_picture)
+                                    <img src="{{ asset('storage/profile-pictures/' . $profilePicture) }}" alt="Profile Picture" class="navbar-profile-picture">
+                                @else
+                                    <!-- Default profile picture or placeholder image -->
+                                    <img src="{{ asset('build/assets/images/default_avatar.png') }}" alt="Default Profile Picture" class="navbar-profile-picture">
+                                @endif
+                            </div>
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                     {{ Auth::user()->username }}

@@ -9,8 +9,8 @@
         <div class="card-body">
             <h1 class="card-header">Availabilities</h1>
             <div class="container mt-5" style="max-width: 700px">
-            <div id="full_calendar_events"></div>
-            <button id="save-button" class="btn btn-primary mt-3">Save</button>
+                <div id="full_calendar_events"></div>
+                <button id="save-button" class="btn btn-primary mt-3">Save</button>
             </div>
         </div>
     </div>
@@ -50,16 +50,23 @@
                 // select callback for capturing the selected date
                 select: function(startDate, endDate) {
                     var selectedDate = startDate.format('YYYY-MM-DD');
-                    // Add the selected date to the array
-                    selectedDates.push(selectedDate);
-                    console.log('Selected Date:', selectedDate);
-                    // Highlight the selected date on the calendar
-                    calendar.fullCalendar('renderEvent', {
-                        start: startDate,
-                        end: endDate,
-                        rendering: 'background',
-                        className: 'fc-highlight'
-                    });
+                    
+                    // Check if the clicked date is already selected
+                    var index = selectedDates.indexOf(selectedDate);
+                    if (index !== -1) {
+                        // Deselect the date
+                        selectedDates.splice(index, 1);
+                        $('.fc-day[data-date="' + selectedDate + '"]').removeClass('fc-highlight');
+                        console.log('Deselected Date:', selectedDate);
+                    } else {
+                        // Select the date
+                        selectedDates.push(selectedDate);
+                        $('.fc-day[data-date="' + selectedDate + '"]').addClass('fc-highlight');
+                        console.log('Selected Date:', selectedDate);
+                    }
+
+                    // Deselect the selection
+                    calendar.fullCalendar('unselect');
                 },
                 events: function (start, end, timezone, callback) {
                     $.ajax({
@@ -83,7 +90,7 @@
                     url: SITEURL + "/availabilities/store",
                     type: "POST",
                     data: {
-                        event_id: 4, // HARDCODED
+                        event_id: 5, // HARDCODED
                         start_date: selectedDates,
                         end_date: selectedDates,
                     },
@@ -98,9 +105,5 @@
                 });
             });
         });
-
-        function displayMessage(message) {
-            toastr.success(message, 'Event');
-        }
     </script>
 @endsection

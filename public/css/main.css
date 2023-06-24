@@ -21,6 +21,8 @@ main {
 
 .navbar-nav {
   margin-left: 10rem;
+  display: flex;
+  align-items: center;
 }
 
 .navbar-nav .nav-link {
@@ -28,6 +30,21 @@ main {
   line-height: 5rem;
   padding: 1rem;
   color: white !important;
+}
+
+/* Profile picture container */
+.profile-picture-container {
+  width: 40px;
+  height: 40px;
+  overflow: hidden;
+  border-radius: 50%;
+}
+
+/* Profile picture */
+.navbar-profile-picture {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 /* footer */
