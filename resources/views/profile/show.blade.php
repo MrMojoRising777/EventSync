@@ -47,7 +47,21 @@
                 @method('PUT')
 
                 <div class="form-group row">
-                  <label for="password" class="col-md-4 col-form-label text-md-right">Password</label>
+                  <label for="old-password" class="col-md-4 col-form-label text-md-right">Old Password</label>
+
+                  <div class="col-md-8">
+                    <input id="old-password" type="password" class="form-control @error('old_password') is-invalid @enderror" name="old_password" required autocomplete="current-password">
+
+                    @error('old_password')
+                      <span class="invalid-feedback" role="alert">
+                        <strong>{{ $message }}</strong>
+                      </span>
+                    @enderror
+                  </div>
+                </div>
+
+                <div class="form-group row">
+                  <label for="password" class="col-md-4 col-form-label text-md-right">New Password</label>
 
                   <div class="col-md-8">
                     <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="new-password">
@@ -61,7 +75,7 @@
                 </div>
 
                 <div class="form-group row">
-                  <label for="password-confirm" class="col-md-4 col-form-label text-md-right">Confirm Password</label>
+                  <label for="password-confirm" class="col-md-4 col-form-label text-md-right">Confirm New Password</label>
 
                   <div class="col-md-8">
                     <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password">
