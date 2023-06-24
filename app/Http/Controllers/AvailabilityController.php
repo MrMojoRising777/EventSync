@@ -8,13 +8,28 @@ use App\Models\Availability;
 use App\Models\RecommendedDate;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Carbon\Carbon;
 
 class AvailabilityController extends Controller
 {
     public function index()
     {
+        $user = auth()->user(); 
+        $currentDate = Carbon::today();
+
+        $events = $user->events()
+            ->whereDate('date', '>=', $currentDate)
+            ->orderBy('date', 'asc')
+            ->paginate(5);
+
+        $ownedEvents = Event::where('owner_id', '=', $user->id)
+            ->whereDate('date', '>=', $currentDate)
+            ->orderBy('date', 'asc')
+            ->paginate(5);
+
         $availabilities = Availability::with(['user', 'event'])->get();
-        return view('availabilities.index', compact('availabilities'));
+
+        return view('availabilities.index', compact('events', 'ownedEvents', 'availabilities'));
     }
 
     public function create()
@@ -41,7 +56,7 @@ class AvailabilityController extends Controller
             // Check if a valid end_date for a given start_date exists
             if (isset($end_dates[$i]) && $end_dates[$i] >= $start_dates[$i]) {
                 $existingAvailability = Availability::where('user_id', $user_id)
-                    ->where('event_id', $event_id)
+                    ->Where('event_id', $event_id)
                     ->whereBetween('start_date', [$start_dates[$i], $end_dates[$i]])
                     ->orWhereBetween('end_date', [$start_dates[$i], $end_dates[$i]])
                     ->first();

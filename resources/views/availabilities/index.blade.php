@@ -8,6 +8,27 @@
     <div class="card">
         <div class="card-body">
             <h1 class="card-header">Availabilities</h1>
+            <div class="container">
+                <h2>Owned events:</h2>
+                <ul>
+                    @foreach ($ownedEvents as $ownedevent)
+                        <li>
+                            <input type="checkbox" class="event-checkbox" value="{{ $ownedevent->id }}">
+                            <strong>Event Name:</strong> {{ $ownedevent->name }}
+                        </li>
+                    @endforeach
+                </ul>
+                <br>
+                <h2>Invited events:</h2>
+                <ul>
+                    @foreach ($events as $event)
+                        <li>
+                            <input type="checkbox" class="event-checkbox" value="{{ $event->id }}">
+                            <strong>Event Name:</strong> {{ $event->name }}
+                        </li>
+                    @endforeach
+                </ul>
+            </div>
             <div class="container mt-5" style="max-width: 700px">
                 <div id="full_calendar_events"></div>
                 <button id="save-button" class="btn btn-primary mt-3">Save</button>
@@ -85,23 +106,32 @@
 
             // Save button click event
             $('#save-button').on('click', function () {
-                // Send the selectedDates array to the server
-                $.ajax({
-                    url: SITEURL + "/availabilities/store",
-                    type: "POST",
-                    data: {
-                        event_id: 5, // HARDCODED
-                        start_date: selectedDates,
-                        end_date: selectedDates,
-                    },
-                    success: function (response) {
-                        console.log('Response:', response);
-                        // Handle the response from the server
-                    },
-                    error: function (error) {
-                        console.log('Error:', error);
-                        // Handle the error
-                    }
+                var selectedEvents = [];
+                $('.event-checkbox:checked').each(function () {
+                    selectedEvents.push($(this).val());
+                });
+                console.log(selectedEvents);
+
+                // Iterate over selectedEvents array
+                selectedEvents.forEach(function(eventId) {
+                    // Send the selectedDates array to the server for each event ID
+                    $.ajax({
+                        url: SITEURL + "/availabilities/store",
+                        type: "POST",
+                        data: {
+                            event_id: eventId,
+                            start_date: selectedDates,
+                            end_date: selectedDates,
+                        },
+                        success: function (response) {
+                            console.log('Response:', response);
+                            // Handle the response from the server
+                        },
+                        error: function (error) {
+                            console.log('Error:', error);
+                            // Handle the error
+                        }
+                    });
                 });
             });
         });
