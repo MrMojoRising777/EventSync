@@ -52,28 +52,44 @@ class AvailabilityController extends Controller
         $end_dates = $request->end_date;
         $user_id = Auth::id();
 
-        for ($i = 0; $i < count($start_dates); $i++) {
-            // Check if a valid end_date for a given start_date exists
-            if (isset($end_dates[$i]) && $end_dates[$i] >= $start_dates[$i]) {
-                $existingAvailability = Availability::where('user_id', $user_id)
-                    ->Where('event_id', $event_id)
-                    ->whereBetween('start_date', [$start_dates[$i], $end_dates[$i]])
-                    ->orWhereBetween('end_date', [$start_dates[$i], $end_dates[$i]])
-                    ->first();
-
-                if ($existingAvailability) {
-                    return redirect()->route('availabilities.index')
-                        ->with('error', 'You have already created an availability for this event in the specified time range.');
-                }
-
+        foreach ($start_dates as $start_date) {
+            $existingAvailability = Availability::where('user_id', $user_id)
+                ->where('event_id', $event_id)
+                ->where('start_date', $start_date)
+                ->first();
+            
+            if (empty($existingAvailability)) {
                 $availability = new Availability;
                 $availability->user_id = $user_id;
                 $availability->event_id = $event_id;
-                $availability->start_date = $start_dates[$i];
-                $availability->end_date = $end_dates[$i];
+                $availability->start_date = $start_date;
+                $availability->end_date = $start_date;
                 $availability->save();
             }
         }
+
+        // for ($i = 0; $i < count($start_dates); $i++) {
+        //     // Check if a valid end_date for a given start_date exists
+        //     if (isset($end_dates[$i]) && $end_dates[$i] >= $start_dates[$i]) {
+        //         $existingAvailability = Availability::where('user_id', $user_id)
+        //             ->Where('event_id', $event_id)
+        //             ->whereBetween('start_date', [$start_dates[$i], $end_dates[$i]])
+        //             ->orWhereBetween('end_date', [$start_dates[$i], $end_dates[$i]])
+        //             ->first();
+
+        //         if ($existingAvailability) {
+        //             return redirect()->route('availabilities.index')
+        //                 ->with('error', 'You have already created an availability for this event in the specified time range.');
+        //         }
+
+        //         $availability = new Availability;
+        //         $availability->user_id = $user_id;
+        //         $availability->event_id = $event_id;
+        //         $availability->start_date = $start_dates[$i];
+        //         $availability->end_date = $end_dates[$i];
+        //         $availability->save();
+        //     }
+        // }
 
         // $this->calculateOverlappingDates($event_id);
 
