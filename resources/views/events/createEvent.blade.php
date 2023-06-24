@@ -5,6 +5,8 @@
   <link rel="stylesheet" href="{{ asset('css/ol.css') }}">
 
   <!-- toastr -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
 
   <div class="container">
@@ -22,18 +24,6 @@
                 <div class="card-body">
                   <input type="text" name="event_name" id="event_name" class="form-control" required placeholder="Typ the name of your event here" required>
                 </div>
-            </div>
-          </div>
-
-          <!-- Calendar Component -->
-          <div class="form-group">
-            <div class="card card-custom mb-3">
-              <div class="card-header">{{ __('Select a date:') }}</div>
-              <div class="card-body card-body-custom p-0">
-                <div class="events-calendar-container" id="calendarContainer">
-                  @include('components.calendar')
-                </div>
-              </div>
             </div>
           </div>
 
@@ -210,9 +200,14 @@
             // Handle success response
             console.log("Pivot table updated:", data);
 
+            var csrfToken = $('meta[name="csrf-token"]').attr('content');
+
             // Make AJAX request to send invitations
             $.ajax({
               url: "{{ route('invitations') }}",
+              headers: {
+                'X-CSRF-TOKEN': csrfToken // Include the CSRF token in the request headers
+              },
               data: {
                 selected_friends: selectedFriends, // Pass selectedFriends as an array
                 owner_id: ownerId,
