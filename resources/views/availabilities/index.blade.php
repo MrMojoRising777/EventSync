@@ -254,6 +254,13 @@
                 selectHelper: true,
                 eventColor: '#ffa500',
 
+                // disable selecting past dates
+                selectAllow: function (selectInfo) {
+                    var today = moment().startOf('day');
+                    var selectedStartDate = selectInfo.start.startOf('day');
+                    // Only allow selection of future dates
+                    return selectedStartDate.isSameOrAfter(today);
+                },
                 // select callback for capturing the selected date
                 select: function(startDate, endDate) {
                     var selectedDate = startDate.format('YYYY-MM-DD');
