@@ -67,7 +67,7 @@
 <div class="container">
   @if ($events->isEmpty())
   <h2>Invited Events</h2>
-    <p><i><b>Currently you aren't part of any events. Don't wait on friends, create your own and invite them!</b></i></p>
+  <p class="text-center"><i><b>Currently you aren't part of any events. Don't wait on friends, create your own and invite them!</b></i></p>
   @else
     <h2>Invited Events</h2>
     @foreach ($events as $event)
