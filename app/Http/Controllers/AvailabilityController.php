@@ -9,6 +9,7 @@ use App\Models\RecommendedDate;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 
 class AvailabilityController extends Controller
 {
@@ -68,31 +69,6 @@ class AvailabilityController extends Controller
             }
         }
 
-        // for ($i = 0; $i < count($start_dates); $i++) {
-        //     // Check if a valid end_date for a given start_date exists
-        //     if (isset($end_dates[$i]) && $end_dates[$i] >= $start_dates[$i]) {
-        //         $existingAvailability = Availability::where('user_id', $user_id)
-        //             ->Where('event_id', $event_id)
-        //             ->whereBetween('start_date', [$start_dates[$i], $end_dates[$i]])
-        //             ->orWhereBetween('end_date', [$start_dates[$i], $end_dates[$i]])
-        //             ->first();
-
-        //         if ($existingAvailability) {
-        //             return redirect()->route('availabilities.index')
-        //                 ->with('error', 'You have already created an availability for this event in the specified time range.');
-        //         }
-
-        //         $availability = new Availability;
-        //         $availability->user_id = $user_id;
-        //         $availability->event_id = $event_id;
-        //         $availability->start_date = $start_dates[$i];
-        //         $availability->end_date = $end_dates[$i];
-        //         $availability->save();
-        //     }
-        // }
-
-        // $this->calculateOverlappingDates($event_id);
-
         return redirect()->route('availabilities.index')
             ->with('success', 'Availabilities created successfully.');
     }
@@ -143,26 +119,30 @@ class AvailabilityController extends Controller
         return redirect()->route('availabilities.index');
     }
 
-    private function calculateOverlappingDates($event_id)
+    public function calculateOverlappingDates($event_id)
     {
-        // Fetch all the availabilities for the event.
-        $availabilities = Availability::where('event_id', $event_id)
+
+
+       
+
+        $availability = Availability::select('start_date', DB::raw('COUNT(start_date) as count'))
+            ->where('event_id', '=', $event_id)
+            ->groupBy('start_date')
+            ->orderBy('count', 'desc')
             ->orderBy('start_date', 'asc')
-            ->get();
+            ->first();
+
 
         // Clear previous recommended dates for the event.
         RecommendedDate::where('event_id', $event_id)->delete();
 
-        for ($i = 0; $i < count($availabilities); $i++) {
-            for ($j = $i + 1; $j < count($availabilities); $j++) {
-                if ($availabilities[$i]->end_date >= $availabilities[$j]->start_date) {
-                    RecommendedDate::create([
-                        'event_id' => $event_id,
-                        'start_date' => max($availabilities[$i]->start_date, $availabilities[$j]->start_date),
-                        'end_date' => min($availabilities[$i]->end_date, $availabilities[$j]->end_date),
-                    ]);
-                }
-            }
-        }
+        $reccomended = new RecommendedDate;
+        $reccomended->start_date = $availability->start_date;
+        $reccomended->event_id = $event_id;
+        $reccomended->end_date = $availability->start_date;
+        $reccomended->save();
+
+        return redirect()->back();
+
     }
 }
