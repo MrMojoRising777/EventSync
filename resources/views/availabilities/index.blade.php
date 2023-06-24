@@ -8,6 +8,8 @@
     <style>
         .checkbox-wrapper-12 {
             position: relative;
+            display: flex;
+            align-items: center;
         }
 
         .checkbox-wrapper-12 > svg {
@@ -40,6 +42,8 @@
             height: 24px;
             top: calc(100px - 12px);
             left: calc(100px - 12px);
+            margin-right: 10px;
+            margin-bottom: 5px;
         }
 
         .checkbox-wrapper-12 .cbx input {
@@ -160,7 +164,7 @@
                             <path d="M2 8.36364L6.23077 12L13 2"></path>
                             </svg>
                         </div>
-                        <strong>Event Name:</strong> {{ $ownedevent->name }}    
+                        <span><strong>Event Name: </strong>{{ $ownedevent->name }}</span> 
                         
                         <svg xmlns="http://www.w3.org/2000/svg" version="1.1">
                             <defs>
@@ -178,10 +182,26 @@
                 <h2>Invited events:</h2>
                 <ul>
                     @foreach ($events as $event)
-                        <li>
-                            <input type="checkbox" class="event-checkbox" value="{{ $event->id }}">
-                            <strong>Event Name:</strong> {{ $event->name }}
-                        </li>
+                        <div class="checkbox-wrapper-12">
+                            <div class="cbx">
+                                <input id="cbx-12" type="checkbox" class="event-checkbox" value="{{ $ownedevent->id }}">
+                                <label for="cbx-12"></label>
+                                <svg width="15" height="14" viewBox="0 0 15 14" fill="none">
+                                <path d="M2 8.36364L6.23077 12L13 2"></path>
+                                </svg>
+                            </div>
+                            <strong>Event Name:</strong> {{ $event->name }}    
+                            
+                            <svg xmlns="http://www.w3.org/2000/svg" version="1.1">
+                                <defs>
+                                <filter id="goo-12">
+                                    <feGaussianBlur in="SourceGraphic" stdDeviation="4" result="blur"></feGaussianBlur>
+                                    <feColorMatrix in="blur" mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 22 -7" result="goo-12"></feColorMatrix>
+                                    <feBlend in="SourceGraphic" in2="goo-12"></feBlend>
+                                </filter>
+                                </defs>
+                            </svg>
+                        </div>
                     @endforeach
                 </ul>
             </div>
@@ -197,13 +217,13 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment-with-locales.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/fullcalendar.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/locale/nl.js"></script>
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/locale/nl.js"></script> -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 
     <script>
         $(document).ready(function () {
             // Set moment.js locale to Dutch
-            moment.locale('nl');
+            // moment.locale('nl');
 
             // fetch header information
             var SITEURL = "{{ url('/') }}";
