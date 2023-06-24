@@ -29,7 +29,12 @@
         </div>
       </div>
       <div class="col-4">
-        <strong>Date:</strong> {{ $ownedevent->date }}
+        <strong>Date:</strong> 
+          @if($ownedevent->date)
+            {{ $ownedevent->date }}
+          @else
+            <span><b><i>There isn't yet a date for this event. Hang in there!</i></b></span>
+          @endif
       </div>
       <div class="col-4">
         <form method="POST" action="{{ route('Event', ['id' => $ownedevent->id]) }}">
