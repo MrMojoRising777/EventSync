@@ -263,12 +263,12 @@
                     if (index !== -1) {
                         // Deselect the date
                         selectedDates.splice(index, 1);
-                        $('.fc-day[data-date="' + selectedDate + '"]').removeClass('fc-highlight');
+                        $('.fc-day[data-date="' + selectedDate + '"]').removeClass('available-day');
                         console.log('Deselected Date:', selectedDate);
                     } else {
                         // Select the date
                         selectedDates.push(selectedDate);
-                        $('.fc-day[data-date="' + selectedDate + '"]').addClass('fc-highlight');
+                        $('.fc-day[data-date="' + selectedDate + '"]').addClass('available-day');
                         console.log('Selected Date:', selectedDate);
                     }
 
