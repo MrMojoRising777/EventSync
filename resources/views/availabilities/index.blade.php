@@ -138,6 +138,11 @@
                 box-shadow: 0 -36px 0 -10px transparent, 32px -16px 0 -10px transparent, 32px 16px 0 -10px transparent, 0 36px 0 -10px transparent, -32px 16px 0 -10px transparent, -32px -16px 0 -10px transparent;
             }
         }
+
+        .available-day {
+            background-color: #FCCB8F;
+        }
+
     </style>
 
     <div class="card">
@@ -215,9 +220,19 @@
                 displayEventTime: true,
                 eventRender: function (event, element, view) {
                     element.find('.fc-title').text(event.title);
+
+                    // Check if the event date exists in $availabilities
+                    var eventDate = event.start.format('YYYY-MM-DD');
+                    var availabilityDates = {!! json_encode($availabilities->pluck('start_date')) !!};
+                    console.log(availabilityDates);
+                    availabilityDates.forEach(function (date) {
+                        var dayElement = $('.fc-day[data-date="' + date + '"]');
+                        dayElement.addClass('available-day');
+                    });
                 },
                 selectable: true,
                 selectHelper: true,
+                eventColor: '#ffa500',
 
                 // select callback for capturing the selected date
                 select: function(startDate, endDate) {

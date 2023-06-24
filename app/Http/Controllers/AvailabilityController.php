@@ -27,7 +27,7 @@ class AvailabilityController extends Controller
             ->orderBy('date', 'asc')
             ->paginate(5);
 
-        $availabilities = Availability::with(['user', 'event'])->get();
+        $availabilities = Availability::where('user_id', '=', $user->id)->get();
 
         return view('availabilities.index', compact('events', 'ownedEvents', 'availabilities'));
     }
