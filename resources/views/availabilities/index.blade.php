@@ -114,26 +114,33 @@
 
                 // Iterate over selectedEvents array
                 selectedEvents.forEach(function(eventId) {
-                    // Send the selectedDates array to the server for each event ID
+                    // Prepare the data to be sent in the AJAX request
+                    var requestData = {
+                        event_id: eventId,
+                        start_date: selectedDates,
+                        end_date: selectedDates,
+                    };
+
+                    // Send the AJAX request with the data
                     $.ajax({
                         url: SITEURL + "/availabilities/store",
                         type: "POST",
-                        data: {
-                            event_id: eventId,
-                            start_date: selectedDates,
-                            end_date: selectedDates,
-                        },
+                        data: requestData,
                         success: function (response) {
-                            console.log('Response:', response);
+                            console.log('Response for Event ID ' + eventId + ':', response);
                             // Handle the response from the server
                         },
                         error: function (error) {
-                            console.log('Error:', error);
+                            console.log('Error for Event ID ' + eventId + ':', error);
                             // Handle the error
                         }
                     });
+
+                    // Log the data being sent in the AJAX request
+                    console.log('Posted Data for Event ID ' + eventId + ':', requestData);
                 });
             });
+
         });
     </script>
 @endsection

@@ -75,7 +75,7 @@ class AvailabilityController extends Controller
             }
         }
 
-        $this->calculateOverlappingDates($event_id);
+        // $this->calculateOverlappingDates($event_id);
 
         return redirect()->route('availabilities.index')
             ->with('success', 'Availabilities created successfully.');
