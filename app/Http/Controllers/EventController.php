@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\FriendController as  FriendController;
 use App\Models\Event;
 use App\Models\User;
+use App\Models\RecommendedDate;
 use Carbon\Carbon;
 
 class EventController extends Controller
@@ -34,11 +35,15 @@ class EventController extends Controller
 
     public function show($id){
         $event = Event::find($id);
+        $user = auth()->user();
+        
 
         if ($event) {
-            $users = $event->users()->get();
+            $friends = $event->users()->get();
+            $recommended = $event->recommendedDates()->get();
+            
             // Return the view with the event data
-            return view('events.DisplayEvent', compact('event', 'users'));
+            return view('events.DisplayEvent', compact('event', 'friends', 'recommended', 'user'));
         } else {
             // Event not found, handle the error or redirect
             return redirect()->back()->with('error', 'Event not found.');

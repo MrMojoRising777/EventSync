@@ -23,18 +23,27 @@
         <div class="container text-center">
             <div class="row justify-content-start">
                 <div class="col">
-                    <form method="POST" action="{{-- route('Event', ['id' => $event->id]) --}}">
+                    @if ($event->owner_id == $user->id)
+                    <form method="POST" action="{{route('Recommended', ['id' => $event->id])}}">
                         @csrf
                         @method('GET')
                         <div class="form-group">
                           <div class="col">
-                            <button type="submit" class="btn btn-success" href="{{--route('Event', ['id' => $event->id])--}}">Your availability</button>
+                            <button type="submit" class="btn btn-success">Check recommended date</button>
                           </div>
                         </div>
                       </form>
+                    @endif
+                    {{"Current Reccomended Date: "}}
+                    @foreach ($recommended as $date)
+                        {{$date->start_date}}
+                    @endforeach
+
                 </div>
             </div>
         </div>
+
+
 
         <hr>
     
@@ -42,9 +51,9 @@
             <div class="row justify-content-start">
                 <div class="col">
                     {{"all invited Friends: "}}
-                    @if (!empty ($users))
-                        @foreach ($users as $user)
-                            {{$user->username}}
+                    @if (!empty ($friends))
+                        @foreach ($friends as $friend)
+                            {{$friend->username}}
                         @endforeach
                     @endif
                 </div>
