@@ -25,7 +25,7 @@
                                 <div class="card-body text-center">
                                 <div class="profile-picture-container d-flex justify-content-center align-items-center">
                                     @if($friend->profile_picture)
-                                    <img src="{{ $friend->profile_picture }}" alt="Profile Picture" class="img-fluid rounded-circle friends-profile-picture">
+                                    <img src="{{ asset('storage/profile-pictures/' . $friend->profile_picture) }}" alt="Profile Picture" class="img-fluid rounded-circle friends-profile-picture">
                                     @else
                                     <img src="{{ asset('build/assets/images/default_avatar.png') }}" alt="Default Profile Picture" class="img-fluid rounded-circle friends-profile-picture">
                                     @endif

@@ -9,14 +9,14 @@
                 <div class="deletefriends-container">
                     <div class="row justify-content-start flex-wrap">
                         @foreach ($usersArray as $friend)
-                        <div class="col-md-6 col-lg-4 col-xl-3 mb-3">
+                        <div class="col-md-3 col-sm-6 mb-4">
                         <div class="checkbox-wrapper-16">
                             <label class="checkbox-wrapper">
                               <input type="checkbox" class="checkbox-input" name="selectedItems[]" value="{{$friend->id}}" />
                                 <span class="checkbox-tile text-center align-middle">
-                                    <div class="profile-picture-container d-flex justify-content-center align-items-center">
+                                    <div class="profile-picture-container pt-1 d-flex justify-content-center align-items-center">
                                         @if($friend->profile_picture)
-                                        <img src="{{ $friend->profile_picture }}" alt="Profile Picture" class="img-fluid rounded-circle friends-profile-picture">
+                                        <img src="{{ asset('storage/profile-pictures/' . $friend->profile_picture) }}" alt="Profile Picture" class="img-fluid rounded-circle friends-profile-picture">
                                         @else
                                         <img src="{{ asset('build/assets/images/default_avatar.png') }}" alt="Default Profile Picture" class="img-fluid rounded-circle friends-profile-picture">
                                         @endif
