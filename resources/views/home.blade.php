@@ -91,8 +91,8 @@
             })
         ],
         view: new ol.View({
-            center: ol.proj.fromLonLat([5.5368901, 50.995]), // Center on Belgium coordinates: [longitude, latitude]
-            minZoom: 7 // Minimum zoom
+            center: ol.proj.fromLonLat([5.5368901, 50.995]), // Center on coordinates: [longitude, latitude]
+            minZoom: 7
         })
     });
 
@@ -126,22 +126,22 @@
             vectorSource.addFeature(marker);
         });
 
-        // Calculate the extent of the vector source
+        // Calculate extent of vector source
         var extent = vectorSource.getExtent();
 
-        // Check the number of features in the vector source
+        // Check number of features in vector source
         var featureCount = vectorSource.getFeatures().length;
 
-        // Fit the view to the extent or set zoom level manually
+        // Fit view to extent or set zoom level manually
         if (featureCount > 1) {
             map.getView().fit(extent, { padding: [50, 50, 50, 50] });
         } else if (featureCount === 1) {
             var markerCoordinates = vectorSource.getFeatures()[0].getGeometry().getCoordinates();
             map.getView().setCenter(markerCoordinates);
-            map.getView().setZoom(12); // Adjust the zoom level as desired
+            map.getView().setZoom(12); // Adjust zoom level
         }
     } else {
-        // Set a default extent and zoom level for the view
+        // Set default extent and zoom level for view
         var defaultCenter = ol.proj.fromLonLat([5.5368901, 50.995]);
         var defaultZoom = 7;
         map.getView().setCenter(defaultCenter);
@@ -152,7 +152,7 @@
 
   $(document).ready(function() {
     // Set moment.js locale to Dutch
-    moment.locale('nl');
+    // moment.locale('nl');
 
     // fetch header information
     var SITEURL = "{{ url('/') }}";
@@ -167,10 +167,9 @@
       type: "GET",
       success: function(response) {
         console.log('Response:', response);
-        initMap(response); // Pass the events directly to the initMap function
+        initMap(response); // Pass events directly to initMap()
       },
       error: function() {
-        // Handle error if the AJAX request fails
         console.log('Failed to fetch map events');
       }
     });

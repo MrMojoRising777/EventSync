@@ -45,7 +45,7 @@
                 selectHelper: true,
                 eventColor: '#ffa500',
 
-                // select callback for capturing the selected date
+                // select callback for capturing selected date
                 select: function(startDate, endDate) {
                     var selectedDate = startDate.format('YYYY-MM-DD');
                     // Emit event with event date
@@ -64,10 +64,9 @@
                         url: SITEURL + "/calendar",
                         type: "GET",
                         success: function (data) {
-                            callback(data); // Pass the events directly to the callback
+                            callback(data); // Pass events directly to callback
                         },
                         error: function () {
-                            // Handle error if the AJAX request fails
                             console.log('Failed to fetch calendar events');
                         }
                     });

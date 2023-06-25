@@ -24,20 +24,20 @@
         })
       ],
       view: new ol.View({
-        center: ol.proj.fromLonLat([5.5368901, 50.995]), // Center on Belgium coordinates: [longitude, latitude]
-        zoom: 10 // Adjust the zoom level as needed
+        center: ol.proj.fromLonLat([5.5368901, 50.995]), // Center on coordinates: [longitude, latitude]
+        zoom: 10
       })
     });
 
-    // Create a marker overlay
+    // Create marker overlay
     marker = new ol.Feature({
       geometry: new ol.geom.Point(ol.proj.fromLonLat([5.5368901, 50.995])) // Marker coordinates: [longitude, latitude]
     });
 
     var markerStyle = new ol.style.Style({
       image: new ol.style.Icon({
-        anchor: [0.5, 1], // Set the anchor point of the marker icon
-        src: 'https://openlayers.org/en/latest/examples/data/icon.png' // URL to the marker icon image
+        anchor: [0.5, 1], // Set anchor point of marker icon
+        src: 'https://openlayers.org/en/latest/examples/data/icon.png' // URL to marker icon image
       })
     });
 
@@ -51,14 +51,14 @@
       source: vectorSource
     });
 
-    // Make the marker draggable
+    // Make marker draggable
     var dragInteraction = new ol.interaction.Translate({
       features: new ol.Collection([marker])
     });
 
     map.addInteraction(dragInteraction);
 
-    // Display the latitude and longitude when the marker is dragged
+    // Display latitude and longitude when marker is dragged
     marker.on('change', function () {
       var coordinates = marker.getGeometry().getCoordinates();
       var lonLat = ol.proj.toLonLat(coordinates);
@@ -77,14 +77,14 @@
           url: 'https://nominatim.openstreetmap.org/search',
           method: 'GET',
           headers: {
-            'Accept-Language': 'nl' // Specify the language as Dutch
+            'Accept-Language': 'nl' // Specify language as Dutch
           },
           dataType: 'json',
           data: {
             q: request.term,
             format: 'json',
             addressdetails: 1,
-            countrycodes: 'be', // Limit the search to Belgium
+            countrycodes: 'be', // Limit search to Belgium
             limit: 5
           },
           success: function(data) {
@@ -98,7 +98,7 @@
                 label: street + ', ' + city,
                 value: street + ', ' + city,
                 zip: zip,
-                city: city // Added city property
+                city: city
               };
             }));
           }
