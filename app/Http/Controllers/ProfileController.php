@@ -50,7 +50,7 @@ class ProfileController extends Controller
         $fileName = uniqid() . '.' . $picture->getClientOriginalExtension();
 
         // Store the file in the storage/app/public/profile-pictures directory
-        $picture->move('public/profile-pictures', $fileName);
+        $picture->storeAs('public/profile-pictures', $fileName);
 
         // Update the user's profile picture
         $user->profile_picture = $fileName;
