@@ -64,3 +64,4 @@ Route::match(['get', 'post'], '/send-invitations', [MailController::class, 'send
 Route::match(['get', 'post', 'delete'], '/send-cancellations/{id}', [MailController::class, 'sendCancelations'])->name('send-cancellations');
 
 Route::get('/recommended/{id}', [AvailabilityController::class, 'calculateOverlappingDates'])->name('Recommended');
+Route::get('/selectRecommended/{id}', [AvailabilityController::class, 'SelectRecommendedDate'])->name('SelectRecommended');

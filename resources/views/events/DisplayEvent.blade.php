@@ -72,6 +72,19 @@
                         </div>
                     </form>
                     @endif
+                        @if (!empty($recommended) && ($event->owner_id == $user->id))
+                            @foreach ($recommended as $date)
+                                <form method="POST" action="{{ route('SelectRecommended', ['id' => $event->id]) }}">
+                                    @csrf
+                                    @method('GET')
+                                    <div class="form-group mt-3">
+                                        <div class="col">
+                                            <button type="submit" class="btn btn-success">Select recommended date as event date</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            @endforeach 
+                        @endif
                 </div>
             </div>
         </div>
