@@ -25,7 +25,7 @@ class AvailabilityController extends Controller
     public function index()
     {
         // Fetch current authenticated user and today's date
-        $user = auth()->user(); 
+        $user = auth()->user();
         $currentDate = Carbon::today();
 
         // Fetch the user's events and owned events (both upcoming and past)
@@ -86,7 +86,7 @@ class AvailabilityController extends Controller
                 ->where('event_id', $event_id)
                 ->where('start_date', $start_date)
                 ->first();
-            
+
             // Only create a new availability if one does not already exist
             if (empty($existingAvailability)) {
                 $availability = new Availability;
@@ -163,7 +163,7 @@ class AvailabilityController extends Controller
 
         // Update the availability
         $availability->update($validatedData);
-        
+
         // Calculate overlapping dates
         $this->calculateOverlappingDates($validatedData['event_id']);
 
@@ -207,12 +207,12 @@ class AvailabilityController extends Controller
         RecommendedDate::where('event_id', $event_id)->delete();
 
         // Create a new recommended date if a valid availability was found
-        if (!empty($availability)){
+        if (!empty($availability)) {
             $recommended = new RecommendedDate;
             $recommended->start_date = $availability->start_date;
             $recommended->event_id = $event_id;
             $recommended->end_date = $availability->start_date;
-            $recommended->save(); 
+            $recommended->save();
         }
 
         // Redirect back to the previous page
@@ -225,15 +225,16 @@ class AvailabilityController extends Controller
      * @param  int $event_id
      * @return \Illuminate\Http\Response
      */
-    public function SelectRecommendedDate($event_id){
+    public function SelectRecommendedDate($event_id)
+    {
         // Fetch the recommended date for the given event id
         $recommended = RecommendedDate::where('event_id', $event_id)->first();
-       
+
         // Update the event date if a recommended date was found
-        if (!empty($recommended)){
+        if (!empty($recommended)) {
             $date = Event::where('id', $event_id)->first();
             $date->date = $recommended->start_date;
-            $date->save();         
+            $date->save();
         }
 
         // Redirect back to the previous page
