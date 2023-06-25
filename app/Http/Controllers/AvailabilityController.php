@@ -136,11 +136,14 @@ class AvailabilityController extends Controller
         // Clear previous recommended dates for the event.
         RecommendedDate::where('event_id', $event_id)->delete();
 
-        $reccomended = new RecommendedDate;
-        $reccomended->start_date = $availability->start_date;
-        $reccomended->event_id = $event_id;
-        $reccomended->end_date = $availability->start_date;
-        $reccomended->save();
+        if (!empty($availability)){
+            $reccomended = new RecommendedDate;
+            $reccomended->start_date = $availability->start_date;
+            $reccomended->event_id = $event_id;
+            $reccomended->end_date = $availability->start_date;
+            $reccomended->save(); 
+        }
+        
 
         return redirect()->back();
 

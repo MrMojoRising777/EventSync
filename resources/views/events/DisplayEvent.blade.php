@@ -29,6 +29,7 @@
                             @if (!empty($friends))
                                 @foreach ($friends as $friend)
                                     {{ $friend->username }}
+                                    <hr>
                                 @endforeach
                             @endif
                         </div>
