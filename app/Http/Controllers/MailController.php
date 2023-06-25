@@ -9,8 +9,17 @@ use Illuminate\Support\Facades\Mail;
 use App\Models\User;
 use App\Models\Event;
 
+/**
+ * Controller for sending email invitations and cancellations.
+ */
 class MailController extends Controller
 {
+    /**
+     * Send invitations to selected friends for a specific event.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function sendInvitations(Request $request)
     {
         $selectedFriendIds = $request->selected_friends;
@@ -48,7 +57,7 @@ class MailController extends Controller
                     'title' => "Invitation $event_name",
                     'body' => nl2br($body),
                 ];
-                
+
 
                 foreach ($selected_friends as $friend) {
                     Mail::to($friend->email)->send(new InviteEmail($details, function (Message $message) {
@@ -63,11 +72,17 @@ class MailController extends Controller
         }
     }
 
+    /**
+     * Send cancellation emails to all users invited to the specified event.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function sendCancelations($id)
-    {        
+    {
         $event = Event::find($id);
         $ownerId = $event->owner_id;
-        $owner = User::find($ownerId); 
+        $owner = User::find($ownerId);
 
         if (!$event) {
             return response()->json(['message' => 'Event not found'], 404);
@@ -95,6 +110,5 @@ class MailController extends Controller
         $event->delete();
 
         return redirect()->back()->with('success', 'Event deleted and cancellation emails sent successfully.');
-
     }
 }

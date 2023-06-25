@@ -3,28 +3,34 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
 use App\Models\User;
 
+/**
+ * Controller for handling friend-related operations.
+ */
 class FriendController extends Controller
 {
-    
-    
-    
-    private function getFriendJson() {
-
-        // get the friends['id'] of the current user as an array
+    /**
+     * Get friend IDs of the authenticated user as a JSON array.
+     *
+     * @return array
+     */
+    private function getFriendJson()
+    {
         $user = auth()->user();
         $friendsJson = $user->friends;
         $json = json_decode($friendsJson);
-            
+
         return $json;
-        }
+    }
 
-
-    public function getCurrentFriends() {
-
-        // get the current users friends info as an array
+    /**
+     * Get current user's friends info as an array.
+     *
+     * @return array
+     */
+    public function getCurrentFriends()
+    {
         $json = $this->getFriendJson();
 
         $usersArray = [];
@@ -38,19 +44,26 @@ class FriendController extends Controller
         return $usersArray;
     }
 
-
+    /**
+     * Display friends of the current user.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function friends()
     {
-
         $usersArray = $this->getCurrentFriends();
-        
-        
+
         return view('friends.friends', compact('usersArray'));
     }
 
-// Add friends functions
-    public function searchFriends(request $request){
-        $users = User::all();
+    /**
+     * Search for users that can be added as friends.
+     *
+     * @param \Illuminate\Http\Request $request
+     * @return \Illuminate\Http\Response
+     */
+    public function searchFriends(Request $request)
+    {
         $search = $request->input('search');
 
         $own = auth()->user();
@@ -65,103 +78,91 @@ class FriendController extends Controller
                 ->orWhere('id', 'like', '%' . $search . '%')
                 ->where('id', '!=', $own->id);
         })
-        ->whereNotIn('id', $friendsJson);
+            ->whereNotIn('id', $friendsJson);
 
         $friends = $friends->get();
 
         return view('friends.addFriends', compact('friends'));
     }
 
-    
-
-    public function AddFriends(request $request){
-
-        //get all users so it can check what friend needs to get added
+    /**
+     * Add selected users as friends.
+     *
+     * @param \Illuminate\Http\Request $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function AddFriends(Request $request)
+    {
         $itemsEloquent = User::all();
-        // array_filter doesnt work with eloquent, so chagne it to an array instead
         $items = $itemsEloquent->toArray();
-
-        //get current friends from the DB
         $json = $this->getFriendJson();
 
-        // Check if any items are selected
         if ($request->has('selectedItems') && is_array($request->input('selectedItems'))) {
             foreach ($request->input('selectedItems') as $selectedItemId) {
-                // Find the selected item by id
                 $selectedItem = array_filter($items, function ($item) use ($selectedItemId) {
                     return $item['id'] == $selectedItemId;
                 });
 
                 if (!empty($selectedItem)) {
-                        
                     $selectedItem = reset($selectedItem);
                     $json[] += $selectedItem['id'];
                 }
             }
         }
-          
-        // save selected friends to database
+
         $user = auth()->user();
         $user->friends = json_encode($json);
         $user->save();
 
         return redirect()->Route('friends');
-
-
     }
 
-
-// Delete friends functions
-    Public function FindFriends() {
-
+    /**
+     * Display a list of current friends to delete.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function FindFriends()
+    {
         $usersArray = $this->getCurrentFriends();
 
         return view('friends.deleteFriends', compact('usersArray'));
     }
 
-    public function DeleteFriends(request $request) {
-        
-
-        //get current friends array from the DB
+    /**
+     * Delete selected friends.
+     *
+     * @param \Illuminate\Http\Request $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function DeleteFriends(Request $request)
+    {
         $json = $this->getFriendJson();
-    
-        //get friend users so it can check what friend needs to get deleted
         $items = $this->getCurrentFriends();
-        
-        
         $deleteFriends = [];
 
-        // Check if any items are selected
         if ($request->has('selectedItems') && is_array($request->input('selectedItems'))) {
             foreach ($request->input('selectedItems') as $selectedItemId) {
-                // Find the selected item by id
                 $selectedItem = array_filter($items, function ($item) use ($selectedItemId) {
                     return $item['id'] == $selectedItemId;
                 });
 
                 if (!empty($selectedItem)) {
-                        
                     $selectedItem = reset($selectedItem);
                     $deleteFriends[] += $selectedItem['id'];
-                        
                 }
             }
-               
-            // delete the selected items from the json array
-             $updatedFriendIds = array_diff($json, $deleteFriends);
-                
+
+            $updatedFriendIds = array_diff($json, $deleteFriends);
         }
-        
-        // save updated friend information to database
-        if (isset($updatedFriendIds)) {    
+
+        if (isset($updatedFriendIds)) {
             $user = auth()->user();
-            $updatedFriendIds = array_values($updatedFriendIds); // Convert to indexed array
+            $updatedFriendIds = array_values($updatedFriendIds);
             $user->friends = json_encode($updatedFriendIds);
             $user->save();
         }
-        
 
         return redirect()->route('friends');
     }
 }
-
