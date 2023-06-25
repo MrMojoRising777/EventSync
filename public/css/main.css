@@ -416,6 +416,7 @@ main {
 }
 
 /* Styles for phones and smaller devices */
+
 @media (max-width: 767px) {
   /* header */
   .navbar-nav {
