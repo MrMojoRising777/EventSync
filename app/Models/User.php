@@ -8,7 +8,9 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 
-
+/**
+ * Model representing a user.
+ */
 class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
@@ -36,7 +38,7 @@ class User extends Authenticatable
     ];
 
     /**
-     * The attributes that should be cast.s
+     * The attributes that should be cast.
      *
      * @var array<string, string>
      */
@@ -45,10 +47,21 @@ class User extends Authenticatable
         'password' => 'hashed',
     ];
 
-    public function Events()
+    /**
+     * Get the events associated with the user.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function events()
     {
         return $this->belongsToMany(Event::class);
     }
+
+    /**
+     * Get the availabilities associated with the user.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
     public function availabilities()
     {
         return $this->hasMany(Availability::class);
