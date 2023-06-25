@@ -43,6 +43,7 @@
                 },
                 selectable: true,
                 selectHelper: true,
+                eventColor: '#ffa500',
 
                 // select callback for capturing the selected date
                 select: function(startDate, endDate) {
