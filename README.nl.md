@@ -2,6 +2,9 @@
   <img src="https://github.com/MrMojoRising777/eindwerkBackEnd/assets/81364395/7b0305e3-367a-4e33-8e69-d3016d600078" width="50%">
 </p>
 
+[![en](https://img.shields.io/badge/lang-en-red.svg)](https://github.com/MrMojoRising777/EventSync/blob/main/README.md)
+[![nl](https://img.shields.io/badge/lang-nl-green.svg)](https://github.com/MrMojoRising777/EventSync/blob/main/README.nl.md)
+
 ## Welkom bij EventSync!
 
 EventSync is een webapplicatie die het plannen van evenementen vergemakkelijkt. Als u ooit moeite heeft gehad met het coördineren van schema's voor groepsevenementen of vakanties, is EventSync hier om dat proces te stroomlijnen.

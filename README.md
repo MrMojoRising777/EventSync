@@ -2,6 +2,8 @@
   <img src="https://github.com/MrMojoRising777/eindwerkBackEnd/assets/81364395/7b0305e3-367a-4e33-8e69-d3016d600078" width="50%">
 </p>
 
+[![en](https://img.shields.io/badge/lang-en-red.svg)](https://github.com/MrMojoRising777/EventSync/blob/main/README.md)
+[![nl](https://img.shields.io/badge/lang-nl-green.svg)](https://github.com/MrMojoRising777/EventSync/blob/main/README.nl.md)
 
 ## Welcome to EventSync! 
 
