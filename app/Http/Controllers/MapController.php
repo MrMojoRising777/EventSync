@@ -14,8 +14,11 @@ class MapController extends Controller
             $userId = Auth::user()->id;
 
             $events = Event::where('owner_id', $userId)
-                ->select(['name', 'lat', 'long'])
-                ->get();
+            ->select(['name', 'lat', 'long'])
+            ->orWhereHas('users', function ($query) use ($userId) {
+                $query->where('user_id', $userId);
+            })
+            ->get();
 
             return response()->json($events);
         }
