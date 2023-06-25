@@ -7,8 +7,16 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 
+/**
+ * Controller for handling user profile-related operations.
+ */
 class ProfileController extends Controller
 {
+    /**
+     * Display the user's profile.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function show()
     {
         $user = Auth::user();
@@ -16,6 +24,12 @@ class ProfileController extends Controller
         return view('profile.show', compact('user', 'profilePicture'));
     }
 
+    /**
+     * Update the username for the current user.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function updateUsername(Request $request)
     {
         $user = Auth::user();
@@ -25,6 +39,12 @@ class ProfileController extends Controller
         return redirect()->route('profile.show')->with('success', 'Username updated successfully.');
     }
 
+    /**
+     * Update the password for the current user.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function updatePassword(Request $request)
     {
         $user = Auth::user();
@@ -34,6 +54,12 @@ class ProfileController extends Controller
         return redirect()->route('profile.show')->with('success', 'Password updated successfully.');
     }
 
+    /**
+     * Update the profile picture for the current user.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function updatePicture(Request $request)
     {
         $user = Auth::user();
@@ -59,6 +85,11 @@ class ProfileController extends Controller
         return redirect()->route('profile.show')->with('success', 'Profile picture updated successfully.');
     }
 
+    /**
+     * Delete the current user's account.
+     *
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function deleteAccount()
     {
         $user = Auth::user();
