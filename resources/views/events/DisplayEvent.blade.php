@@ -20,6 +20,8 @@
 
         <div class="container text-center">
             <div class="row justify-content-start">
+
+                <!-- invited friends list -->
                 <div class="col">
                     <div class="card my-3">
                         <div class="card-header">
@@ -35,43 +37,45 @@
                         </div>
                     </div>
                 </div>
+
+                <!-- Map Component -->
                 <div class="col">
                     <div class="container text-center my-3">
                         <div class="row justify-content-start">
                             <div class="col">
-                            <div class="card map-container">
-                                <div class="card-header">{{ __('Map') }}</div>
-                                    <div class="card-body">
-                                        <!-- Map Component -->
-                                        <div id="map_{{ $event->id }}" class="map_events-display"></div>
+                                <div class="card map-container">
+                                    <div class="card-header">{{ __('Map') }}</div>
+                                        <div class="card-body">
+                                            <div id="map_{{ $event->id }}" class="map_events-display"></div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
+                        {{ "Event Location: " . $event->address . ', ' . $event->zipcode . ' ' . $event->city }}
                     </div>
-                    {{ "Event Location: " . $event->address . ', ' . $event->zipcode . ' ' . $event->city }}
                 </div>
             </div>
-        </div>
 
-        <div class="container text-center">
-            <div class="row justify-content-start">
-                <div class="col">
-                    {{ "Current Recommended Date: " }}
-                    @foreach ($recommended as $date)
-                        {{ $date->start_date }}
-                    @endforeach
-                    @if ($event->owner_id == $user->id)
-                    <form method="POST" action="{{ route('Recommended', ['id' => $event->id]) }}">
-                        @csrf
-                        @method('GET')
-                        <div class="form-group mt-3">
-                            <div class="col">
-                                <button type="submit" class="btn btn-success">Check recommended date</button>
-                            </div>
-                        </div>
-                    </form>
-                    @endif
+            <!-- get & set recommened_date -->
+            <div class="container text-center">
+                <div class="row justify-content-start">
+                    <div class="col">
+                        {{ "Current Recommended Date: " }}
+                        @foreach ($recommended as $date)
+                            {{ $date->start_date }}
+                        @endforeach
+                        @if ($event->owner_id == $user->id)
+                            <form method="POST" action="{{ route('Recommended', ['id' => $event->id]) }}">
+                                @csrf
+                                @method('GET')
+                                <div class="form-group mt-3">
+                                    <div class="col">
+                                        <button type="submit" class="btn btn-success">Check recommended date</button>
+                                    </div>
+                                </div>
+                            </form>
+                        @endif
                         @if (!empty($recommended) && ($event->owner_id == $user->id))
                             @foreach ($recommended as $date)
                                 <form method="POST" action="{{ route('SelectRecommended', ['id' => $event->id]) }}">
@@ -85,14 +89,15 @@
                                 </form>
                             @endforeach 
                         @endif
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
 @endsection
 
 <script>
+    // map initialization function
     function initMap_{{ $event->id }}() {
       const eventLatLng = ol.proj.fromLonLat([{{ $event->lat }}, {{ $event->long }}]);
       const map = new ol.Map({

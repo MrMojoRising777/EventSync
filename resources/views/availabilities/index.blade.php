@@ -240,7 +240,7 @@
                 }
             });
 
-            var selectedDates = []; // Array to store selected dates
+            var selectedDates = [];
 
             var calendar = $('#full_calendar_events').fullCalendar({
                 editable: true,
@@ -248,7 +248,7 @@
                 eventRender: function (event, element, view) {
                     element.find('.fc-title').text(event.title);
 
-                    // Check if the event date exists in $availabilities
+                    // Check if event date exists in $availabilities
                     var eventDate = event.start.format('YYYY-MM-DD');
                     var availabilityDates = {!! json_encode($availabilities->pluck('start_date')) !!};
                     console.log(availabilityDates);
@@ -268,19 +268,19 @@
                     // Only allow selection of future dates
                     return selectedStartDate.isSameOrAfter(today);
                 },
-                // select callback for capturing the selected date
+                // select callback for capturing selected date
                 select: function(startDate, endDate) {
                     var selectedDate = startDate.format('YYYY-MM-DD');
                     
-                    // Check if the clicked date is already selected
+                    // Check if clicked date is already selected
                     var index = selectedDates.indexOf(selectedDate);
                     if (index !== -1) {
-                        // Deselect the date
+                        // Deselect date
                         selectedDates.splice(index, 1);
                         $('.fc-day[data-date="' + selectedDate + '"]').removeClass('available-day');
                         console.log('Deselected Date:', selectedDate);
                     } else {
-                        // Select the date
+                        // Select date
                         selectedDates.push(selectedDate);
                         $('.fc-day[data-date="' + selectedDate + '"]').addClass('available-day');
                         console.log('Selected Date:', selectedDate);
@@ -294,10 +294,9 @@
                         url: SITEURL + "/calendar",
                         type: "GET",
                         success: function (data) {
-                            callback(data); // Pass the events directly to the callback
+                            callback(data); // Pass events directly to callback
                         },
                         error: function () {
-                            // Handle error if the AJAX request fails
                             console.log('Failed to fetch calendar events');
                         }
                     });
@@ -314,14 +313,14 @@
 
                 // Iterate over selectedEvents array
                 selectedEvents.forEach(function(eventId) {
-                    // Prepare the data to be sent in the AJAX request
+                    // Prepare data to be sent in AJAX request
                     var requestData = {
                         event_id: eventId,
                         start_date: selectedDates,
                         end_date: selectedDates,
                     };
 
-                    // Send the AJAX request with the data
+                    // Send AJAX request with data
                     $.ajax({
                         url: SITEURL + "/availabilities/store",
                         type: "POST",
@@ -329,12 +328,15 @@
                         success: function (response) {
                             toastr.success('Availability added for ' + eventId);
                             console.log('Response for Event ID ' + eventId + ':', requestData);
-                            // Handle the response from the server
+                            
+                            // Redirect to "/home" after AJAX requests
+                            if (eventId === selectedEvents[selectedEvents.length - 1]) {
+                                window.location.href = SITEURL + "/home";
+                            }
                         },
                         error: function (error) {
                             toastr.log('Oops! Something went wrong.')
                             console.log('Error for Event ID ' + eventId + ':', error);
-                            // Handle the error
                         }
                     });
                 });

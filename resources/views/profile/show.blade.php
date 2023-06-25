@@ -91,6 +91,7 @@
 
               <hr>
 
+              <!-- upload profile picture -->
               <form method="POST" action="{{ route('profile.update.picture') }}" enctype="multipart/form-data">
                 @csrf
                 @method('PUT')
@@ -118,6 +119,7 @@
 
               <hr>
               
+              <!-- show user id -->
               <div class="user-id" style="text-align: center;">
                 User ID: <span class="user-id-number" style="font-weight: bold;">{{ $user->id }}</span>
                 <p><i>Share your user-id with friends so they can find, add and invite you to event. Keep on creating memories!</i></p>
@@ -125,6 +127,7 @@
 
               <hr>
 
+              <!-- delete account button -->
               <form method="POST" action="{{ route('profile.delete') }}">
                 @csrf
                 @method('DELETE')

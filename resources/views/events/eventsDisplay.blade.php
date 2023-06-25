@@ -82,21 +82,26 @@
       </div>
       <div class="container text-center">
         <div class="row align-items-center">
+
+          <!-- Map Component -->
           <div class="col-4">
             <div class="container m-2">
               <div class="card map-container">
                 <div class="card-header">{{ __('Map') }}</div>
                 <div class="card-body">
-                  <!-- Map Component -->
                   <div id="map_{{ $event->id }}" class="map_events-display"></div>
                 </div>
               </div>
               <strong>Location:</strong> {{ $event->address }}, {{ $event->zipcode }} {{ $event->city }}
             </div>
           </div>
+
+          <!-- event date display -->
           <div class="col-4">
             Date: {{ $event->date }}
           </div>
+
+          <!-- event details button -->
           <div class="col-4">
             <form method="POST" action="{{ route('Event', ['id' => $event->id]) }}">
               @csrf
@@ -107,6 +112,8 @@
                 </div>
               </div>
             </form>
+
+            <!-- delete/cancel event button -->
             <form method="POST" action="{{ route('event.pivot.delete', ['id' => $event->id]) }}">
               @csrf
               @method('DELETE')

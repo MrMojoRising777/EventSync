@@ -69,7 +69,7 @@
                           <span class="checkbox-tile text-center align-middle">
                             <div class="profile-picture-container d-flex justify-content-center align-items-center">
                               @if($friend->profile_picture)
-                                <img src="{{ asset('storage/profile-pictures/' . $friend->profile_picture) }}" alt="Profile Picture" class="img-fluid rounded-circle friends-profile-picture">
+                                <img src="{{ asset('storage/profile-pictures/' . $friend->profile_picture) }}" alt="Profile Picture" class="img-fluid rounded-circle friends-profile-picture pt-1">
                               @else
                                 <img src="{{ asset('build/assets/images/default_avatar.png') }}" alt="Default Profile Picture" class="img-fluid rounded-circle friends-profile-picture">
                               @endif
@@ -133,7 +133,7 @@
       selectedFriends.push(checkbox.value);
     });
 
-    // Log the input values
+    // Log input values
     console.log("event_name: " + eventName);
     console.log("owner_id: " + ownerId);
     console.log("--------------------------------");
@@ -175,13 +175,12 @@
       },
       type: "POST",
       success: function (data) {
-        // Handle success response
         console.log("New event created:", data);
 
         // Show toastr popup
         toastr.success('Event created successfully');
 
-        // Get the event ID
+        // Get event ID
         eventId = data.event.id;
 
         console.log("Event ID:", eventId);
@@ -197,7 +196,6 @@
           },
           type: "POST",
           success: function (data) {
-            // Handle success response
             console.log("Pivot table updated:", data);
 
             var csrfToken = $('meta[name="csrf-token"]').attr('content');
@@ -206,10 +204,10 @@
             $.ajax({
               url: "{{ route('invitations') }}",
               headers: {
-                'X-CSRF-TOKEN': csrfToken // Include the CSRF token in the request headers
+                'X-CSRF-TOKEN': csrfToken // Include the CSRF token in request headers
               },
               data: {
-                selected_friends: selectedFriends, // Pass selectedFriends as an array
+                selected_friends: selectedFriends, // Pass selectedFriends as array
                 owner_id: ownerId,
                 event_name: eventName,
                 event_date: event_date,
@@ -220,19 +218,17 @@
               },
               type: "POST",
               success: function (data) {
-                // Handle success response
                 console.log("Invitations sent:", data);
 
                 // Show toastr popup
                 toastr.success('Invitations sent successfully');
 
-                // Redirect to home page after a delay
+                // Redirect to home page after delay
                 setTimeout(function () {
                   window.location.href = "{{ route('eventsPage') }}";
                 }, 2000); // Delay in milliseconds
               },
               error: function (xhr, status, error) {
-                // Handle error response
                 console.log("Error sending invitations:", error);
 
                 // Show toastr popup for error
@@ -241,7 +237,6 @@
             });
           },
           error: function (xhr, status, error) {
-            // Handle error response
             console.log("Error updating pivot table:", error);
             // Show toastr popup for error
             toastr.error('Error creating event');
@@ -249,7 +244,6 @@
         });
       },
       error: function (xhr, status, error) {
-        // Handle error response
         console.log("Error creating new event:", error);
 
         // Show toastr popup for error

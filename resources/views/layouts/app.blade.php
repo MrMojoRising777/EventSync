@@ -21,6 +21,8 @@
 </head>
 <body class="@yield('body-class')">
     <div id="app">
+        
+        <!-- header -->
         <nav class="navbar navbar-expand-md navbar-light shadow-sm">
             <div class="container">
                 <a class="navbar-brand" href="{{route('home')}}">
@@ -113,10 +115,12 @@
             </div>
         </nav>
 
+        <!-- body -->
         <main class="py-4">
             @yield('content')
         </main>
 
+        <!-- footer -->
         <footer class="footer">
             <div class="container py-4">
                 <div class="row">

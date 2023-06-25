@@ -5,6 +5,8 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
+
+                <!-- friends display -->
                 <div class="card-header">{{ __('Friends') }}</div>
                 <div class="card-body">
                     @if (session('status'))
@@ -41,12 +43,16 @@
 
                 </div>
             </div>
+
+            <!-- add friends card -->
             <div class="card">
                 <div class="card-header">{{"Add Friends"}}</div>
                 <div class="card-body">
                     <a type="button" class="btn btn-primary" href="{{route('searchFriends')}}">{{"Search"}}</a>
                 </div>
             </div>
+
+            <!-- delete friends card -->
             <div class="card">
                 <div class="card-header">{{"Delete Friends"}}</div>
                 <div class="card-body">
