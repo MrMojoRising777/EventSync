@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\Event;
 
 use App\Http\Controllers\FriendController as  FriendController;
 
@@ -31,7 +32,19 @@ class HomeController extends Controller
         $usersArray = new FriendController();
         $friends = $usersArray->getCurrentFriends();
 
-        return view('home', compact('friends'));
+        $user = auth()->user(); 
+
+        $events = $user->events()
+            // ->whereDate('date', '>=', $currentDate)
+            ->orderBy('date', 'asc')
+            ->paginate(5);
+
+        $ownedEvents = Event::where('owner_id', '=', $user->id)
+            // ->whereDate('date', '>=', $currentDate)
+            ->orderBy('date', 'asc')
+            ->paginate(5);
+
+        return view('home', compact('friends', 'events', 'ownedEvents'));
     }
     
 
