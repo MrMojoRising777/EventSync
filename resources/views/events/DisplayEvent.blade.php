@@ -13,6 +13,9 @@
             <div class="header-left">
                 {{ "Event Name: " . $event->name }}
             </div>
+            <div class="header-right">
+                {{ "Event Date: " . $event->date }}
+            </div>
         </div>
 
         <div class="container text-center">
