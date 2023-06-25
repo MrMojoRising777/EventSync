@@ -19,12 +19,12 @@ class AvailabilityController extends Controller
         $currentDate = Carbon::today();
 
         $events = $user->events()
-            ->whereDate('date', '>=', $currentDate)
+            // ->whereDate('date', '>=', $currentDate)
             ->orderBy('date', 'asc')
             ->paginate(5);
 
         $ownedEvents = Event::where('owner_id', '=', $user->id)
-            ->whereDate('date', '>=', $currentDate)
+            // ->whereDate('date', '>=', $currentDate)
             ->orderBy('date', 'asc')
             ->paginate(5);
 
