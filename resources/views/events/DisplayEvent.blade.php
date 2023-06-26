@@ -17,7 +17,7 @@
                 @if (isset($event->date))
                 {{ "Event Date: " . $event->date }}
                 @else
-                {{ "Event Date: No date set yet." }}
+                {{ "Event Date: TBD" }}
                 @endif
             </div>
         </div>
@@ -33,10 +33,10 @@
                         </div>
                         <div class="card-body">
                             @if (!empty($friends))
-                            @foreach ($friends as $friend)
-                            {{ $friend->username }}
-                            <hr>
-                            @endforeach
+                                @foreach ($friends as $friend)
+                                    {{ $friend->username }}
+                                    <hr>
+                                @endforeach
                             @endif
                         </div>
                     </div>
@@ -49,103 +49,87 @@
                             <div class="col">
                                 <div class="card map-container">
                                     <div class="card-header">{{ __('Map') }}</div>
-                                    <div class="card-body">
-                                        <div id="map_{{ $event->id }}" class="map_events-display"></div>
+                                        <div class="card-body">
+                                            <div id="map_{{ $event->id }}" class="map_events-display"></div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
+                        {{ "Event Location: " . $event->address . ', ' . $event->zipcode . ' ' . $event->city }}
                     </div>
-                    {{ "Event Location: " . $event->address . ', ' . $event->zipcode . ' ' . $event->city }}
                 </div>
             </div>
-        </div>
 
-        <!-- get & set recommened_date -->
-        <div class="container text-center">
-            <div class="row justify-content-start">
-                <div class="col">
-                    {{ "Current Recommended Date: " }}
-                    @foreach ($recommended as $date)
-                    {{ $date->start_date }}
-                    @endforeach
-                    @if ($event->owner_id == $user->id)
-                    <form method="POST" action="{{ route('Recommended', ['id' => $event->id]) }}">
-                        @csrf
-                        @method('GET')
-                        <div class="form-group mt-3">
-                            <div class="col">
-                                <button type="submit" class="btn btn-success">Check recommended date</button>
-                            </div>
-                        </div>
-                    </form>
-                    @endif
-                    @if (!empty($recommended) && ($event->owner_id == $user->id))
-                    @foreach ($recommended as $date)
-                    <form method="POST" action="{{ route('SelectRecommended', ['id' => $event->id]) }}">
-                        @csrf
-                        @method('GET')
-                        <div class="form-group mt-3">
-                            <div class="col">
-                                <button type="submit" class="btn btn-success">Select recommended date as event date</button>
-                            </div>
-                        </div>
-                    </form>
-                    @endforeach
-                    @endif
+            <!-- get & set recommened_date -->
+            <div class="container text-center">
+                <div class="row justify-content-start">
+                    <div class="col">
+                        {{ "Current Recommended Date: " }}
+                        @foreach ($recommended as $date)
+                            {{ $date->start_date }}
+                        @endforeach
+                        @if ($event->owner_id == $user->id)
+                            <form method="POST" action="{{ route('Recommended', ['id' => $event->id]) }}">
+                                @csrf
+                                @method('GET')
+                                <div class="form-group mt-3">
+                                    <div class="col">
+                                        <button type="submit" class="btn btn-success">Check recommended date</button>
+                                    </div>
+                                </div>
+                            </form>
+                        @endif
+                        @if (!empty($recommended) && ($event->owner_id == $user->id))
+                            @foreach ($recommended as $date)
+                                <form method="POST" action="{{ route('SelectRecommended', ['id' => $event->id]) }}">
+                                    @csrf
+                                    @method('GET')
+                                    <div class="form-group mt-3">
+                                        <div class="col">
+                                            <button type="submit" class="btn btn-success">Select recommended date as event date</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            @endforeach 
+                        @endif
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
 @endsection
 
 <script>
     // map initialization function
-    function initMap_ {
-        {
-            $event - > id
-        }
-    }() {
-        const eventLatLng = ol.proj.fromLonLat([{
-            {
-                $event - > lat
-            }
-        }, {
-            {
-                $event - > long
-            }
-        }]);
-        const map = new ol.Map({
-            target: 'map_{{ $event->id }}',
-            layers: [
-                new ol.layer.Tile({
-                    source: new ol.source.OSM()
-                })
-            ],
-            view: new ol.View({
-                center: eventLatLng,
-                zoom: 12
-            })
-        });
-        const marker = new ol.Feature({
-            geometry: new ol.geom.Point(eventLatLng)
-        });
-        const markerLayer = new ol.layer.Vector({
-            source: new ol.source.Vector({
-                features: [marker]
-            }),
-            style: new ol.style.Style({
-                image: new ol.style.Icon({
-                    src: 'https://openlayers.org/en/latest/examples/data/icon.png'
-                })
-            })
-        });
-        map.addLayer(markerLayer);
+    function initMap_{{ $event->id }}() {
+      const eventLatLng = ol.proj.fromLonLat([{{ $event->lat }}, {{ $event->long }}]);
+      const map = new ol.Map({
+        target: 'map_{{ $event->id }}',
+        layers: [
+          new ol.layer.Tile({
+            source: new ol.source.OSM()
+          })
+        ],
+        view: new ol.View({
+          center: eventLatLng,
+          zoom: 12
+        })
+      });
+      const marker = new ol.Feature({
+        geometry: new ol.geom.Point(eventLatLng)
+      });
+      const markerLayer = new ol.layer.Vector({
+        source: new ol.source.Vector({
+          features: [marker]
+        }),
+        style: new ol.style.Style({
+          image: new ol.style.Icon({
+            src: 'https://openlayers.org/en/latest/examples/data/icon.png'
+          })
+        })
+      });
+      map.addLayer(markerLayer);
     }
-    window.addEventListener('load', initMap_ {
-        {
-            $event - > id
-        }
-    });
+    window.addEventListener('load', initMap_{{ $event->id }});
 </script>
