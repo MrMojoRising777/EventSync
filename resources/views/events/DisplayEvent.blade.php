@@ -14,7 +14,11 @@
                 {{ "Event Name: " . $event->name }}
             </div>
             <div class="header-right">
+                @if (isset($event->date))
                 {{ "Event Date: " . $event->date }}
+                @else
+                {{ "Event Date: TBD" }}
+                @endif
             </div>
         </div>
 
@@ -62,9 +66,13 @@
                 <div class="row justify-content-start">
                     <div class="col">
                         {{ "Current Recommended Date: " }}
-                        @foreach ($recommended as $date)
-                            {{ $date->start_date }}
-                        @endforeach
+                        @if ($recommended->isEmpty())
+                            {{ "TBD" }}
+                        @else
+                            @foreach ($recommended as $date)
+                                {{ $date->start_date }}
+                            @endforeach
+                        @endif
                         @if ($event->owner_id == $user->id)
                             <form method="POST" action="{{ route('Recommended', ['id' => $event->id]) }}">
                                 @csrf
