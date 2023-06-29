@@ -4,12 +4,17 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
+/**
+ * This migration creates the 'events' table and updates the foreign key constraint.
+ */
 return new class extends Migration
 {
     /**
      * Run the migrations.
+     *
+     * @return void
      */
-     public function up()
+    public function up()
     {
         Schema::create('events', function (Blueprint $table) {
             $table->id();
@@ -21,8 +26,14 @@ return new class extends Migration
             $table->string('zipcode');
             $table->string('city');
             $table->unsignedBigInteger('owner_id');
-            $table->foreign('owner_id')->references('id')->on('users'); 
+            $table->foreign('owner_id')->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();
+        });
+
+        // Drop the previous foreign key constraint and add the updated one
+        Schema::table('events', function (Blueprint $table) {
+            $table->dropForeign(['owner_id']);
+            $table->foreign('owner_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
 
@@ -36,4 +47,3 @@ return new class extends Migration
         Schema::dropIfExists('events');
     }
 };
-
